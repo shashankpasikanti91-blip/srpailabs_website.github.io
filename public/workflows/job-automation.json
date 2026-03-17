@@ -1,0 +1,732 @@
+{
+  "name": "Job automation",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 17
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -224,
+        -48
+      ],
+      "id": "e2519b8e-774e-4fb7-81f1-aec2064487c5",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "https://drive.google.com/file/d/1URLi6HLio--IOYt3Kbi0E5zoCbvBDArO/view?usp=sharing",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -16,
+        -48
+      ],
+      "id": "02f20051-3e4d-423b-bf19-ca75b66310e5",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "d3YFXeOul05k0VwT",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        192,
+        -48
+      ],
+      "id": "caa38ef2-58f9-45e5-b55e-cbebb198f55c",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1nzZfAqooM1lG2Up0o06R0e9dNhJQqLRm-47dBmBY-no",
+          "mode": "list",
+          "cachedResultName": "n8n first demo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nzZfAqooM1lG2Up0o06R0e9dNhJQqLRm-47dBmBY-no/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1690179834,
+          "mode": "list",
+          "cachedResultName": "Filter",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nzZfAqooM1lG2Up0o06R0e9dNhJQqLRm-47dBmBY-no/edit#gid=1690179834"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        400,
+        -48
+      ],
+      "id": "316e6589-4125-49ea-820a-dac867597eda",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Jap5msqmtlnuujKs",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const keyword = $input.first().json.Keyword || \"\";\nconst location = $input.first().json.Location || \"\";\nconst experiencelevel = $input.first().json[\"Experience Level\"] || \"\";\nconst remote = $input.first().json.Remote || \"\";\nconst jobtype = $input.first().json[\"Job Type\"] || \"\";\nconst easyApply = $input.first().json[\"Easy Apply\"] || \"\";\n\nconst encodedKeyword = encodeURIComponent(keyword);\nconst encodedLocation = encodeURIComponent(location);\n\nlet url = `https://www.linkedin.com/jobs/search/?f_TPR=r86400&refresh=true`;\n\nif (encodedKeyword !== \"\") {\n  url += `&keywords=${encodedKeyword}`;\n}\nif (encodedLocation !== \"\") {\n  url += `&location=${encodedLocation}`;\n}\nif (experiencelevel !== \"\") {\n  url += `&experiencelevel=${encodeURIComponent(experiencelevel)}`;\n}\nif (remote !== \"\") {\n  url += `&remote=${encodeURIComponent(remote)}`;\n}\nif (jobtype !== \"\") {\n  url += `&jobtype=${encodeURIComponent(jobtype)}`;\n}\nif (easyApply !== \"\") {\n  url += `&easyApply=${encodeURIComponent(easyApply)}`;\n}\n\nreturn { json: { url } };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        -48
+      ],
+      "id": "212c5d58-8cee-4643-869c-6d39b84d1388",
+      "name": "Create search URL"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        736,
+        -48
+      ],
+      "id": "d6db72d0-ec49-45d4-8003-1ea0a07fe61b",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "links",
+              "cssSelector": "a[href*=\"jobs\"]",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        944,
+        -48
+      ],
+      "id": "e0c31241-baa6-47d5-bb76-d5f3efab83d7",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "links",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        -48
+      ],
+      "id": "201b798d-3b00-49bd-bd20-dac4414a1892",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "batchSize": 2,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1248,
+        464
+      ],
+      "id": "679268a9-b518-4f19-ac5c-915414bbbba2",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "amount": 8
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -512,
+        176
+      ],
+      "id": "079bdc47-1239-45a6-8f42-523ed1d3e2ab",
+      "name": "Wait",
+      "webhookId": "ff92acd9-4ce5-41e0-b2c3-679b23ac3742"
+    },
+    {
+      "parameters": {
+        "url": "=https://www.linkedin.com/?trk=public_jobs_nav-header-logo\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -304,
+        176
+      ],
+      "id": "e7442221-50f4-4984-a8ed-4efc6a4db55a",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": "div h1"
+            },
+            {
+              "key": "company",
+              "cssSelector": "div span a"
+            },
+            {
+              "key": "location",
+              "cssSelector": "div span[class*='topcard__flavor topcard__flavor--bullet']"
+            },
+            {
+              "key": "description",
+              "cssSelector": "div.description__text--rich"
+            },
+            {
+              "key": "jobid",
+              "cssSelector": "a[data-item-type='semaphore']",
+              "returnValue": "attribute",
+              "attribute": "data-semaphore-content-urn"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -96,
+        176
+      ],
+      "id": "bbef2c16-5933-4273-b9ee-884ce2a179c1",
+      "name": "HTML1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f8cea2b0-ad23-4a1a-ba8a-576661a3c5d4",
+              "name": "description",
+              "value": "={{ $json.description\n    .replace(/\\\\n/g, '\\n')\n    .replace(/•/g, '\\n• ')\n    .replace(/\\s{2,}/g, ' ')\n    .trim()\n}}\n",
+              "type": "string"
+            },
+            {
+              "id": "c3114015-1afe-45ed-bd7f-47ad111f4ddb",
+              "name": "jobid",
+              "value": "={{ $json.jobid.split(':').pop() }}\n",
+              "type": "string"
+            },
+            {
+              "id": "57a5bfc2-a59f-47d6-9606-4cdd9256721c",
+              "name": "applylink",
+              "value": "={{ `https://www.linkedin.com/jobs/view/${$json.jobid.split(':').pop()}` }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        112,
+        176
+      ],
+      "id": "441bc54a-fa15-41de-bab4-c5f7b5e3b8e6",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an assistant that helps match candidates to job opportunities. Your task is to:\n\n1. Review the candidate's resume.\n2. Analyze both the resume and the job description to calculate a job matching score (0–100).\n3. Create a cover letter based on the resume and job description. The cover letter must:\n   - Contain at least 2 paragraphs.\n   - Exclude the name, address, and signature sections.\n   - Escape all special characters, including quotation marks (\\\") and newlines (\\n), so the JSON is valid.\n\nYour output **must be valid JSON** and parsable by n8n, for example:\n\n{\"score\": 80, \"coverLetter\": \"sample cover letter with escaped quotes and newlines\"}\n\nInputs:\n\njob_description: {{ $json.description }}\nmy_resume: {{ $('Extract from File').item.json.text }}\n\n**Important:** The output JSON must be a single line with properly escaped characters.\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -368,
+        448
+      ],
+      "id": "33546c46-aaf7-48a7-8ec7-031b369dab4b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -384,
+        640
+      ],
+      "id": "3b4566cf-5de6-400c-8b2a-9a053876ec32",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "pABTTpHKkRM1gsGt",
+          "name": "Google Gemini(PaLM) Api account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ \nJSON.stringify({\n  score: JSON.parse($json.output.replaceAll(/```(?:json)?/g, \"\").trim()).score,\n  coverLetter: JSON.parse($json.output.replaceAll(/```(?:json)?/g, \"\").trim()).coverLetter\n})\n}}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -16,
+        496
+      ],
+      "id": "140e7d81-819a-490e-9c4b-42af7bd7b52b",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1nzZfAqooM1lG2Up0o06R0e9dNhJQqLRm-47dBmBY-no",
+          "mode": "list",
+          "cachedResultName": "n8n first demo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nzZfAqooM1lG2Up0o06R0e9dNhJQqLRm-47dBmBY-no/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1308497753,
+          "mode": "list",
+          "cachedResultName": "Result Jobs application",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nzZfAqooM1lG2Up0o06R0e9dNhJQqLRm-47dBmBY-no/edit#gid=1308497753"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Link": "={{ $('Edit Fields').item.json.applylink }}",
+            "Title ": "={{ $('Edit Fields').item.json.title }}",
+            "Company": "={{ $('Edit Fields').item.json.company }}",
+            "Location": "={{ $('Edit Fields').item.json.location }}",
+            "Description": "={{ $('Edit Fields').item.json.description }}",
+            "Score": "={{ $json.score }}",
+            "Coverletter": "={{ $json.coverLetter }}"
+          },
+          "matchingColumns": [
+            "Link"
+          ],
+          "schema": [
+            {
+              "id": "Title ",
+              "displayName": "Title ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Score",
+              "displayName": "Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Coverletter",
+              "displayName": "Coverletter",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        192,
+        496
+      ],
+      "id": "8bf865d6-f306-4d94-871a-c951cb60b9ca",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Jap5msqmtlnuujKs",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7bd36a4f-e69c-40c3-b76c-3c5958595f9a",
+              "leftValue": "={{ $('Edit Fields1').item.json.score }}",
+              "rightValue": 50,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        400,
+        496
+      ],
+      "id": "9b1b9f5a-b3e1-4b7c-b510-df65a3f3c2cf",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "7144152487",
+        "text": "=Title:{{ $json['Title '] }}\nCompany:{{ $json.Company }}\nLocation: {{ $json.Location }}\nJob Score: {{ $json.Score }}\nApply: {{ $json.Link }}\nCopy Cover Letter from here:{{ $json.Coverletter }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        672,
+        160
+      ],
+      "id": "ee5dbff7-d38c-4a68-bda2-2093e6772e21",
+      "name": "Send a text message",
+      "webhookId": "41625d5c-9dd5-4662-a65a-8e96abebf4fe",
+      "credentials": {
+        "telegramApi": {
+          "id": "Kr9UXzkSNHLvrZqB",
+          "name": "Telegram account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Create search URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create search URL": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "HTML1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4960a4a2-8c0b-4935-8557-d1f4df7eb657",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "68e964e6f6f15100b5acf702c5b4da1bf787ef658432dd190d521c61a33db447"
+  },
+  "id": "6IyoJKfk3uTEFIHw",
+  "tags": []
+}

@@ -1,0 +1,294 @@
+{
+  "name": "Apify",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        -64
+      ],
+      "id": "3981227f-cc01-4f75-8a8b-8bcb7712666f",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "actorId": {
+          "__rl": true,
+          "value": "nwua9Gu5YrADL7ZDj",
+          "mode": "list",
+          "cachedResultName": "Google Maps Scraper (compass/crawler-google-places)",
+          "cachedResultUrl": "https://console.apify.com/actors/nwua9Gu5YrADL7ZDj/input"
+        },
+        "customBody": "={\n    \"includeWebResults\": false,\n    \"language\": \"en\",\n    \"locationQuery\": \"kuala lumpur, Malaysia\",\n    \"maxCrawledPlacesPerSearch\":{{ $json['Maxnumber result'] }},\n    \"maxImages\": 0,\n    \"maximumLeadsEnrichmentRecords\": 0,\n    \"scrapeContacts\": false,\n    \"scrapeDirectories\": false,\n    \"scrapeImageAuthors\": false,\n    \"scrapePlaceDetailPage\": false,\n    \"scrapeReviewsPersonalData\": true,\n    \"scrapeTableReservationProvider\": false,\n    \"searchStringsArray\": [\n        \"{{ $json.Category }}\"\n    ],\n    \"skipClosedPlaces\": false\n} "
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -64
+      ],
+      "id": "68c26bbf-c2f6-414f-948b-c483ecbdee0d",
+      "name": "Run an Actor",
+      "credentials": {
+        "apifyApi": {
+          "id": "LEsKtKBT3bJYV4Ay",
+          "name": "nov 26th"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Datasets",
+        "datasetId": "={{ $json.defaultDatasetId }}",
+        "limit": null
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        192,
+        -64
+      ],
+      "id": "5db6107b-1fe5-47df-854d-f9738ca7847e",
+      "name": "Get dataset items",
+      "credentials": {
+        "apifyApi": {
+          "id": "LEsKtKBT3bJYV4Ay",
+          "name": "nov 26th"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1lwryagZoCXnqb1fhZ2MVg6SfBi6z8vNc-0vv1qE96Js",
+          "mode": "list",
+          "cachedResultName": "Restaurants in MY",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lwryagZoCXnqb1fhZ2MVg6SfBi6z8vNc-0vv1qE96Js/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lwryagZoCXnqb1fhZ2MVg6SfBi6z8vNc-0vv1qE96Js/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Title": "={{ $json.title }}",
+            "Price": "={{ $json.price }}",
+            "Categoryname": "={{ $json.categoryName }}",
+            "Address": "={{ $json.address }}",
+            "Street": "={{ $json.street }}",
+            "City": "={{ $json.city }}",
+            "Postalcode": "={{ $json.postalCode }}",
+            "CountryCode": "={{ $json.countryCode }}",
+            "State": "={{ $json.state }}",
+            "Total Score": "={{ $json.totalScore }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Price",
+              "displayName": "Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Categoryname",
+              "displayName": "Categoryname",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Address",
+              "displayName": "Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Street",
+              "displayName": "Street",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "City",
+              "displayName": "City",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Postalcode",
+              "displayName": "Postalcode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "State",
+              "displayName": "State",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CountryCode",
+              "displayName": "CountryCode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Total Score",
+              "displayName": "Total Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        400,
+        -64
+      ],
+      "id": "86c21a2f-900c-4873-852f-c6128bcc75f6",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Jap5msqmtlnuujKs",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4df5145c-7105-4f82-827f-a411d82b883a",
+              "name": "Category",
+              "value": "Agency",
+              "type": "string"
+            },
+            {
+              "id": "4ed0b48d-37ee-4a36-8eff-a101d35b9a34",
+              "name": "Maxnumber result",
+              "value": "50",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -192,
+        -64
+      ],
+      "id": "bbb6207a-ebeb-4131-81eb-aa17c79ef954",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run an Actor": {
+      "main": [
+        [
+          {
+            "node": "Get dataset items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get dataset items": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Run an Actor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "37412b19-0494-4e1c-bd0b-d8fb82e347cc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "68e964e6f6f15100b5acf702c5b4da1bf787ef658432dd190d521c61a33db447"
+  },
+  "id": "yOIQQULy1h0hne41",
+  "tags": []
+}

@@ -1,0 +1,449 @@
+{
+  "name": "IG Scraping posts",
+  "nodes": [
+    {
+      "parameters": {
+        "actorId": {
+          "__rl": true,
+          "value": "nH2AHrwxeTRJoN5hX",
+          "mode": "list",
+          "cachedResultName": "Instagram Post Scraper (apify/instagram-post-scraper)",
+          "cachedResultUrl": "https://console.apify.com/actors/nH2AHrwxeTRJoN5hX/input"
+        },
+        "customBody": "{\n    \"resultsLimit\": 10,\n    \"skipPinnedPosts\": false,\n    \"username\": [\n        \"https://www.instagram.com/evolving.ai/\"\n    ]\n}"
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        16
+      ],
+      "id": "abf21c8b-30db-4f1b-96cc-f6297b29668d",
+      "name": "Run an Actor",
+      "credentials": {
+        "apifyApi": {
+          "id": "aqrp6Q2KfSgEwFHu",
+          "name": "sp91 14Dec2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Datasets",
+        "datasetId": "={{ $json.defaultDatasetId }}",
+        "limit": null
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        96,
+        16
+      ],
+      "id": "5c4e7d60-b6bc-4316-beb1-8b2d12c84a8d",
+      "name": "Get dataset items",
+      "credentials": {
+        "apifyApi": {
+          "id": "aqrp6Q2KfSgEwFHu",
+          "name": "sp91 14Dec2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "=You are a helpful, precise Instagram post classifier for an AI-focused audience (people who build with or want to learn AI, understand cool news that come out of it that actually strike have an interesting take)."
+            },
+            {
+              "content": "=Classify an Instagram post for an automation-focused audience. Return only\n{\"Verdict\":\"relevant or not_relevant\"}.\n\n-Relevant if it some interesting news on AI that came out\n\n-Not relevant if it's motivational/personal, non-automation coding, crypto/politics/finance, or tool discounts etc.. or vague hype with no build/impact.\n\nOutput valid JSON only.\n{\"Verdict\":\"relevant or not_relevant\"}."
+            },
+            {
+              "content": "=Here is the Instagram post to analyse: {{ $('Edit Fields').item.json.caption }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "textFormat": {
+            "textOptions": {
+              "type": "json_object"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        -320,
+        272
+      ],
+      "id": "723f6389-5429-456e-a946-b908a22725c9",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "3PXGxtHFSVV4jGyM",
+          "name": "SP91 12dec2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 5,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        560,
+        16
+      ],
+      "id": "7b8f3365-d3c0-4975-a423-134cb7070984",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dbec30a6-f3e2-441e-ae0d-6b36aac76146",
+              "name": "commentsCount",
+              "value": "={{ $json.commentsCount }}",
+              "type": "number"
+            },
+            {
+              "id": "3f607cd7-1990-4652-9a9d-aed2c0df3468",
+              "name": "videoViewCount",
+              "value": "={{ $json.videoViewCount }}",
+              "type": "number"
+            },
+            {
+              "id": "3af88401-7f36-4852-bbc4-d307edd6ecc2",
+              "name": "likesCount",
+              "value": "={{ $json.likesCount }}",
+              "type": "number"
+            },
+            {
+              "id": "433e6499-c956-4d9b-96e9-c10a3e513058",
+              "name": "caption",
+              "value": "={{ $json.caption }}",
+              "type": "string"
+            },
+            {
+              "id": "2166f473-5281-481f-b375-7162736258a6",
+              "name": "timestamp",
+              "value": "={{ $json.timestamp.toDateTime().format(\"DD\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        16
+      ],
+      "id": "b1e06468-6042-49ce-810d-fc86cae851a2",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8b994dee-6415-4d4d-b76c-e3dd651a9afb",
+              "leftValue": "={{ $json.output[0].content[0].text.Verdict }}",
+              "rightValue": "relevant",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        32,
+        272
+      ],
+      "id": "478bd359-baa9-4294-a427-04bcd7165fa8",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=# Overview\nYou're a helpful, intelligent writing assistant.\n\n## Task\nRewrite the Instagram post that I'm going to give you in a way that encapsulates the original theme but uses different words.\n\nI am targeting an audience that are people who build with or want to learn AI. They are always fascinated by new discoveries or news that actually make an impact.\n\n## My Results\nOver the years I was in different fields doing IT recruitment. I started learning AI automation workflows with N8N, and I am happy with this work. I got to do a bunch of fun stuff like travel, movies, enjoy my life, etc.\n\n# Rules\n- Use no fluff or young tone when rewriting the Instagram post\n- Only output the Instagram post and that's it \n- Dont use any CTA at the end"
+            },
+            {
+              "content": "=Here is an IG post to rewrite:  {{ $('Edit Fields').item.json.caption }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        240,
+        272
+      ],
+      "id": "02497b20-8245-4855-a19b-b135bdad7671",
+      "name": "Message a model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "3PXGxtHFSVV4jGyM",
+          "name": "SP91 12dec2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "18OTmIcz_5sTE3-dQGImZhe19hUmVsRAIcrROGGq_DZM",
+          "mode": "list",
+          "cachedResultName": "IG Posts scrapers",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18OTmIcz_5sTE3-dQGImZhe19hUmVsRAIcrROGGq_DZM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18OTmIcz_5sTE3-dQGImZhe19hUmVsRAIcrROGGq_DZM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Username": "={{ $('Get dataset items').item.json.ownerFullName }}",
+            "Post URL": "={{ $('Get dataset items').item.json.url }}",
+            "Original Post Text": "={{ $('Edit Fields').item.json.caption }}",
+            "Re-written Post Text": "={{ $json.output[0].content[0].text }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Username",
+              "displayName": "Username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Post URL",
+              "displayName": "Post URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Original Post Text",
+              "displayName": "Original Post Text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Re-written Post Text",
+              "displayName": "Re-written Post Text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        592,
+        272
+      ],
+      "id": "b21d3621-b0f4-41d0-afc4-11cb2c9cd488",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lwm85XOMAxL2D5gx",
+          "name": "3/12/2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -352,
+        16
+      ],
+      "id": "fff555c5-50de-4422-95b6-fe1ea3e26d2e",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Run an Actor": {
+      "main": [
+        [
+          {
+            "node": "Get dataset items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get dataset items": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Run an Actor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e0181e6f-4ff6-401c-bc3f-2bc8e84f3438",
+  "meta": {
+    "instanceId": "d623930058a5c1992b67b9b46f58aa81ce2ffebfaa94683c6ebb36ae093e8337"
+  },
+  "id": "xRYGahrOInUlfvit",
+  "tags": []
+}

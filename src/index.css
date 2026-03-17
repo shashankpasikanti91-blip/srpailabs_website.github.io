@@ -1,0 +1,298 @@
+/* Font imports — must be first */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Modern Dark SaaS Design System - Inspired by automatezai.com */
+
+@layer base {
+  :root {
+    /* Light mode - clean and professional */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 10%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 240 10% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+
+    --primary: 219 74% 15%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 10% 96%;
+    --secondary-foreground: 240 10% 10%;
+
+    --muted: 240 10% 96%;
+    --muted-foreground: 240 5% 50%;
+
+    --accent: 189 100% 50%;
+    --accent-foreground: 0 0% 10%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 10% 90%;
+    --input: 240 10% 90%;
+    --ring: 189 100% 50%;
+
+    --radius: 0.75rem;
+    
+    /* Custom design tokens */
+    --gradient-hero: linear-gradient(135deg, hsl(219 74% 15%), hsl(189 100% 50%), hsl(200 95% 45%));
+    --gradient-glow: radial-gradient(ellipse at center, hsl(189 100% 50% / 0.2), transparent 70%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(240 10% 98%));
+    --gradient-border: linear-gradient(135deg, hsl(189 100% 50% / 0.4), hsl(200 95% 45% / 0.4));
+    
+    --shadow-soft: 0 4px 30px -4px hsl(189 100% 50% / 0.2);
+    --shadow-card: 0 4px 24px -2px hsl(240 10% 10% / 0.08);
+    --shadow-glow: 0 0 80px hsl(189 100% 50% / 0.3);
+    --shadow-button: 0 4px 20px hsl(189 100% 50% / 0.35);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 219 74% 15%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 189 100% 50%;
+  }
+
+  .dark {
+    /* Dark mode - #0B0D10 background with electric cyan #00C2FF accent */
+    --background: 220 18% 4%;
+    --foreground: 0 0% 97%;
+
+    --card: 220 15% 8%;
+    --card-foreground: 0 0% 97%;
+
+    --popover: 220 16% 6%;
+    --popover-foreground: 0 0% 97%;
+
+    --primary: 189 100% 50%;
+    --primary-foreground: 220 18% 4%;
+
+    --secondary: 220 15% 14%;
+    --secondary-foreground: 0 0% 97%;
+
+    --muted: 220 15% 16%;
+    --muted-foreground: 220 8% 75%;
+
+    --accent: 189 100% 50%;
+    --accent-foreground: 220 18% 4%;
+
+    --destructive: 0 63% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 12% 18%;
+    --input: 220 15% 14%;
+    --ring: 189 100% 50%;
+    
+    /* Dark mode design tokens - electric cyan */
+    --gradient-hero: linear-gradient(135deg, hsl(189 100% 50%), hsl(200 95% 45%), hsl(220 80% 55%));
+    --gradient-glow: radial-gradient(ellipse at center, hsl(189 100% 50% / 0.3), transparent 70%);
+    --gradient-card: linear-gradient(145deg, hsl(220 15% 10%), hsl(220 15% 6%));
+    --gradient-border: linear-gradient(135deg, hsl(189 100% 50% / 0.5), hsl(200 95% 45% / 0.5));
+    
+    --shadow-soft: 0 4px 30px -4px hsl(189 100% 50% / 0.25);
+    --shadow-glow: 0 0 100px hsl(189 100% 50% / 0.35);
+    --shadow-button: 0 4px 25px hsl(189 100% 50% / 0.4);
+    --shadow-card: 0 8px 32px -4px hsl(220 18% 2% / 0.6);
+    
+    --sidebar-background: 220 18% 5%;
+    --sidebar-foreground: 0 0% 97%;
+    --sidebar-primary: 189 100% 50%;
+    --sidebar-primary-foreground: 220 18% 4%;
+    --sidebar-accent: 220 15% 14%;
+    --sidebar-accent-foreground: 0 0% 97%;
+    --sidebar-border: 220 12% 18%;
+    --sidebar-ring: 189 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Default to dark mode */
+  html {
+    color-scheme: dark;
+  }
+  
+  :root {
+    color-scheme: dark;
+  }
+}
+
+@layer utilities {
+  /* Glass morphism effect - improved visibility */
+  .glass {
+    @apply bg-card/70 backdrop-blur-2xl border border-border/60;
+    box-shadow: 0 4px 24px -4px hsl(240 10% 4% / 0.4);
+  }
+  
+  .glass-strong {
+    @apply bg-card/85 backdrop-blur-3xl border border-border/70;
+    box-shadow: 0 4px 32px -4px hsl(240 10% 4% / 0.5);
+  }
+  
+  /* Gradient text effect */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-hero);
+  }
+  
+  /* Glow effects */
+  .glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .glow-sm {
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.25);
+  }
+  
+  /* Card interactions - improved visibility */
+  .card-hover {
+    @apply transition-all duration-500 ease-out;
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-soft);
+  }
+  
+  /* Visible card style */
+  .visible-card {
+    @apply bg-card border border-border/70 rounded-2xl;
+    box-shadow: 0 4px 24px -4px hsl(240 10% 4% / 0.4), 
+                inset 0 1px 0 hsl(0 0% 100% / 0.05);
+  }
+  
+  /* Floating shapes for background */
+  .floating-shape {
+    @apply absolute rounded-full opacity-20;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.3), hsl(var(--primary) / 0.1));
+    filter: blur(60px);
+  }
+  
+  /* Section divider gradient */
+  .section-divider {
+    @apply h-px w-full;
+    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+  }
+  
+  /* Premium border glow */
+  .border-glow {
+    @apply relative;
+  }
+  
+  .border-glow::before {
+    content: '';
+    @apply absolute -inset-px rounded-[inherit] pointer-events-none;
+    background: var(--gradient-border);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    padding: 1px;
+  }
+  
+  /* Animated gradient background */
+  .animated-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+  }
+  
+  /* Tool card style - centered display */
+  .tool-card {
+    @apply flex flex-col items-center justify-center p-6 rounded-2xl bg-card border border-border/60 transition-all duration-300;
+    box-shadow: 0 4px 20px -4px hsl(240 10% 4% / 0.3);
+  }
+  
+  .tool-card:hover {
+    @apply border-primary/40;
+    box-shadow: 0 8px 32px -4px hsl(var(--primary) / 0.2);
+    transform: translateY(-4px);
+  }
+  
+  /* Shine effect on hover */
+  .shine-effect {
+    @apply relative overflow-hidden;
+  }
+  
+  .shine-effect::after {
+    content: '';
+    @apply absolute inset-0 pointer-events-none;
+    background: linear-gradient(
+      45deg,
+      transparent 40%,
+      hsl(var(--primary) / 0.1) 50%,
+      transparent 60%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+  
+  .shine-effect:hover::after {
+    transform: translateX(100%);
+  }
+  
+  /* Text shadow for hero */
+  .text-glow {
+    text-shadow: 0 0 40px hsl(var(--primary) / 0.5);
+  }
+  
+  /* Pill badge style */
+  .pill-badge {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium;
+    @apply bg-primary/10 border border-primary/20 text-primary;
+  }
+  
+  /* Stats card style */
+  .stat-card {
+    @apply relative p-6 rounded-2xl text-center;
+    @apply bg-card/50 border border-border/50;
+    @apply transition-all duration-300;
+  }
+  
+  .stat-card:hover {
+    @apply border-primary/30;
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Selection styling */
+::selection {
+  background: hsl(var(--primary) / 0.3);
+  color: hsl(var(--foreground));
+}

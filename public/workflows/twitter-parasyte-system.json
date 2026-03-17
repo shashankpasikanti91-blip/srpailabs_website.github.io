@@ -1,0 +1,429 @@
+{
+  "name": "Twitter Parasyte System",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Twitter Parasite system ",
+        "formDescription": "Please add a keyword to activate the system",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "keyword",
+              "placeholder": "AI Automation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -544,
+        -224
+      ],
+      "id": "f10af3e7-7b30-4d76-9879-b774b01d1468",
+      "name": "On form submission",
+      "webhookId": "f165c848-9e31-4b26-b5c4-c0fdc29dd768"
+    },
+    {
+      "parameters": {
+        "actorId": {
+          "__rl": true,
+          "value": "CJdippxWmn9uRfooo",
+          "mode": "list",
+          "cachedResultName": "Tweet Scraper|$0.25/1K Tweets | Pay-Per Result | No Rate Limits (kaitoeasyapi/twitter-x-data-tweet-scraper-pay-per-result-cheapest)",
+          "cachedResultUrl": "https://console.apify.com/actors/CJdippxWmn9uRfooo/input"
+        },
+        "customBody": "={\n    \"filter:blue_verified\": false,\n    \"filter:consumer_video\": false,\n    \"filter:has_engagement\": false,\n    \"filter:hashtags\": false,\n    \"filter:images\": false,\n    \"filter:links\": false,\n    \"filter:media\": false,\n    \"filter:mentions\": false,\n    \"filter:native_video\": false,\n    \"filter:nativeretweets\": false,\n    \"filter:news\": false,\n    \"filter:pro_video\": false,\n    \"filter:quote\": false,\n    \"filter:replies\": false,\n    \"filter:safe\": false,\n    \"filter:spaces\": false,\n    \"filter:twimg\": false,\n    \"filter:videos\": false,\n    \"filter:vine\": false,\n    \"from\": \"elonmusk\",\n    \"include:nativeretweets\": false,\n    \"lang\": \"en\",\n    \"maxItems\": 100,\n    \"searchTerms\": [\n        \"{{ $json.keyword }}\"\n    ],\n    \"since\": \"2021-12-31_23:59:59_UTC\",\n    \"twitterContent\": \"from:elonmusk make -\\\"live laugh love\\\"\",\n    \"until\": \"2024-12-31_23:59:59_UTC\"\n} "
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        -224
+      ],
+      "id": "301d5b8d-bc65-4ab4-8dff-ee36a94b8fc7",
+      "name": "Run an Actor",
+      "credentials": {
+        "apifyApi": {
+          "id": "aqrp6Q2KfSgEwFHu",
+          "name": "sp91 14Dec2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Datasets",
+        "datasetId": "={{ $json.defaultDatasetId }}",
+        "offset": {}
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        -224
+      ],
+      "id": "9353a0e5-7e46-4ecc-8b52-48407e8134c3",
+      "name": "Get dataset items",
+      "credentials": {
+        "apifyApi": {
+          "id": "aqrp6Q2KfSgEwFHu",
+          "name": "sp91 14Dec2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 20,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        80,
+        -224
+      ],
+      "id": "6f2dde1f-7323-4783-a85b-5a144e269448",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=You are a helpful, precise tweet classifier for an automation-focused audience (people who build or learn automations: n8n/make.com/zapier, APIs & webhooks, AI agents, RPA, workflow ops, integration patterns, real builds, and tool releases that impact automation work)."
+            },
+            {
+              "role": "system",
+              "content": "=Classify a tweet for an automation-focused audience. Return only {\"verdict\":\"relevant\" or not_relevant}.\n\n- Relevant if it contains actionable automation content (how-tos, real builds, APIs/webhooks/integrations, agent/RPA workflows, templates, or ops patterns).\n\n-Not relevant if generic AI/tech news, motivational/personal, non-automation coding, crypto/politics/finance, or tool discounts, etc., or vague hype with no build/impact.\n\nOutput valid JSON only.\n{\"verdict\":\"relevant\" or not_relevant}.\n\n"
+            },
+            {
+              "content": "=Here is the tweet that you need to classify:  {{ $('Get dataset items').item.json.author.description }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "textFormat": {
+            "textOptions": {
+              "type": "json_object"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        288,
+        -208
+      ],
+      "id": "f839505b-8c72-4bb3-8300-aab0a10dcba5",
+      "name": "Relevance Agent",
+      "credentials": {
+        "openAiApi": {
+          "id": "3PXGxtHFSVV4jGyM",
+          "name": "SP91 12dec2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a1e20a9c-5f5d-4b25-8744-7e40c89c1ad6",
+              "leftValue": "={{ $json.output[0].content[0].text.verdict }}",
+              "rightValue": "=relevant",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        -208
+      ],
+      "id": "7b64c18f-a828-4ffb-9b12-11790b5e9bf3",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "18OTmIcz_5sTE3-dQGImZhe19hUmVsRAIcrROGGq_DZM",
+          "mode": "list",
+          "cachedResultName": "IG Posts scrapers",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18OTmIcz_5sTE3-dQGImZhe19hUmVsRAIcrROGGq_DZM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1977278243,
+          "mode": "list",
+          "cachedResultName": "Tweet Pst Scrape",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18OTmIcz_5sTE3-dQGImZhe19hUmVsRAIcrROGGq_DZM/edit#gid=1977278243"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Keyword": "={{ $('On form submission').item.json.keyword }}",
+            "Re-written tweet": "={{ $json['rewrite tweet'] }}",
+            "Original tweet": "={{ $('Get dataset items').item.json.text }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Keyword",
+              "displayName": "Keyword",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Original tweet",
+              "displayName": "Original tweet",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Re-written tweet",
+              "displayName": "Re-written tweet",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1376,
+        -208
+      ],
+      "id": "37517655-fd44-48b5-9f20-1f73f01cf85e",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lwm85XOMAxL2D5gx",
+          "name": "3/12/2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "77b4ae6b-f204-4866-bc07-76cc2f81ee0f",
+              "name": "keyword",
+              "value": "={{ $('On form submission').item.json.keyword }}",
+              "type": "string"
+            },
+            {
+              "id": "90ff4f4b-3cf4-401b-8bb4-9fa8182404b5",
+              "name": "original Tweet",
+              "value": "={{ $('Get dataset items').item.json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "41c1c44c-6264-46c8-9039-61fcbf4b03e7",
+              "name": "rewrite tweet",
+              "value": "={{ $json.output[0].content[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1168,
+        -208
+      ],
+      "id": "4d10313d-2126-4609-b36f-9e991c359a82",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=# Overview\nYou're a helpful, intelligent writing assistant.\n\n## Task\nRewrite the tweet I'm going to give it to you in a way that encapsulates the original theme but uses different words.\n\nI am targeting an audience that are people who build or learn automation: n8n/make.com/zapier, APIs & webhooks, AI agents, RPA, workflow ops, integration patterns, real builds, and tool releases that impact automation work.\n\n\n## My Results\nOver the years I was in different fields doing IT recruitment. I started learning AI automation workflows with N8N, and I am happy with this work. I got to do a bunch of fun stuff like travel, movies, enjoy my life, etc.\n\n# Rules\n- Use no fluff or young tone when rewriting the Instagram post\n- Only output the Instagram post and that's it \n"
+            },
+            {
+              "role": "system",
+              "content": "=Here is the tweet to rewrite: {{ $('Get dataset items').item.json.text }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        832,
+        -208
+      ],
+      "id": "46d2e909-e70c-4d18-9d37-3de750290cbe",
+      "name": "Rewrite tweet Agent ",
+      "credentials": {
+        "openAiApi": {
+          "id": "3PXGxtHFSVV4jGyM",
+          "name": "SP91 12dec2025"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Run an Actor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run an Actor": {
+      "main": [
+        [
+          {
+            "node": "Get dataset items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get dataset items": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Relevance Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Relevance Agent": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Rewrite tweet Agent ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rewrite tweet Agent ": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6d33b735-a265-4210-a712-767db7874f3b",
+  "meta": {
+    "instanceId": "d623930058a5c1992b67b9b46f58aa81ce2ffebfaa94683c6ebb36ae093e8337"
+  },
+  "id": "dnMBq2CxeDK6V1et",
+  "tags": []
+}

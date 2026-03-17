@@ -1,0 +1,762 @@
+{
+  "name": "Email classifier AI Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -464,
+        -64
+      ],
+      "id": "1996f063-a4b4-4d9b-b265-7fa43c3901f5",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HFeCvOlq9g6Rn7WL",
+          "name": "Gmail account 4 Dec 2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.text }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "Priority",
+              "description": "Emails requiring immediate attention or action, typically from key stakeholders, clients, or time-sensitive issues. Keywords: urgent, ASAP, immediate, deadline, action required, high priority, today, now"
+            },
+            {
+              "category": "Finance",
+              "description": "Emails related to financial matters such as invoices, billing statements, payment reminders, receipts, taxes, or accounting updates. Keywords: invoice, payment, billing, receipt, transaction, due amount, refund, tax, salary"
+            },
+            {
+              "category": "Banking & Financial Alerts",
+              "description": "Automated alerts from banks or financial institutions regarding account activity. Keywords: bank alert, debit, credit, transaction alert, OTP, balance, withdrawal, deposit"
+            },
+            {
+              "category": " Promotions / MarketingQuotes / Inspiration",
+              "description": "Emails related to marketing campaigns, promotional offers, newsletters, product launches, or sales messages. Keywords: offer, discount, sale, promo, newsletter, deal, limited time, subscribe"
+            },
+            {
+              "category": "Personal",
+              "description": "Emails from friends, family, or personal contacts that are not work-related. Keywords: family, friend, personal, reunion, party, catch up"
+            },
+            {
+              "category": "Support",
+              "description": "Emails related to ongoing communication with current clients or customers, support tickets, issue resolution, complaints, service requests, or helpdesk responses. Keywords: support, ticket, case, issue, help, complaint, resolved, pending, reference ID"
+            },
+            {
+              "category": "Jobs / Career Opportunities",
+              "description": "Emails related to job openings, career opportunities, recruitment portals, interview calls, application status updates, or hiring notifications. Keywords:  job opening, hiring, vacancy, career opportunity, apply now, recruitment, recruiter, interview, shortlisted, application status, HR, talent acquisition Common Senders:  LinkedIn Jobs, Indeed, Naukri, Glassdoor, company HR emails, recruitment agencies"
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "Please classify the text provided by the user into one of the following categories: {categories}, and use the provided formatting instructions below. Don't explain, and only output the json.",
+          "enableAutoFixing": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        -176,
+        -272
+      ],
+      "id": "9f138284-e233-4e18-991e-5de2c12db84f",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -208,
+        560
+      ],
+      "id": "914dc445-584e-4a17-a441-e293fd103479",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "3PXGxtHFSVV4jGyM",
+          "name": "SP91 12dec2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_4005266375727216747"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        -752
+      ],
+      "id": "3514a71e-a4e9-40e1-b656-7975b1635861",
+      "name": "Label: \"Priority\"",
+      "webhookId": "19aaed9b-2b3c-41e5-bfb0-9be8412ba1de",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HFeCvOlq9g6Rn7WL",
+          "name": "Gmail account 4 Dec 2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_7482106178026328946"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        -544
+      ],
+      "id": "3fe73bee-3dac-4854-a4ed-74742bf9f2f4",
+      "name": "Label: \"Finance\"",
+      "webhookId": "19aaed9b-2b3c-41e5-bfb0-9be8412ba1de",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HFeCvOlq9g6Rn7WL",
+          "name": "Gmail account 4 Dec 2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_4265059891973810639"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        -336
+      ],
+      "id": "f5f4f286-5a40-4b52-a241-601a99c9b10e",
+      "name": "Label: \"Banking\"",
+      "webhookId": "19aaed9b-2b3c-41e5-bfb0-9be8412ba1de",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HFeCvOlq9g6Rn7WL",
+          "name": "Gmail account 4 Dec 2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_2102459922677643005"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        -144
+      ],
+      "id": "b926eea9-2670-4769-b955-0b63e060cadc",
+      "name": "Label: \"Promotions\"",
+      "webhookId": "19aaed9b-2b3c-41e5-bfb0-9be8412ba1de",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HFeCvOlq9g6Rn7WL",
+          "name": "Gmail account 4 Dec 2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_3300876815708749295"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        80
+      ],
+      "id": "7159d9fc-766d-4223-88cf-65b4c1ecbb26",
+      "name": "Label: \"Personal\"",
+      "webhookId": "19aaed9b-2b3c-41e5-bfb0-9be8412ba1de",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HFeCvOlq9g6Rn7WL",
+          "name": "Gmail account 4 Dec 2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_9132103828664408855"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        192,
+        272
+      ],
+      "id": "a924c32d-a5dc-42b2-8ce6-e1591bd82b62",
+      "name": "Label: \"Support\"",
+      "webhookId": "19aaed9b-2b3c-41e5-bfb0-9be8412ba1de",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HFeCvOlq9g6Rn7WL",
+          "name": "Gmail account 4 Dec 2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_663727130047163211"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        496
+      ],
+      "id": "8301ffac-1ac5-42b4-95d7-3378bf2b20f1",
+      "name": "Label: \"Jobsportal\"",
+      "webhookId": "19aaed9b-2b3c-41e5-bfb0-9be8412ba1de",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HFeCvOlq9g6Rn7WL",
+          "name": "Gmail account 4 Dec 2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "threadId": "={{ $('Gmail Trigger').item.json.threadId }}",
+          "sendTo": "={{ $('Gmail Trigger').item.json.from.value[0].address }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        1056,
+        0
+      ],
+      "id": "2ec1b6f5-90ca-46dd-a43c-918845f8e23d",
+      "name": "Draft Email",
+      "webhookId": "0221a08b-4f51-4fe3-aca3-c7801d504b85",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HFeCvOlq9g6Rn7WL",
+          "name": "Gmail account 4 Dec 2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Email from:{{ $('Gmail Trigger').item.json.from.value[0].name }}\n\nEmail text: {{ $('Gmail Trigger').item.json.text }}",
+        "options": {
+          "systemMessage": "=# Overview\nYou are a customer support representative named Kelly. your job is to respond to customer enquiries in friendly and professional manner\n\n#tools\nDraft Email- use this to send an email reply to a customer. Always sign off as shashi<br>SRP Autolabs\n\n\n# Rules\n- keep the emails concise"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        368,
+        288
+      ],
+      "id": "db2e273a-0599-4cf5-aaf1-256c4daa0739",
+      "name": "Customer Support Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Email from:{{ $('Gmail Trigger').item.json.from.value[0].name }}\n\nEmail text: {{ $('Gmail Trigger').item.json.text }}",
+        "options": {
+          "systemMessage": "=# Overview\nYou are a finance representative named Kelly. your job is to respond to finance enquiries in friendly and professional manner\n\n#tools\nDraft Email – use this to send an email reply to a customer. Always sign off as shashi<br>SRP Autolabs\n\n\n# Rules\n- keep the emails concise"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        416,
+        -544
+      ],
+      "id": "f7de1224-071d-4fa8-8b25-4b4849eea99b",
+      "name": "Finance Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Email from:{{ $('Gmail Trigger').item.json.from.value[0].name }}\n\nEmail text: {{ $('Gmail Trigger').item.json.text }}",
+        "options": {
+          "systemMessage": "=# Overview\nYou are an agent in charge of high-priority emails. Your job is to summarise incoming emails and escalate them to the human \n\n#tools\nTelegram – use this email to send the summary of the email once it's summarised \n\n# Rules\n- keep the emails concise"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        432,
+        -752
+      ],
+      "id": "bded709c-a673-44ac-9265-5de07caa2c21",
+      "name": "Priority Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Email from:{{ $('Gmail Trigger').item.json.from.value[0].name }}\n\nEmail text: {{ $('Gmail Trigger').item.json.text }}",
+        "options": {
+          "systemMessage": "=# Overview\nYou are a banking representative named Kelly. your job is to respond to banking enquiries in friendly and professional manner\n\n#tools\nDraft Email – use this to send an email reply to a customer. Always sign off as shashi<br>SRP Autolabs\n\n\n# Rules\n- keep the emails concise"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        416,
+        -336
+      ],
+      "id": "133fa182-a776-4354-9998-218853df3feb",
+      "name": "Banking Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Email from:{{ $('Gmail Trigger').item.json.from.value[0].name }}\n\nEmail text: {{ $('Gmail Trigger').item.json.text }}",
+        "options": {
+          "systemMessage": "=# Overview\nYou are a Promotions Classification Agent.\nYour task is to identify whether an email is a promotional or marketing email.\n\n# Scope\nPromotional emails include:\n- Discounts, offers, sales\n- Marketing campaigns\n- Newsletters\n- Product or service promotions\n\n# Rules\n- Do not summarize the email\n- Do not reply to the email\n- Do not generate notifications\n- Only classify the email\n- Keep the output minimal\n\n# Output\nReturn only one word:\n\"PROMOTION\" or \"NOT_PROMOTION\"\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        416,
+        -128
+      ],
+      "id": "c205db52-3a34-4b5d-98d7-a82fc332b0cf",
+      "name": "Promotions Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Email from:{{ $('Gmail Trigger').item.json.from.value[0].name }}\n\nEmail text: {{ $('Gmail Trigger').item.json.text }}",
+        "options": {
+          "systemMessage": "=# Overview\nYou are a Personal Email Assistant named Kelly.\nYour role is to handle important personal emails for the user.\n\n# Responsibilities\n1. Identify whether the email is personal.\n2. If the email is personal:\n   - Create a short, polite draft reply (DO NOT send it).\n   - Create a brief summary of the email.\n   - Prepare a notification message for Telegram.\n3. If the email is not personal:\n   - Do nothing.\n\n# Scope\nPersonal emails include:\n- Messages from friends or family\n- Direct personal enquiries\n- Informal one-to-one messages\n- Non-marketing, non-automated emails\n\n# Rules\n- Never send an email reply automatically\n- Only create a draft reply\n- Keep drafts friendly, professional, and concise\n- Do not include explanations or reasoning\n- Do not respond to promotional or automated emails\n\n# Tools\nTelegram:\nUse this tool ONLY if the email is classified as PERSONAL.\nSend a notification containing:\n- A short summary of the email\n- A note that a draft reply has been created\n\nDraft Email:\nUse this tool to create a draft reply.\nAlways sign off as:\n\nshashi  \nSRP Autolabs\n\n# Output Control\n- If the email is PERSONAL, use the Draft Email tool and the Telegram tool.\n- If the email is NOT personal, produce no output.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        400,
+        80
+      ],
+      "id": "2681cab0-66a0-4511-9871-e5d1ace9e120",
+      "name": "Personal Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Email from:{{ $('Gmail Trigger').item.json.from.value[0].name }}\n\nEmail text: {{ $('Gmail Trigger').item.json.text }}",
+        "options": {
+          "systemMessage": "=# Overview\nYou are a jobs portal representative named Kelly. your job is to respond to jobs portal enquiries in friendly and professional manner\n\n#tools\nDraft Email – use this to send an email reply to a customer. Always sign off as shashi<br>SRP Autolabs\n\n\n# Rules\n- keep the emails concise"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        416,
+        496
+      ],
+      "id": "8c5491d7-4d69-435c-8cb2-6c2b27aac726",
+      "name": "Job related Agent "
+    },
+    {
+      "parameters": {
+        "chatId": "7144152487",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Text', ``, 'string') }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegramTool",
+      "typeVersion": 1.2,
+      "position": [
+        1024,
+        -560
+      ],
+      "id": "aaef973a-1f21-49f5-9d4b-c4e5303e5f02",
+      "name": "telegram notification",
+      "webhookId": "09e53e5d-d863-478c-854a-613e5f294df8",
+      "credentials": {
+        "telegramApi": {
+          "id": "15YvcuXId96pjqjg",
+          "name": "Buntygmail notification"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Gmail Trigger": [
+      {
+        "json": {
+          "id": "19b1a2f3127a6b79",
+          "threadId": "19b1a2f3127a6b79",
+          "labelIds": [
+            "UNREAD",
+            "IMPORTANT",
+            "CATEGORY_PERSONAL",
+            "INBOX"
+          ],
+          "sizeEstimate": 6048,
+          "headers": {
+            "delivered-to": "Delivered-To: info@srpailabs.com",
+            "received": "Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])\r\n        by mx.google.com with SMTPS id 6a1803df08f44-8887fc33636sor18759236d6.0.2025.12.13.16.07.38\r\n        for <info@srpailabs.com>\r\n        (Google Transport Security);\r\n        Sat, 13 Dec 2025 16:07:38 -0800 (PST)",
+            "x-received": "X-Received: by 2002:a05:6214:f62:b0:888:2032:4ad2 with SMTP id\r\n 6a1803df08f44-8887e80dbe4mr92550836d6.8.1765670858333; Sat, 13 Dec 2025\r\n 16:07:38 -0800 (PST)",
+            "arc-seal": "ARC-Seal: i=1; a=rsa-sha256; t=1765670858; cv=none;\r\n        d=google.com; s=arc-20240605;\r\n        b=dwOlDGLYOlcygR0nH2yZpYBiRuh3/kciPB95u3Z1kSkxDPpV0yAG34xKYeaZwVpxY4\r\n         1yAOpsh8GLeScPMQKXPC+d9+MRje4grEVsyZ+JxTI6kcqgLWWz1p8MaZihcDjCm6eSuj\r\n         2IOsTKMdoQvBtsaJLTMaZWLCgkB9pzHQsMOQ0hFfQuYxr09LoMk4rf1cwh0/K4gfGT7m\r\n         PIxqdaBN+BExNwiQRS+FJgyjHVrIhGnkccrN/plwzL+v3q9dRsXxEl9tonuG8BBqcSjN\r\n         PKrjpGWhq0SVjx87tfkRiIfn2PVv7U5NvH7wepF95Ddvy29cF2PkG9YHfVD+ioFDGDJk\r\n         7lPg==",
+            "arc-message-signature": "ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;\r\n        h=to:subject:message-id:date:from:mime-version:dkim-signature;\r\n        bh=tDUtbZE3tUS4y9lpBwWaZWLXMJcbuDmb3SBA43m2XdY=;\r\n        fh=mLJ1I5zjhAGdN80XVE/ILGwYoGUfjtBI7DleYho+sH0=;\r\n        b=QFm8AvuylaIZ1ccLbDcDrtNhaK9IiWDdxWNiitNiCOYn/0kKhRNtVkHgHS59dzpHxo\r\n         pWgpld21TlLPFccEThbthm3sm4tBCJA+Unwn/z3A47aOcvyeZMADEP3roLvR4OL5ynMe\r\n         MHm3qsjQy/DV607aZnGPYqyNbDGYKsJAkTzZPDRzjqdFEWiHvPQIJp6VUG3Mvjs3HHd3\r\n         lRt6Tu0hS8vnMnyROLIrejxlTthZZuvFXvtjK7k3rWAYCvR27Jmw/BoxWaDIfb8lYPOW\r\n         9K39HSgZP+kE6qG9mCoFDEGFbmihZA/Lpgd6BM5TcCjvhRYcH6X7ZdlLK9ceAfizav2o\r\n         a8tQ==;\r\n        dara=google.com",
+            "arc-authentication-results": "ARC-Authentication-Results: i=1; mx.google.com;\r\n       dkim=pass header.i=@gmail.com header.s=20230601 header.b=FRvtjvQ9;\r\n       spf=pass (google.com: domain of bejanvotiyaharishkumar@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=bejanvotiyaharishkumar@gmail.com;\r\n       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;\r\n       dara=pass header.i=@gmail.com",
+            "return-path": "Return-Path: <bejanvotiyaharishkumar@gmail.com>",
+            "received-spf": "Received-SPF: pass (google.com: domain of bejanvotiyaharishkumar@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;",
+            "authentication-results": "Authentication-Results: mx.google.com;\r\n       dkim=pass header.i=@gmail.com header.s=20230601 header.b=FRvtjvQ9;\r\n       spf=pass (google.com: domain of bejanvotiyaharishkumar@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=bejanvotiyaharishkumar@gmail.com;\r\n       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;\r\n       dara=pass header.i=@gmail.com",
+            "dkim-signature": "DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;\r\n        d=gmail.com; s=20230601; t=1765670858; x=1766275658; dara=google.com;\r\n        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject\r\n         :date:message-id:reply-to;\r\n        bh=tDUtbZE3tUS4y9lpBwWaZWLXMJcbuDmb3SBA43m2XdY=;\r\n        b=FRvtjvQ9i5KS4nHR596k+x37dE+eM1FAdMYKUmtX3hIAaUEv/hsb5KgPgFFhkM6eNZ\r\n         zMt/NCeJUwBNpwyC22QKW0QedjnTpkZ+Lu3q51c/0rDewjbhl1XFuFugnuub3EJ6QXfr\r\n         2ihznrmw42LR3e58r8GBW5h65VPDtZHV4Nkt6oFV9wwz3Owdu/2wwBs3Yev+A92SQm29\r\n         LBd5HNbdDHTtVKskZ0qTOgoiA8Qsk4nYCJEsTxT4gE7Y7yWZTQOK4EgJlq/zZvcpDrTm\r\n         BRFQmkZr5Xx/Sfy8yFu0UGkc5PO9wMO1YL/PMmIahIDPmkUfezZbNe+6d/iLzaIblSo3\r\n         eC2Q==",
+            "x-google-dkim-signature": "X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;\r\n        d=1e100.net; s=20230601; t=1765670858; x=1766275658;\r\n        h=to:subject:message-id:date:from:mime-version:x-gm-gg\r\n         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;\r\n        bh=tDUtbZE3tUS4y9lpBwWaZWLXMJcbuDmb3SBA43m2XdY=;\r\n        b=O1a+0fKxX92/LePnf8I84/SHegL0ZNo7yC/aC0rqFyuqBg28x/0MAlMZ+gd9194QJL\r\n         bLRjvXZ/G/ugFVbLi4uIFeNN2r5DPTzHa/WUY85cCbNCG1HH3QsJDzCqs2xZpuJIG5D2\r\n         Dwe5bDvXx2lBgyPEPdSyeBWNMEqWnYlA9iHqwdZzCnFtzSlbPg7xY5HYWp3TQd9Z0+5p\r\n         h8NAsBBE3OLoAA1L2y8PXOsoV9e6RwHXC101CZnU9DmW/yHC/lzkoo1S/6+Wu+rGelB9\r\n         3SyBTueH316yyxVzlajCi4wjoy+o8jCAC/lhzQQS0JyuCCp22LvPAt0aNr3s+17BcDoQ\r\n         VcZw==",
+            "x-gm-message-state": "X-Gm-Message-State: AOJu0YxXYmeQGwTmiaCfRI5YIZzdO4y7k3WAnDAMM8YZWAccHTN/A0cN\r\n\tc6mAmKjaW7DyiAiAoOHgliwx/3fwHzy6spEA+T2uLGM6HKmhYSnvz0W3wEtbuANWJRYFB7gRDy1\r\n\tgO4zXBdZNTQG/E9aUsWrNooAhyS/Kcvv/ZfafUNU=",
+            "x-gm-gg": "X-Gm-Gg: AY/fxX4F6kco85+sn8av8JpbKoB3qGCwCBJZnKYt95dlBpz+QETLe+RmDGsjcVnpS2T\r\n\tnHbFJdcgysZiGXEGbhMgiKw38WUGQP3bMzEQxkDw+ohDpwO+rW0u+wT1WZZTJAUbfb+JO0vQ2MY\r\n\topnHanQo+5DaKVEtcD6pTwgZXlKGA5s9HcbpI3+aU9Wy6jATYoSBvKv9MccGwwK2RHRKQ3nbkd2\r\n\ty3x5lrLlodugxoYupb/ZTt2I7lqfMWJHmhKBowhSKA1QGbLqMZlz8qiIZuXDv1W2ICmkqWHH6pn\r\n\tg7W0Z1QHZUvgNBeeBORIlQfM67xGUsyrs4v1+ey05d3QbbN9Se28Hgyf1nw=",
+            "x-google-smtp-source": "X-Google-Smtp-Source: AGHT+IGi8PV2KK0gPTqKqW1Hbraz5Ec6op/0Gnqp/G4nk4j+/gUQOcEhiEj2eON1wFSyJtEZh5IYXogGEyPtLaKMN9I=",
+            "mime-version": "MIME-Version: 1.0",
+            "from": "From: Harishkumar Bejanvotiya <bejanvotiyaharishkumar@gmail.com>",
+            "date": "Date: Sun, 14 Dec 2025 08:07:23 +0800",
+            "x-gm-features": "X-Gm-Features: AQt7F2oOG-LzJSmR8vp_M6lZ142XdgZ-4QMrAQOtUEwghCQSHXljcA8-35SaFdk",
+            "message-id": "Message-ID: <CABCy-O7q_Si1SgpCPtkM2gMW84C=u1Z3sPga214hzycAmBmcMQ@mail.gmail.com>",
+            "subject": "Subject: customer support",
+            "to": "To: info@srpailabs.com",
+            "content-type": "Content-Type: multipart/alternative; boundary=\"0000000000004d210f0645de487d\""
+          },
+          "html": "<div dir=\"ltr\">Hey there,<div><br></div><div>What&#39;s your policy for returns, and what do you guys do as a company?</div><div><br></div><div>Harish</div></div>\n",
+          "text": "Hey there we have client emergency, they want to know how much we charge.",
+          "textAsHtml": "<p>Hey there,</p><p>What&apos;s your policy for returns, and what do you guys do as a company?</p><p>Harish</p>",
+          "subject": "customer support",
+          "date": "2025-12-14T00:07:23.000Z",
+          "to": {
+            "value": [
+              {
+                "address": "info@srpailabs.com",
+                "name": ""
+              }
+            ],
+            "html": "<span class=\"mp_address_group\"><a href=\"mailto:info@srpailabs.com\" class=\"mp_address_email\">info@srpailabs.com</a></span>",
+            "text": "info@srpailabs.com"
+          },
+          "from": {
+            "value": [
+              {
+                "address": "bejanvotiyaharishkumar@gmail.com",
+                "name": "Harishkumar Bejanvotiya"
+              }
+            ],
+            "html": "<span class=\"mp_address_group\"><span class=\"mp_address_name\">Harishkumar Bejanvotiya</span> &lt;<a href=\"mailto:bejanvotiyaharishkumar@gmail.com\" class=\"mp_address_email\">bejanvotiyaharishkumar@gmail.com</a>&gt;</span>",
+            "text": "\"Harishkumar Bejanvotiya\" <bejanvotiyaharishkumar@gmail.com>"
+          },
+          "messageId": "<CABCy-O7q_Si1SgpCPtkM2gMW84C=u1Z3sPga214hzycAmBmcMQ@mail.gmail.com>"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Customer Support Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Priority Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Finance Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Banking Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Promotions Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Job related Agent ",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Personal Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Label: \"Priority\"",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Label: \"Finance\"",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Label: \"Banking\"",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Label: \"Promotions\"",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Label: \"Personal\"",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Label: \"Support\"",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Label: \"Jobsportal\"",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Label: \"Priority\"": {
+      "main": [
+        [
+          {
+            "node": "Priority Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Label: \"Support\"": {
+      "main": [
+        [
+          {
+            "node": "Customer Support Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft Email": {
+      "ai_tool": [
+        [
+          {
+            "node": "Customer Support Agent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "Finance Agent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "Banking Agent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "Promotions Agent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "Personal Agent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "Job related Agent ",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Label: \"Finance\"": {
+      "main": [
+        [
+          {
+            "node": "Finance Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Label: \"Banking\"": {
+      "main": [
+        [
+          {
+            "node": "Banking Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Label: \"Promotions\"": {
+      "main": [
+        [
+          {
+            "node": "Promotions Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Label: \"Personal\"": {
+      "main": [
+        [
+          {
+            "node": "Personal Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Label: \"Jobsportal\"": {
+      "main": [
+        [
+          {
+            "node": "Job related Agent ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "telegram notification": {
+      "ai_tool": [
+        [
+          {
+            "node": "Priority Agent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "Promotions Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "031d24c8-895b-4c99-a3e6-94a565ad502d",
+  "meta": {
+    "instanceId": "d623930058a5c1992b67b9b46f58aa81ce2ffebfaa94683c6ebb36ae093e8337"
+  },
+  "id": "zueBYHOeBLz17PAi",
+  "tags": []
+}
