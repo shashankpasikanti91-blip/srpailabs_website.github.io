@@ -1,6 +1,6 @@
 # SRP AI Labs — Platform Website
 
-> Part of the **SRP AI Labs Platform** — a unified suite of 4 AI-powered SaaS products.
+> **AI Business Operating System Company** — building AI-powered SaaS products, n8n workflow automation, AI agents, and industry-specific business systems.
 
 **Website:** [srpailabs.com](https://srpailabs.com)  
 **Contact:** info@srpailabs.com
@@ -9,18 +9,35 @@
 
 ## Platform Products
 
-| Product | Subdomain | Status |
-|---|---|---|
-| Autonomous OS | [autonomous.srpailabs.com](https://autonomous.srpailabs.com) | Live |
-| Marketing OS | [app.srpailabs.com](https://app.srpailabs.com) | Live |
-| MediFlow | [mediflow.srpailabs.com](https://mediflow.srpailabs.com) | Beta |
-| SmartRecruit | [recruit.srpailabs.com](https://recruit.srpailabs.com) | Live |
+| Product | Subdomain | Industry | Status |
+|---|---|---|---|
+| Autonomous Business Platform | [autonomous.srpailabs.com](https://autonomous.srpailabs.com) | Multi-industry / Enterprise | Live |
+| Marketing OS | [app.srpailabs.com](https://app.srpailabs.com) | Marketing / Agencies | Live |
+| MediFlow (Healthcare OS) | [mediflow.srpailabs.com](https://mediflow.srpailabs.com) | Hospitals / Healthcare | Live |
+| SmartRecruit (HR/Recruitment OS) | [recruit.srpailabs.com](https://recruit.srpailabs.com) | Recruitment / HR | Live |
+
+> Each product is a **fully independent system** — separate login, database, and deployment. This is intentional for security, performance, and product clarity.
 
 ---
 
 ## This Repository
 
-This repo contains the **main marketing + platform landing page** (`srpailabs.com`). Each product above lives in its own separate repository and runs on its own subdomain.
+This repo contains the **main brand hub + platform landing page** (`srpailabs.com`). Each product above lives in its own separate repository and runs on its own subdomain. This site acts as the central entry point that routes users to the correct product.
+
+---
+
+## What's on srpailabs.com
+
+- **Hero** — AI automation + agentic AI brand statement
+- **About SRP AI Labs** — Company overview as an AI Business Operating System Company
+- **Solutions / Services** — n8n automation, AI agents, RAG chatbots, integrations, multi-tenant SaaS
+- **Products Section** — Premium cards for all 4 products with descriptions, features, and direct links
+- **Product Ecosystem** — Explains the independent deployment model (separate logins, isolated databases)
+- **Industries** — Healthcare, Recruitment, Marketing, Enterprise, SMEs, Startups
+- **Why SRP AI Labs** — AI-first, scalable, industry-specific, automation-driven, secure
+- **Pricing** — Flexible plans (Starter / Growth / Enterprise) with clear descriptions
+- **Contact / Demo** — Lead capture form + Telegram notification + social links
+- **AI Chatbot (SRPA)** — Routes users to correct product based on their industry/use case
 
 ---
 
@@ -28,10 +45,11 @@ This repo contains the **main marketing + platform landing page** (`srpailabs.co
 
 - **React + Vite** (TypeScript)
 - **Tailwind CSS** + shadcn/ui components
-- **OpenAI gpt-4o-mini** (chatbot)
-- **Telegram Bot** (contact form notifications)
+- **Framer Motion** — animations
+- **OpenAI gpt-4o-mini** — chatbot (SRPA assistant)
+- **Telegram Bot** — contact form notifications
 - **Nginx** — reverse proxy for all subdomains (see `nginx/srpailabs.conf`)
-- **PostgreSQL** — single shared instance with per-product schemas (see `database/init.sql`)
+- **PostgreSQL** — per-product schemas (see `database/init.sql`)
 
 ---
 

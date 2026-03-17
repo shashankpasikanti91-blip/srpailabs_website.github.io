@@ -231,10 +231,15 @@ const Index = () => {
                   ))}
                 </div>
               </div>
-              {["Services", "Use Cases", "Pricing", "Contact"].map((item) => (
-                <a key={item} href={`#${item.toLowerCase().replace(" ", "-")}`}
+              {[
+                { label: "Solutions", href: "#services" },
+                { label: "Industries", href: "#use-cases" },
+                { label: "Pricing", href: "#pricing" },
+                { label: "Contact", href: "#contact" },
+              ].map((item) => (
+                <a key={item.label} href={item.href}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 relative group">
-                  {item}
+                  {item.label}
                   <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary group-hover:w-full transition-all duration-300" />
                 </a>
               ))}
@@ -349,13 +354,13 @@ const Index = () => {
                 className="flex flex-wrap gap-4 mt-2"
               >
                 <Button size="xl" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 shadow-[0_4px_25px_hsl(var(--primary)/0.4)] hover:shadow-[0_8px_40px_hsl(var(--primary)/0.5)] hover:-translate-y-0.5 transition-all">
-                  <a href="#products" className="group flex items-center gap-2">
-                    Explore Products
+                  <a href="#services" className="group flex items-center gap-2">
+                    Explore Solutions
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </Button>
                 <Button size="xl" variant="outline" asChild className="rounded-full px-8">
-                  <a href="#contact">Book a Call</a>
+                  <a href="#contact">Book Demo</a>
                 </Button>
               </motion.div>
             </motion.div>
@@ -453,7 +458,7 @@ const Index = () => {
       </section>
 
       {/* ==================== ABOUT ==================== */}
-      <section id="case-studies" className="py-28 relative">
+      <section id="about" className="py-28 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
         <div className="container mx-auto px-6">
           <motion.div
@@ -464,20 +469,20 @@ const Index = () => {
               <div>
                 <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
                   <span className="w-2 h-2 rounded-full bg-primary" />
-                  About Me
+                  About SRP AI Labs
                 </span>
                 <h2 className="text-4xl md:text-5xl font-bold font-display mb-6 leading-tight">
-                  AI Automation Developer &{" "}
-                  <span className="gradient-text">n8n Specialist</span>
+                  AI Business Operating{" "}
+                  <span className="gradient-text">System Company</span>
                 </h2>
                 <p className="text-muted-foreground leading-relaxed mb-6">
-                  I'm <span className="text-foreground font-semibold">Shashank</span>, an AI automation developer specializing in building intelligent n8n workflows that combine the power of AI with seamless automation—helping companies eliminate manual work and scale effortlessly.
+                  <span className="text-foreground font-semibold">SRP AI Labs</span> builds AI-powered SaaS products, automation systems, and intelligent business workflows — helping organizations across industries eliminate manual work and scale operations with purpose-built AI.
                 </p>
                 <p className="text-muted-foreground leading-relaxed mb-8">
-                  With <span className="text-foreground font-semibold">40+ real working automation workflows</span> practiced and built across hands-on exercises and personal projects, I've developed deep expertise in connecting AI models, APIs, and business tools into cohesive systems.
+                  We specialize in <span className="text-foreground font-semibold">n8n workflow automation</span>, AI agent development, multi-tenant SaaS platforms, and industry-specific operating systems — from healthcare and recruitment to marketing and enterprise automation.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  {["AI-first", "No-code friendly", "Fast delivery", "Affordable", "Custom solutions"].map((tag) => (
+                  {["AI-first", "Industry-specific", "Multi-tenant SaaS", "n8n Powered", "Automation-driven"].map((tag) => (
                     <span key={tag} className="px-4 py-2 rounded-full bg-card border border-border/50 text-sm font-medium text-foreground">
                       {tag}
                     </span>
@@ -489,14 +494,14 @@ const Index = () => {
                   variants={fadeInUp}
                   className="text-xl font-medium text-foreground italic border-l-4 border-primary pl-6 py-4 bg-card/30 rounded-r-2xl"
                 >
-                  "My mission is to make AI-driven automation simple, affordable, and accessible for every business—no coding required."
+                  "We believe every business deserves purpose-built AI — not generic tools, but systems designed for your industry."
                 </motion.blockquote>
                 <div className="grid grid-cols-2 gap-4">
                   {[
+                    { value: "4", label: "Live Products" },
                     { value: "40+", label: "Workflows Built" },
-                    { value: "100%", label: "No-Code" },
                     { value: "24/7", label: "Uptime" },
-                    { value: "Fast", label: "Delivery" },
+                    { value: "Multi", label: "Industry" },
                   ].map((stat, i) => (
                     <motion.div
                       key={i}
@@ -512,12 +517,12 @@ const Index = () => {
                   <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full">
                     <a href="#contact" className="group flex items-center gap-2">
                       <Sparkles className="w-5 h-5" />
-                      Let's Discuss
+                      Book Demo
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </a>
                   </Button>
                   <Button size="lg" variant="outline" asChild className="rounded-full">
-                    <a href="#products">View Portfolio</a>
+                    <a href="#products">Explore Products</a>
                   </Button>
                 </div>
               </div>
@@ -568,7 +573,7 @@ const Index = () => {
       </section>
 
       {/* ==================== SERVICES ==================== */}
-      <section id="workflows" className="py-28 relative">
+      <section id="services" className="py-28 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
         <div className="container mx-auto px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
@@ -615,22 +620,26 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ==================== WHY CHOOSE ME ==================== */}
-      <section className="py-28 relative">
+      {/* ==================== WHY SRP AI LABS ==================== */}
+      <section id="why-srp" className="py-28 relative">
         <div className="container mx-auto px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
             <motion.div variants={fadeInUp} className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">Why Choose Me</h2>
-              <p className="text-muted-foreground text-lg">What sets my automation services apart</p>
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
+                <span className="w-2 h-2 rounded-full bg-primary" />
+                Why SRP AI Labs
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">The Right AI Partner <span className="gradient-text">for Your Business</span></h2>
+              <p className="text-muted-foreground text-lg">What makes SRP AI Labs different from generic automation vendors</p>
             </motion.div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {[
-                { icon: Rocket, title: "Fast Delivery", description: "Quick turnaround on all projects" },
-                { icon: Shield, title: "Affordable Plans", description: "Budget-friendly automation solutions" },
-                { icon: Clock, title: "24/7 Automated Workflows", description: "Your automation never sleeps" },
-                { icon: Wrench, title: "End-to-End Customization", description: "Tailored to your exact needs" },
-                { icon: Code, title: "No Coding Required", description: "100% no-code / low-code solutions" },
-                { icon: CheckCircle, title: "Industry-Standard Tools", description: "Built with proven technologies" },
+                { icon: Brain, title: "AI-First Approach", description: "Every product and workflow is built with AI at the core — not bolted on as an afterthought." },
+                { icon: Layers, title: "Scalable Architecture", description: "Systems built to grow with your business — from single teams to enterprise scale." },
+                { icon: Building2, title: "Industry-Specific Solutions", description: "Purpose-built for hospitals, recruitment agencies, marketing teams, and enterprises." },
+                { icon: Workflow, title: "Automation-Driven Operations", description: "End-to-end process automation — from data entry to intelligent decisions." },
+                { icon: Shield, title: "Secure & Independent Systems", description: "Isolated deployments and separate databases per product — no cross-contamination." },
+                { icon: CheckCircle, title: "Proven Technology Stack", description: "Built on n8n, GPT-4, Supabase, and enterprise-grade infrastructure." },
               ].map((item, i) => (
                 <motion.div
                   key={i}
@@ -765,7 +774,7 @@ const Index = () => {
             <motion.div variants={fadeInUp} className="text-center mb-16">
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
                 <span className="w-2 h-2 rounded-full bg-primary" />
-                SaaS Platform
+                AI-Powered Products
               </span>
               <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
                 Our <span className="gradient-text">Products</span>
@@ -777,8 +786,8 @@ const Index = () => {
               {[
                 {
                   name: "Autonomous OS",
-                  tagline: "AI-Powered Work Operating System",
-                  description: "Automate complex multi-step business operations with AI agents that plan, execute, and adapt in real time — no human intervention needed.",
+                  tagline: "AI Business Application Generator",
+                  description: "AI-powered platform that generates full business applications, workflows, dashboards, automation rules, compliance logic, and data systems from natural language. Multi-industry, multi-tenant.",
                   url: "https://autonomous.srpailabs.com",
                   subdomain: "autonomous.srpailabs.com",
                   icon: Monitor,
@@ -786,12 +795,12 @@ const Index = () => {
                   border: "hover:border-blue-500/40",
                   iconColor: "text-blue-400",
                   badge: "Live",
-                  features: ["Autonomous task planning", "Multi-agent orchestration", "Real-time decision making", "Integrates with 100+ tools"],
+                  features: ["Generate apps from natural language", "Multi-industry, multi-tenant", "Automated workflow & dashboard generation", "Compliance & business logic AI"],
                 },
                 {
                   name: "Marketing OS",
-                  tagline: "AI-Driven Marketing Automation",
-                  description: "Generate content, schedule campaigns, score leads, and analyze performance — all on autopilot. Built for growth teams that move fast.",
+                  tagline: "AI Marketing SaaS Platform",
+                  description: "AI marketing SaaS with CRM, lead capture, multilingual creative generation, campaign automation, social media scheduling, localization, and analytics.",
                   url: "https://app.srpailabs.com",
                   subdomain: "app.srpailabs.com",
                   icon: BarChart3,
@@ -799,25 +808,25 @@ const Index = () => {
                   border: "hover:border-purple-500/40",
                   iconColor: "text-purple-400",
                   badge: "Live",
-                  features: ["AI content generation", "LinkedIn & email automation", "Lead scoring & CRM sync", "Campaign analytics dashboard"],
+                  features: ["CRM & lead capture automation", "Multilingual creative generation", "Campaign & social media scheduling", "Analytics & performance dashboard"],
                 },
                 {
                   name: "MediFlow",
-                  tagline: "Healthcare Workflow Automation",
-                  description: "Streamline patient intake, appointment scheduling, clinical documentation, and billing with HIPAA-aware AI workflows built for healthcare providers.",
+                  tagline: "Healthcare Operating System",
+                  description: "AI-powered hospital management SaaS with patient lifecycle, chatbot booking, prescriptions, lab, billing, pharmacy, staff dashboards, and multi-tenant hospital isolation.",
                   url: "https://mediflow.srpailabs.com",
                   subdomain: "mediflow.srpailabs.com",
                   icon: Activity,
                   color: "from-emerald-500/20 to-teal-500/10",
                   border: "hover:border-emerald-500/40",
                   iconColor: "text-emerald-400",
-                  badge: "Beta",
-                  features: ["Patient intake automation", "Appointment & scheduling AI", "Clinical notes summarization", "Billing & claims workflow"],
+                  badge: "Live",
+                  features: ["Patient lifecycle & chatbot booking", "Prescriptions, lab & billing", "Pharmacy & staff dashboards", "Multi-tenant hospital isolation"],
                 },
                 {
                   name: "SmartRecruit",
-                  tagline: "AI Recruitment & ATS Platform",
-                  description: "Automate the full hiring funnel — from job posting and resume screening to interview scheduling and onboarding — powered by GPT-4 scoring and n8n workflows.",
+                  tagline: "AI-Powered Recruitment ATS",
+                  description: "AI-powered recruitment ATS with resume screening, hiring workflows, job generation, AI writing, OTP login, and full pipeline automation.",
                   url: "https://recruit.srpailabs.com",
                   subdomain: "recruit.srpailabs.com",
                   icon: UserCheck,
@@ -825,7 +834,7 @@ const Index = () => {
                   border: "hover:border-orange-500/40",
                   iconColor: "text-orange-400",
                   badge: "Live",
-                  features: ["AI resume screening & scoring", "Automated interview scheduling", "Candidate communication bot", "Onboarding workflow automation"],
+                  features: ["AI resume screening & scoring", "OTP login & secure access", "AI-generated job descriptions", "Full hiring pipeline automation"],
                 },
               ].map((product, i) => (
                 <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }} transition={{ duration: 0.3 }}>
@@ -865,6 +874,73 @@ const Index = () => {
                 </motion.div>
               ))}
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ==================== PRODUCT ECOSYSTEM ==================== */}
+      <section id="ecosystem" className="py-28 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+        <div className="container mx-auto px-6">
+          <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
+            <motion.div variants={fadeInUp} className="text-center mb-16">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
+                <span className="w-2 h-2 rounded-full bg-primary" />
+                Product Ecosystem
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
+                One Brand. <span className="gradient-text">Four Independent Systems.</span>
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+                srpailabs.com is the main hub. Each product is a fully independent SaaS with its own login, database, and deployment — intentional for performance, security, and clarity.
+              </p>
+            </motion.div>
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
+              {[
+                { icon: Shield, title: "Separate Logins", desc: "Each product has its own authentication system. Users log in directly to the product they need — no cross-product confusion." },
+                { icon: Database, title: "Isolated Databases", desc: "Every product runs on its own database. Hospital data, HR data, and marketing data never mix." },
+                { icon: Layers, title: "Independent Deployments", desc: "Each product is deployed and scaled independently. A change in one product never affects another." },
+                { icon: Building2, title: "Unified Brand", desc: "All products are built and maintained by SRP AI Labs. Same quality standards, different domain expertise." },
+              ].map((item, i) => (
+                <motion.div key={i} variants={fadeInUp} className="flex items-start gap-4 p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-500 group">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-primary/20 transition-all">
+                    <item.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-1 text-foreground">{item.title}</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            <motion.div variants={fadeInUp} className="max-w-4xl mx-auto">
+              <div className="p-8 rounded-3xl bg-card/30 border border-border/40 backdrop-blur-xl">
+                <p className="text-center text-sm font-semibold text-foreground mb-6">Access each product directly at its own subdomain:</p>
+                <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    { name: "Autonomous OS", url: "https://autonomous.srpailabs.com", icon: Monitor, color: "text-blue-400", desc: "Business automation" },
+                    { name: "Marketing OS", url: "https://app.srpailabs.com", icon: BarChart3, color: "text-purple-400", desc: "AI marketing" },
+                    { name: "MediFlow", url: "https://mediflow.srpailabs.com", icon: Activity, color: "text-emerald-400", desc: "Healthcare OS" },
+                    { name: "SmartRecruit", url: "https://recruit.srpailabs.com", icon: UserCheck, color: "text-orange-400", desc: "HR & Recruitment" },
+                  ].map((p) => (
+                    <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
+                      className="flex flex-col items-center gap-3 p-5 rounded-2xl bg-background/60 border border-border/60 hover:border-primary/40 transition-all group/card text-center">
+                      <div className="w-10 h-10 rounded-xl bg-card border border-border/60 flex items-center justify-center group-hover/card:scale-110 transition-transform">
+                        <p.icon className={`w-5 h-5 ${p.color}`} />
+                      </div>
+                      <div>
+                        <div className="text-sm font-semibold text-foreground">{p.name}</div>
+                        <div className="text-xs text-muted-foreground">{p.desc}</div>
+                      </div>
+                      <ExternalLink className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover/card:opacity-100 transition-opacity" />
+                    </a>
+                  ))}
+                </div>
+                <p className="text-center text-xs text-muted-foreground mt-6">
+                  Each product has its own independent login — no shared session or unified account required.
+                </p>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -918,12 +994,12 @@ const Index = () => {
             <motion.div variants={fadeInUp} className="text-center mb-16">
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
                 <span className="w-2 h-2 rounded-full bg-primary" />
-                Simple Pricing
+                Flexible Pricing
               </span>
               <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
                 Plans for <span className="gradient-text">Every Stage</span>
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">Start free, scale as you grow. No hidden fees.</p>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">Pricing depends on solution type, users, workflow volume, and deployment scope.</p>
             </motion.div>
             <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {[
@@ -932,7 +1008,7 @@ const Index = () => {
                   price: "$49",
                   period: "/mo",
                   desc: "Perfect for small teams getting started with AI automation",
-                  features: ["1 SaaS product access", "5 active workflows", "1,000 automation runs/mo", "Email support", "Standard integrations"],
+                  features: ["1 solution deployment", "5 active workflows", "1,000 automation runs/mo", "Email support", "Standard integrations"],
                   cta: "Get Started",
                   popular: false,
                 },
@@ -940,17 +1016,17 @@ const Index = () => {
                   name: "Growth",
                   price: "$149",
                   period: "/mo",
-                  desc: "For growing teams that need full automation power",
-                  features: ["All 4 products included", "Unlimited workflows", "50,000 automation runs/mo", "Priority support", "Advanced AI agents", "Custom integrations", "Analytics dashboard"],
-                  cta: "Start Free Trial",
+                  desc: "For growing teams that need advanced automation power",
+                  features: ["Advanced automation features", "50 active workflows", "50,000 automation runs/mo", "Priority support", "Advanced AI agents", "Custom integrations", "Analytics dashboard"],
+                  cta: "Book Demo",
                   popular: true,
                 },
                 {
                   name: "Enterprise",
                   price: "Custom",
                   period: "",
-                  desc: "Tailored solutions for large organizations",
-                  features: ["Everything in Growth", "Dedicated AI agent setup", "On-premise deployment option", "SLA & uptime guarantee", "Custom model fine-tuning", "Dedicated account manager", "White-label option"],
+                  desc: "Custom solution setup for large organizations",
+                  features: ["Custom solution setup", "Dedicated AI agent deployment", "On-premise deployment option", "SLA & uptime guarantee", "Custom model fine-tuning", "Dedicated account manager", "White-label option"],
                   cta: "Contact Sales",
                   popular: false,
                 },
@@ -995,6 +1071,11 @@ const Index = () => {
                 </motion.div>
               ))}
             </div>
+            <motion.p variants={fadeInUp} className="text-center text-sm text-muted-foreground mt-10 max-w-2xl mx-auto p-4 rounded-xl bg-card/30 border border-border/40">
+              Need a hospital, recruitment, marketing, or custom automation solution?{" "}
+              <a href="#contact" className="text-primary hover:underline font-medium">Contact SRP AI Labs</a>{" "}
+              for tailored pricing.
+            </motion.p>
           </motion.div>
         </div>
       </section>
@@ -1189,8 +1270,9 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4 text-foreground">Company</h4>
               <ul className="space-y-3">
-                <li><a href="#services" className="text-sm text-muted-foreground hover:text-primary transition-colors">Services</a></li>
-                <li><a href="#use-cases" className="text-sm text-muted-foreground hover:text-primary transition-colors">Use Cases</a></li>
+                <li><a href="#services" className="text-sm text-muted-foreground hover:text-primary transition-colors">Solutions</a></li>
+                <li><a href="#use-cases" className="text-sm text-muted-foreground hover:text-primary transition-colors">Industries</a></li>
+                <li><a href="#about" className="text-sm text-muted-foreground hover:text-primary transition-colors">About</a></li>
                 <li><a href="#pricing" className="text-sm text-muted-foreground hover:text-primary transition-colors">Pricing</a></li>
                 <li><a href="#contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">Contact</a></li>
                 <li><Link to="/privacy-policy" className="text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link></li>
