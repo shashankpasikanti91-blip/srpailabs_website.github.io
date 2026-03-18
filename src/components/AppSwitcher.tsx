@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Monitor, BarChart3, Activity, UserCheck, X, Grid3X3 } from "lucide-react";
+import { Monitor, BarChart3, Activity, UserCheck, TrendingUp, X, Grid3X3 } from "lucide-react";
 
 const apps = [
   {
@@ -32,6 +32,14 @@ const apps = [
     url: "https://recruit.srpailabs.com",
     icon: UserCheck,
     color: "from-orange-500 to-amber-500",
+    badge: "Live",
+  },
+  {
+    name: "Growth",
+    description: "Business growth & lead-gen",
+    url: "https://growth.srpailabs.com",
+    icon: TrendingUp,
+    color: "from-green-500 to-lime-500",
     badge: "Live",
   },
 ];

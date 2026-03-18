@@ -163,13 +163,17 @@ const Index = () => {
 
   const toolsAndTechnologies = [
     { name: "n8n", description: "Core Automation Platform", icon: Workflow },
-    { name: "Figma", description: "UI & Workflow Design", icon: Layers },
-    { name: "LLMs / GPT", description: "AI-Powered Intelligence", icon: Bot },
-    { name: "Make / Zapier", description: "No-Code Automation Bridges", icon: Sparkles },
+    { name: "OpenAI GPT-4o", description: "ChatGPT & AI Completions", icon: Bot },
+    { name: "Claude (Anthropic)", description: "Advanced AI Reasoning", icon: Brain },
+    { name: "Python + FastAPI", description: "AI Backend & REST APIs", icon: Code },
+    { name: "Cursor + VS Code", description: "Agentic AI Development", icon: Cpu },
+    { name: "Pydantic + Fire", description: "Data Validation & CLI", icon: Shield },
     { name: "Gemini", description: "Google AI Models", icon: Zap },
+    { name: "Supabase", description: "Database & Auth Layer", icon: Database },
     { name: "APIs & Webhooks", description: "System Integrations", icon: Plug },
-    { name: "Databases", description: "Data Storage & Retrieval", icon: Database },
-    { name: "RAG Chatbots", description: "AI Knowledge Agents", icon: MessageSquare },
+    { name: "RAG Pipelines", description: "AI Knowledge Agents", icon: MessageSquare },
+    { name: "Apify", description: "Web Scraping & Data", icon: Globe },
+    { name: "Agentic AI", description: "Multi-step AI Workflows", icon: Sparkles },
   ];
 
   const faqs = [
@@ -216,6 +220,7 @@ const Index = () => {
                     { name: "Marketing OS", desc: "AI marketing automation", url: "https://app.srpailabs.com", icon: BarChart3, color: "text-purple-400" },
                     { name: "MediFlow", desc: "Healthcare workflow AI", url: "https://mediflow.srpailabs.com", icon: Activity, color: "text-emerald-400" },
                     { name: "SmartRecruit", desc: "AI recruitment platform", url: "https://recruit.srpailabs.com", icon: UserCheck, color: "text-orange-400" },
+                    { name: "Growth", desc: "Business growth & lead-gen", url: "https://growth.srpailabs.com", icon: TrendingUp, color: "text-green-400" },
                   ].map((p) => (
                     <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
                       className="flex items-center gap-3 p-3 rounded-xl hover:bg-primary/5 transition-colors group/item">
@@ -315,7 +320,7 @@ const Index = () => {
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-8"
               >
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                SRP AI Labs Platform — 4 Products Live
+                SRP AI Labs Platform — 5 Products Live
               </motion.div>
 
               <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.05] tracking-tight font-display mb-8">
@@ -337,6 +342,7 @@ const Index = () => {
                   { label: "Marketing OS", url: "https://app.srpailabs.com" },
                   { label: "MediFlow", url: "https://mediflow.srpailabs.com" },
                   { label: "SmartRecruit", url: "https://recruit.srpailabs.com" },
+                  { label: "Growth", url: "https://growth.srpailabs.com" },
                 ].map((p) => (
                   <a key={p.label} href={p.url} target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-card border border-border/60 text-muted-foreground hover:border-primary/40 hover:text-primary transition-all">
@@ -498,7 +504,7 @@ const Index = () => {
                 </motion.blockquote>
                 <div className="grid grid-cols-2 gap-4">
                   {[
-                    { value: "4", label: "Live Products" },
+                    { value: "5", label: "Live Products" },
                     { value: "40+", label: "Workflows Built" },
                     { value: "24/7", label: "Uptime" },
                     { value: "Multi", label: "Industry" },
@@ -779,7 +785,7 @@ const Index = () => {
               <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
                 Our <span className="gradient-text">Products</span>
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">Four AI-powered SaaS apps, each solving a critical business problem at scale</p>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">Five AI-powered SaaS platforms, each solving a critical business problem at scale</p>
             </motion.div>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -836,8 +842,21 @@ const Index = () => {
                   badge: "Live",
                   features: ["AI resume screening & scoring", "OTP login & secure access", "AI-generated job descriptions", "Full hiring pipeline automation"],
                 },
+                {
+                  name: "Growth",
+                  tagline: "AI-Driven Business Growth Platform",
+                  description: "AI-powered growth platform with automated lead generation, pipeline management, outreach sequences, workflow execution, and real-time business analytics — built for scale.",
+                  url: "https://growth.srpailabs.com",
+                  subdomain: "growth.srpailabs.com",
+                  icon: TrendingUp,
+                  color: "from-green-500/20 to-lime-500/10",
+                  border: "hover:border-green-500/40",
+                  iconColor: "text-green-400",
+                  badge: "Live",
+                  features: ["Automated lead generation & scoring", "AI outreach sequences & follow-ups", "Pipeline tracking & deal management", "n8n workflow execution engine", "Real-time growth analytics dashboard"],
+                },
               ].map((product, i) => (
-                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }} transition={{ duration: 0.3 }}>
+                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }} transition={{ duration: 0.3 }} className={i === 4 ? "md:col-span-2" : undefined}>
                   <Card className={`h-full bg-gradient-to-br ${product.color} border-border/50 ${product.border} transition-all duration-500 overflow-hidden group relative`}>
                     <CardHeader className="p-8">
                       <div className="flex items-start justify-between mb-4">
@@ -889,7 +908,7 @@ const Index = () => {
                 Product Ecosystem
               </span>
               <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
-                One Brand. <span className="gradient-text">Four Independent Systems.</span>
+                One Brand. <span className="gradient-text">Five Independent Systems.</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
                 srpailabs.com is the main hub. Each product is a fully independent SaaS with its own login, database, and deployment — intentional for performance, security, and clarity.
@@ -916,12 +935,13 @@ const Index = () => {
             <motion.div variants={fadeInUp} className="max-w-4xl mx-auto">
               <div className="p-8 rounded-3xl bg-card/30 border border-border/40 backdrop-blur-xl">
                 <p className="text-center text-sm font-semibold text-foreground mb-6">Access each product directly at its own subdomain:</p>
-                <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid sm:grid-cols-2 md:grid-cols-5 gap-4">
                   {[
                     { name: "Autonomous OS", url: "https://autonomous.srpailabs.com", icon: Monitor, color: "text-blue-400", desc: "Business automation" },
                     { name: "Marketing OS", url: "https://app.srpailabs.com", icon: BarChart3, color: "text-purple-400", desc: "AI marketing" },
                     { name: "MediFlow", url: "https://mediflow.srpailabs.com", icon: Activity, color: "text-emerald-400", desc: "Healthcare OS" },
                     { name: "SmartRecruit", url: "https://recruit.srpailabs.com", icon: UserCheck, color: "text-orange-400", desc: "HR & Recruitment" },
+                    { name: "Growth", url: "https://growth.srpailabs.com", icon: TrendingUp, color: "text-green-400", desc: "Business Growth" },
                   ].map((p) => (
                     <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
                       className="flex flex-col items-center gap-3 p-5 rounded-2xl bg-background/60 border border-border/60 hover:border-primary/40 transition-all group/card text-center">
@@ -999,25 +1019,25 @@ const Index = () => {
               <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
                 Plans for <span className="gradient-text">Every Stage</span>
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">Pricing depends on solution type, users, workflow volume, and deployment scope.</p>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">Flexible packages for businesses adopting AI automation — start small and scale with confidence.</p>
             </motion.div>
             <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {[
                 {
                   name: "Starter",
-                  price: "$49",
+                  price: "$19",
                   period: "/mo",
-                  desc: "Perfect for small teams getting started with AI automation",
-                  features: ["1 solution deployment", "5 active workflows", "1,000 automation runs/mo", "Email support", "Standard integrations"],
+                  desc: "For small businesses with simple automation needs",
+                  features: ["1 solution setup", "Up to 3 active workflows", "Basic n8n automation", "Standard integrations", "Email support", "Simple reporting"],
                   cta: "Get Started",
                   popular: false,
                 },
                 {
                   name: "Growth",
-                  price: "$149",
+                  price: "$49",
                   period: "/mo",
-                  desc: "For growing teams that need advanced automation power",
-                  features: ["Advanced automation features", "50 active workflows", "50,000 automation runs/mo", "Priority support", "Advanced AI agents", "Custom integrations", "Analytics dashboard"],
+                  desc: "For growing teams that need stronger automation power",
+                  features: ["Advanced automation workflows", "Up to 10 active workflows", "AI-assisted process automation", "Custom integrations", "Priority support", "Analytics dashboard"],
                   cta: "Book Demo",
                   popular: true,
                 },
@@ -1025,8 +1045,8 @@ const Index = () => {
                   name: "Enterprise",
                   price: "Custom",
                   period: "",
-                  desc: "Custom solution setup for large organizations",
-                  features: ["Custom solution setup", "Dedicated AI agent deployment", "On-premise deployment option", "SLA & uptime guarantee", "Custom model fine-tuning", "Dedicated account manager", "White-label option"],
+                  desc: "For larger organizations with bespoke requirements",
+                  features: ["Custom solution setup", "Dedicated AI agent deployment", "Advanced integrations", "Enterprise SLA & support", "White-label / multi-team options", "Dedicated onboarding"],
                   cta: "Contact Sales",
                   popular: false,
                 },
@@ -1095,10 +1115,10 @@ const Index = () => {
               Tools & <span className="gradient-text">Technologies</span>
             </motion.h2>
             <motion.p variants={fadeInUp} className="text-muted-foreground text-lg mb-6 max-w-2xl mx-auto">
-              The core technologies powering AI automation workflows
+              The exact tools and frameworks powering every SRP AI Labs product and workflow
             </motion.p>
             <motion.p variants={fadeInUp} className="text-sm text-muted-foreground mb-14 max-w-3xl mx-auto bg-card/40 border border-border/40 rounded-xl px-6 py-4">
-              <span className="text-foreground font-medium">40+ Automation Workflows</span> have been practiced and built hands-on as real working examples for skill-building and demonstration.
+              <span className="text-foreground font-medium">5 Live Products · 40+ Automation Workflows</span> — built hands-on with agentic AI, Python, n8n orchestration, and LLM integrations across every layer of the stack.
             </motion.p>
 
             <motion.div variants={fadeInUp} className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-12">
@@ -1122,7 +1142,7 @@ const Index = () => {
 
             {/* Scrolling tech tags */}
             <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-              {["n8n", "Apify", "WhatsApp Cloud API", "Google API Suite", "REST APIs", "JSON", "Webhooks", "Selenium (Java)", "AI Agents", "No-Code Automation Tools"].map((tech, i) => (
+              {["n8n", "Python", "FastAPI", "Pydantic", "Fire", "OpenAI GPT-4o", "Claude Sonnet", "Gemini", "Supabase", "Cursor", "VS Code", "LangChain / LangGraph", "REST APIs", "Webhooks", "RAG Pipelines", "Agentic AI", "Apify", "WhatsApp Cloud API", "Google API Suite"].map((tech, i) => (
                 <motion.span
                   key={i}
                   whileHover={{ scale: 1.05, y: -2 }}
@@ -1265,6 +1285,7 @@ const Index = () => {
                 <li><a href="https://app.srpailabs.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"><BarChart3 className="w-3.5 h-3.5" />Marketing OS</a></li>
                 <li><a href="https://mediflow.srpailabs.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"><Activity className="w-3.5 h-3.5" />MediFlow</a></li>
                 <li><a href="https://recruit.srpailabs.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"><UserCheck className="w-3.5 h-3.5" />SmartRecruit</a></li>
+                <li><a href="https://growth.srpailabs.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"><TrendingUp className="w-3.5 h-3.5" />Growth</a></li>
               </ul>
             </div>
             <div>

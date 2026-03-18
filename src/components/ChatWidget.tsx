@@ -70,7 +70,7 @@ export const ChatWidget = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi! 👋 I'm the SRP Automation Labs assistant. I can help you learn about our automation services, AI agents, and n8n workflows. How can I assist you today?",
+      content: "Hi! 👋 I'm SRPA, the SRP AI Labs assistant. We build 5 AI-powered SaaS products — from Healthcare & Recruitment to Marketing, Growth, and Business Automation. What's your use case? I'll guide you to the right product!",
     },
   ]);
   const [input, setInput] = useState("");

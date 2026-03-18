@@ -15,6 +15,7 @@
 | Marketing OS | [app.srpailabs.com](https://app.srpailabs.com) | Marketing / Agencies | Live |
 | MediFlow (Healthcare OS) | [mediflow.srpailabs.com](https://mediflow.srpailabs.com) | Hospitals / Healthcare | Live |
 | SmartRecruit (HR/Recruitment OS) | [recruit.srpailabs.com](https://recruit.srpailabs.com) | Recruitment / HR | Live |
+| Growth | [growth.srpailabs.com](https://growth.srpailabs.com) | Business Growth / Lead-Gen / Operations | Live |
 
 > Each product is a **fully independent system** — separate login, database, and deployment. This is intentional for security, performance, and product clarity.
 
@@ -31,25 +32,48 @@ This repo contains the **main brand hub + platform landing page** (`srpailabs.co
 - **Hero** — AI automation + agentic AI brand statement
 - **About SRP AI Labs** — Company overview as an AI Business Operating System Company
 - **Solutions / Services** — n8n automation, AI agents, RAG chatbots, integrations, multi-tenant SaaS
-- **Products Section** — Premium cards for all 4 products with descriptions, features, and direct links
+- **Products Section** — Premium cards for all 5 products with descriptions, features, and direct links
 - **Product Ecosystem** — Explains the independent deployment model (separate logins, isolated databases)
 - **Industries** — Healthcare, Recruitment, Marketing, Enterprise, SMEs, Startups
 - **Why SRP AI Labs** — AI-first, scalable, industry-specific, automation-driven, secure
 - **Pricing** — Flexible plans (Starter / Growth / Enterprise) with clear descriptions
 - **Contact / Demo** — Lead capture form + Telegram notification + social links
-- **AI Chatbot (SRPA)** — Routes users to correct product based on their industry/use case
+- **AI Chatbot (SRPA)** — Routes users to correct product based on their industry/use case (5 products)
 
 ---
 
 ## Tech Stack
 
+### Frontend (this repo — srpailabs.com)
 - **React + Vite** (TypeScript)
 - **Tailwind CSS** + shadcn/ui components
 - **Framer Motion** — animations
-- **OpenAI gpt-4o-mini** — chatbot (SRPA assistant)
+- **OpenAI GPT-4o** — SRPA chatbot assistant
 - **Telegram Bot** — contact form notifications
-- **Nginx** — reverse proxy for all subdomains (see `nginx/srpailabs.conf`)
+
+### Backend / Products
+- **Python + FastAPI** — AI backend services for all products
+- **Pydantic** — data validation & schemas
+- **Fire** — CLI tooling
+- **Supabase** — database, auth, and realtime per product
 - **PostgreSQL** — per-product schemas (see `database/init.sql`)
+
+### AI Models
+- **OpenAI GPT-4o** — completions, agents, embeddings
+- **Claude (Anthropic)** — advanced AI reasoning
+- **Gemini** — Google AI models
+
+### Agentic AI & Automation
+- **n8n** — core workflow automation platform
+- **LangChain / LangGraph** — agentic AI pipelines
+- **Cursor + VS Code** — agentic AI-assisted development
+- **RAG Pipelines** — Pinecone + embeddings
+- **Apify** — web scraping & data extraction
+
+### Infrastructure
+- **Nginx** — reverse proxy for all subdomains (see `nginx/srpailabs.conf`)
+- **Hetzner VPS** — production server
+- **Let's Encrypt** — SSL for all 6 domains
 
 ---
 
@@ -99,7 +123,7 @@ npm run build
 
 ### Nginx
 
-See `nginx/srpailabs.conf` for the full reverse-proxy config covering all 5 domains (main + 4 subdomains) with SSL via Let's Encrypt.
+See `nginx/srpailabs.conf` for the full reverse-proxy config covering all 6 domains (main + 5 subdomains) with SSL via Let's Encrypt.
 
 Deploy steps on Hetzner:
 ```sh
@@ -107,7 +131,8 @@ sudo cp nginx/srpailabs.conf /etc/nginx/sites-available/srpailabs.conf
 sudo ln -s /etc/nginx/sites-available/srpailabs.conf /etc/nginx/sites-enabled/
 sudo certbot --nginx -d srpailabs.com -d www.srpailabs.com \
              -d autonomous.srpailabs.com -d app.srpailabs.com \
-             -d mediflow.srpailabs.com -d recruit.srpailabs.com
+             -d mediflow.srpailabs.com -d recruit.srpailabs.com \
+             -d growth.srpailabs.com
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
@@ -119,6 +144,7 @@ See `database/init.sql` for the full schema — shared instance with separate sc
 - `marketing` — Marketing OS campaigns, content, analytics
 - `mediflow` — MediFlow clinics, patients, appointments, workflows
 - `recruit` — SmartRecruit companies, jobs, candidates, interviews
+- `growth` — Growth leads, pipelines, outreach sequences, analytics
 
 ```sh
 psql -U postgres -d srpailabs -f database/init.sql
