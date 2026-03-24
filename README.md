@@ -29,16 +29,31 @@ This repo contains the **main brand hub + platform landing page** (`srpailabs.co
 
 ## What's on srpailabs.com
 
-- **Hero** — AI automation + agentic AI brand statement
+- **Hero** — AI automation + agentic AI brand statement (fully responsive)
 - **About SRP AI Labs** — Company overview as an AI Business Operating System Company
 - **Solutions / Services** — n8n automation, AI agents, RAG chatbots, integrations, multi-tenant SaaS
 - **Products Section** — Premium cards for all 5 products with descriptions, features, and direct links
 - **Product Ecosystem** — Explains the independent deployment model (separate logins, isolated databases)
 - **Industries** — Healthcare, Recruitment, Marketing, Enterprise, SMEs, Startups
 - **Why SRP AI Labs** — AI-first, scalable, industry-specific, automation-driven, secure
-- **Pricing** — Flexible plans (Starter / Growth / Enterprise) with clear descriptions
+- **Pricing** — Flexible plans (Starter / Growth / Enterprise) with feature comparison table
 - **Contact / Demo** — Lead capture form + Telegram notification + social links
 - **AI Chatbot (SRPA)** — Routes users to correct product based on their industry/use case (5 products)
+- **App Switcher** — Floating product switcher widget (bottom drawer on mobile, panel on desktop)
+
+### Mobile-First Responsive Design (v2.0)
+
+The entire site is built with a mobile-first responsive approach:
+
+- **Hamburger menu** on mobile with slide-over drawer, expandable Products section, and smooth animations
+- **Hero section** scales typography from `text-3xl` (mobile) → `text-7xl` (desktop), buttons stack vertically on small screens
+- **All sections** use responsive padding (`py-14 sm:py-20 md:py-24 lg:py-28`) and container padding (`px-4 sm:px-6`)
+- **Product grids** adapt: single column on mobile → 2 columns on tablet → 3 columns on desktop
+- **App Switcher** opens as a bottom sheet drawer on mobile, floating panel on desktop
+- **Chat Widget** repositioned and resized for mobile screens
+- **Pricing cards** stack vertically on mobile with full-width CTA buttons
+- **No horizontal overflow** — overflow-x hidden globally
+- **Touch-friendly** spacing and tap targets throughout
 
 ---
 

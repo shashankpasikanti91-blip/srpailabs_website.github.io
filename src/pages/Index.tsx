@@ -1,10 +1,10 @@
-import { motion, useMotionValue, useSpring, useTransform, useInView } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, useInView, AnimatePresence } from "framer-motion";
 import { 
   Workflow, MessageSquare, Globe, Plug, Bot, Settings, ArrowRight, Linkedin, Github, Mail,
   Zap, Clock, Bell, BarChart3, CheckCircle, Rocket, Shield, Users, Code, Wrench,
   HelpCircle, MapPin, Phone, Sparkles, FileText, TrendingUp, Target, ExternalLink,
   MousePointer2, Layers, Database, Cpu, ArrowUpRight, ChevronDown, Monitor, Activity,
-  Brain, Briefcase, HeartPulse, UserCheck, Building2, Star
+  Brain, Briefcase, HeartPulse, UserCheck, Building2, Star, Menu, X, Minus
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -69,6 +69,8 @@ const AnimatedCounter = ({ value, suffix = "" }: { value: string; suffix?: strin
 const Index = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20 });
@@ -202,13 +204,15 @@ const Index = () => {
         transition={{ duration: 0.5 }}
         className="sticky top-0 z-50 backdrop-blur-2xl bg-background/70 border-b border-border/40"
       >
-        <div className="container mx-auto px-6 py-4">
+        <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
-            <a href="#home" className="flex items-center gap-3">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-8 w-auto" />
-              <span className="text-lg font-bold text-foreground hidden sm:inline font-display">SRP AI Labs</span>
+            <a href="#home" className="flex items-center gap-2 sm:gap-3">
+              <img src={srpLogo} alt="SRP AI Labs" className="h-7 sm:h-8 w-auto" />
+              <span className="text-base sm:text-lg font-bold text-foreground hidden sm:inline font-display">SRP AI Labs</span>
             </a>
-            <div className="hidden md:flex items-center gap-6">
+
+            {/* Desktop navigation */}
+            <div className="hidden md:flex items-center gap-5 lg:gap-6">
               {/* Products dropdown */}
               <div className="relative group">
                 <button className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300">
@@ -252,17 +256,124 @@ const Index = () => {
                 <a href="#contact">Get Started</a>
               </Button>
             </div>
+
+            {/* Mobile hamburger */}
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="md:hidden w-10 h-10 rounded-xl bg-card/50 border border-border/50 flex items-center justify-center text-foreground hover:text-primary transition-colors"
+              aria-label="Open menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
           </nav>
         </div>
       </motion.header>
 
+      {/* Mobile Menu Drawer */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm md:hidden"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="fixed top-0 right-0 bottom-0 z-[70] w-[80vw] max-w-xs bg-background border-l border-border/40 flex flex-col md:hidden"
+            >
+              <div className="flex items-center justify-between p-4 border-b border-border/40">
+                <span className="text-sm font-bold text-foreground font-display">Menu</span>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-9 h-9 rounded-xl bg-card/50 border border-border/50 flex items-center justify-center text-foreground"
+                  aria-label="Close menu"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto py-4 px-4">
+                {/* Products expandable */}
+                <div className="mb-1">
+                  <button
+                    onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
+                    className="flex items-center justify-between w-full py-3 px-3 rounded-xl text-sm font-medium text-foreground hover:bg-muted/50 transition-colors"
+                  >
+                    Products
+                    <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${mobileProductsOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  <AnimatePresence>
+                    {mobileProductsOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pl-3 pb-2 space-y-1">
+                          {[
+                            { name: "Autonomous OS", url: "https://autonomous.srpailabs.com", icon: Monitor, color: "text-blue-400" },
+                            { name: "Marketing OS", url: "https://app.srpailabs.com", icon: BarChart3, color: "text-purple-400" },
+                            { name: "MediFlow", url: "https://mediflow.srpailabs.com", icon: Activity, color: "text-emerald-400" },
+                            { name: "SmartRecruit", url: "https://recruit.srpailabs.com", icon: UserCheck, color: "text-orange-400" },
+                            { name: "Growth", url: "https://growth.srpailabs.com", icon: TrendingUp, color: "text-green-400" },
+                          ].map((p) => (
+                            <a
+                              key={p.name}
+                              href={p.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-3 py-2.5 px-3 rounded-lg hover:bg-muted/50 transition-colors"
+                              onClick={() => setMobileMenuOpen(false)}
+                            >
+                              <p.icon className={`w-4 h-4 ${p.color}`} />
+                              <span className="text-sm text-muted-foreground">{p.name}</span>
+                            </a>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+                {[
+                  { label: "Solutions", href: "#services" },
+                  { label: "Industries", href: "#use-cases" },
+                  { label: "Pricing", href: "#pricing" },
+                  { label: "Contact", href: "#contact" },
+                ].map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block py-3 px-3 rounded-xl text-sm font-medium text-foreground hover:bg-muted/50 transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+              <div className="p-4 border-t border-border/40">
+                <Button asChild className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-full" size="lg">
+                  <a href="#contact" onClick={() => setMobileMenuOpen(false)}>Get Started</a>
+                </Button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       {/* ==================== HERO ==================== */}
-      <section id="home" className="relative py-20 md:py-32">
+      <section id="home" className="relative py-12 sm:py-16 md:py-24 lg:py-32">
         {/* Abstract animated background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {/* Large gradient orb - right side */}
           <motion.div
-            className="absolute top-1/2 right-0 -translate-y-1/2 w-[700px] h-[700px] md:w-[900px] md:h-[900px]"
+            className="absolute top-1/2 right-0 -translate-y-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] md:w-[700px] md:h-[700px] lg:w-[900px] lg:h-[900px]"
             animate={{ rotate: [0, 360] }}
             transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
           >
@@ -272,32 +383,32 @@ const Index = () => {
             }} />
           </motion.div>
           
-          {/* Floating geometric shapes */}
+          {/* Floating geometric shapes - hidden on small screens */}
           <motion.div
-            className="absolute top-[15%] right-[20%] w-20 h-20 border border-primary/20 rounded-2xl"
+            className="absolute top-[15%] right-[20%] w-14 h-14 md:w-20 md:h-20 border border-primary/20 rounded-2xl hidden sm:block"
             animate={{ y: [0, -30, 0], rotate: [0, 45, 0] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute top-[35%] right-[10%] w-14 h-14 border border-primary/15 rounded-full"
+            className="absolute top-[35%] right-[10%] w-10 h-10 md:w-14 md:h-14 border border-primary/15 rounded-full hidden sm:block"
             animate={{ y: [0, 20, 0], x: [0, -10, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           />
           <motion.div
-            className="absolute bottom-[25%] right-[25%] w-10 h-10 bg-primary/10 rounded-lg"
+            className="absolute bottom-[25%] right-[25%] w-8 h-8 md:w-10 md:h-10 bg-primary/10 rounded-lg hidden md:block"
             animate={{ y: [0, -20, 0], rotate: [0, -30, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           />
           <motion.div
-            className="absolute top-[60%] right-[5%] w-6 h-6 bg-primary/20 rounded-full"
+            className="absolute top-[60%] right-[5%] w-5 h-5 md:w-6 md:h-6 bg-primary/20 rounded-full hidden md:block"
             animate={{ y: [0, 15, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
           />
-          {/* Connection lines / dots */}
+          {/* Connection dots - fewer on mobile */}
           {[...Array(6)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-2 h-2 bg-primary/30 rounded-full"
+              className="absolute w-1.5 h-1.5 md:w-2 md:h-2 bg-primary/30 rounded-full hidden sm:block"
               style={{ top: `${20 + i * 12}%`, right: `${8 + (i % 3) * 15}%` }}
               animate={{ opacity: [0.2, 0.6, 0.2], scale: [1, 1.5, 1] }}
               transition={{ duration: 3, repeat: Infinity, delay: i * 0.4 }}
@@ -305,8 +416,8 @@ const Index = () => {
           ))}
         </div>
 
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center mb-10 md:mb-16">
             {/* Left - Text content */}
             <motion.div
               initial={{ opacity: 0, x: -40 }}
@@ -317,13 +428,13 @@ const Index = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-8"
+                className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-5 sm:mb-8"
               >
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary animate-pulse" />
                 SRP AI Labs Platform — 5 Products Live
               </motion.div>
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.05] tracking-tight font-display mb-8">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] tracking-tight font-display mb-5 sm:mb-8">
                 <span className="text-foreground">One Platform.</span>
                 <br />
                 <span className="text-foreground">Infinite</span>
@@ -331,12 +442,12 @@ const Index = () => {
                 <span className="gradient-text text-glow">Automation.</span>
               </h1>
 
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-xl">
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed mb-6 sm:mb-10 max-w-xl">
                 SRP AI Labs builds AI-powered SaaS products that automate the hardest parts of running a business — from recruitment and marketing to healthcare and operations.
               </p>
 
               {/* Product pills */}
-              <div className="flex flex-wrap gap-2 mb-10">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6 sm:mb-10">
                 {[
                   { label: "Autonomous OS", url: "https://autonomous.srpailabs.com" },
                   { label: "Marketing OS", url: "https://app.srpailabs.com" },
@@ -345,8 +456,8 @@ const Index = () => {
                   { label: "Growth", url: "https://growth.srpailabs.com" },
                 ].map((p) => (
                   <a key={p.label} href={p.url} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-card border border-border/60 text-muted-foreground hover:border-primary/40 hover:text-primary transition-all">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium bg-card border border-border/60 text-muted-foreground hover:border-primary/40 hover:text-primary transition-all">
+                    <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-primary" />
                     {p.label}
                     <ExternalLink className="w-3 h-3" />
                   </a>
@@ -357,16 +468,16 @@ const Index = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="flex flex-wrap gap-4 mt-2"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2"
               >
-                <Button size="xl" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 shadow-[0_4px_25px_hsl(var(--primary)/0.4)] hover:shadow-[0_8px_40px_hsl(var(--primary)/0.5)] hover:-translate-y-0.5 transition-all">
-                  <a href="#services" className="group flex items-center gap-2">
+                <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 sm:px-8 shadow-[0_4px_25px_hsl(var(--primary)/0.4)] hover:shadow-[0_8px_40px_hsl(var(--primary)/0.5)] hover:-translate-y-0.5 transition-all w-full sm:w-auto">
+                  <a href="#services" className="group flex items-center justify-center gap-2">
                     Explore Solutions
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </Button>
-                <Button size="xl" variant="outline" asChild className="rounded-full px-8">
-                  <a href="#contact">Book Demo</a>
+                <Button size="lg" variant="outline" asChild className="rounded-full px-6 sm:px-8 w-full sm:w-auto">
+                  <a href="#contact" className="flex items-center justify-center">Book Demo</a>
                 </Button>
               </motion.div>
             </motion.div>
@@ -384,7 +495,7 @@ const Index = () => {
                 <motion.img
                   src={srpLogo}
                   alt="SRP AI Automation Labs"
-                  className="relative z-10 w-[280px] h-auto drop-shadow-2xl"
+                  className="relative z-10 w-[200px] lg:w-[280px] h-auto drop-shadow-2xl"
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                 />
@@ -397,19 +508,19 @@ const Index = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.6 }}
-            className="mt-16 border-t border-border/40 bg-background/60 backdrop-blur-xl rounded-lg py-8"
+            className="mt-8 sm:mt-12 md:mt-16 border-t border-border/40 bg-background/60 backdrop-blur-xl rounded-lg py-6 sm:py-8"
           >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-8 text-center">
               {[
                 { value: "40", suffix: "+", label: "Hands-on Workflows Built" },
                 { value: "100", suffix: "%", label: "No-Code / Low-Code" },
                 { value: "24/7", suffix: "", label: "Automation Uptime" },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
-                  <div className="text-3xl md:text-4xl font-bold text-primary font-display">
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary font-display">
                     {stat.value === "24/7" ? "24/7" : <AnimatedCounter value={stat.value} suffix={stat.suffix} />}
                   </div>
-                  <div className="text-xs md:text-sm text-muted-foreground mt-1">{stat.label}</div>
+                  <div className="text-[10px] sm:text-xs md:text-sm text-muted-foreground mt-1">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -418,22 +529,22 @@ const Index = () => {
       </section>
 
       {/* ==================== CAPABILITIES / HIGHLIGHTS ==================== */}
-      <section className="py-28 relative">
-        <div className="container mx-auto px-6">
+      <section className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}
           >
-            <motion.div variants={fadeInUp} className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold font-display mb-4">
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-display mb-3 sm:mb-4">
                 What We <span className="gradient-text">Deliver</span>
               </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
                 End-to-end automation capabilities for modern businesses
               </p>
             </motion.div>
 
             {/* Bento grid layout */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 max-w-6xl mx-auto">
               {[
                 { icon: Zap, title: "Save Time", description: "Automate repetitive tasks" },
                 { icon: Bot, title: "AI Agents", description: "Smart automation powered by AI" },
@@ -446,15 +557,15 @@ const Index = () => {
                   key={i}
                   variants={fadeInUp}
                   whileHover={{ y: -6, scale: 1.02 }}
-                  className="group relative p-6 rounded-2xl bg-card/50 border border-border/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-500 cursor-default"
+                  className="group relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-card/50 border border-border/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-500 cursor-default"
                 >
-                  <div className="absolute inset-0 rounded-2xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="relative z-10">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
-                      <item.icon className="w-6 h-6 text-primary" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
+                      <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                     </div>
-                    <h4 className="font-semibold text-sm text-foreground mb-1">{item.title}</h4>
-                    <p className="text-xs text-muted-foreground">{item.description}</p>
+                    <h4 className="font-semibold text-xs sm:text-sm text-foreground mb-1">{item.title}</h4>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground">{item.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -464,20 +575,20 @@ const Index = () => {
       </section>
 
       {/* ==================== ABOUT ==================== */}
-      <section id="about" className="py-28 relative">
+      <section id="about" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}
             className="max-w-5xl mx-auto"
           >
-            <motion.div variants={fadeInUp} className="grid md:grid-cols-2 gap-16 items-center">
+            <motion.div variants={fadeInUp} className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
               <div>
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
-                  <span className="w-2 h-2 rounded-full bg-primary" />
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                   About SRP AI Labs
                 </span>
-                <h2 className="text-4xl md:text-5xl font-bold font-display mb-6 leading-tight">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-4 sm:mb-6 leading-tight">
                   AI Business Operating{" "}
                   <span className="gradient-text">System Company</span>
                 </h2>
@@ -538,17 +649,17 @@ const Index = () => {
       </section>
 
       {/* ==================== HOW WE WORK ==================== */}
-      <section className="py-28 relative">
-        <div className="container mx-auto px-6">
+      <section className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}
             className="max-w-6xl mx-auto"
           >
-            <motion.div variants={fadeInUp} className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">How We Work</h2>
-              <p className="text-muted-foreground text-lg">Simple, transparent process from discovery to deployment</p>
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">How We Work</h2>
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg">Simple, transparent process from discovery to deployment</p>
             </motion.div>
-            <div className="grid md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               {[
                 { step: "01", title: "Discovery", desc: "We analyze your business processes and identify automation opportunities", icon: Target },
                 { step: "02", title: "Design", desc: "We architect the workflow solution with clear documentation", icon: Layers },
@@ -559,17 +670,17 @@ const Index = () => {
                   key={i}
                   variants={fadeInUp}
                   whileHover={{ y: -8 }}
-                  className="group relative p-8 rounded-3xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-500"
+                  className="group relative p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-500"
                 >
-                  <div className="absolute top-6 right-6 text-6xl font-bold text-primary/10 font-display group-hover:text-primary/20 transition-colors">
+                  <div className="absolute top-4 right-4 sm:top-6 sm:right-6 text-3xl sm:text-4xl md:text-6xl font-bold text-primary/10 font-display group-hover:text-primary/20 transition-colors">
                     {item.step}
                   </div>
                   <div className="relative z-10">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
-                      <item.icon className="w-7 h-7 text-primary" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl sm:rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
+                      <item.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-primary" />
                     </div>
-                    <h4 className="font-bold text-xl mb-3 text-foreground font-display">{item.title}</h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                    <h4 className="font-bold text-sm sm:text-base md:text-xl mb-2 sm:mb-3 text-foreground font-display">{item.title}</h4>
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -579,23 +690,23 @@ const Index = () => {
       </section>
 
       {/* ==================== SERVICES ==================== */}
-      <section id="services" className="py-28 relative">
+      <section id="services" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
-            <motion.div variants={fadeInUp} className="text-center mb-16">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
-                <span className="w-2 h-2 rounded-full bg-primary" />
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 What We Do
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
                 Our <span className="gradient-text">Services</span>
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+              <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
                 Comprehensive automation solutions for modern businesses
               </p>
             </motion.div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {services.map((service, i) => (
                 <motion.div key={i} variants={fadeInUp} whileHover={{ y: -8 }} transition={{ duration: 0.3 }}>
                   <Card className="h-full bg-card/50 border-border/50 hover:border-primary/30 transition-all duration-500 overflow-hidden group backdrop-blur-sm">
@@ -627,18 +738,18 @@ const Index = () => {
       </section>
 
       {/* ==================== WHY SRP AI LABS ==================== */}
-      <section id="why-srp" className="py-28 relative">
-        <div className="container mx-auto px-6">
+      <section id="why-srp" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
-            <motion.div variants={fadeInUp} className="text-center mb-16">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
-                <span className="w-2 h-2 rounded-full bg-primary" />
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Why SRP AI Labs
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">The Right AI Partner <span className="gradient-text">for Your Business</span></h2>
-              <p className="text-muted-foreground text-lg">What makes SRP AI Labs different from generic automation vendors</p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">The Right AI Partner <span className="gradient-text">for Your Business</span></h2>
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg">What makes SRP AI Labs different from generic automation vendors</p>
             </motion.div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
               {[
                 { icon: Brain, title: "AI-First Approach", description: "Every product and workflow is built with AI at the core — not bolted on as an afterthought." },
                 { icon: Layers, title: "Scalable Architecture", description: "Systems built to grow with your business — from single teams to enterprise scale." },
@@ -668,22 +779,22 @@ const Index = () => {
       </section>
 
       {/* ==================== CASE STUDIES ==================== */}
-      <section id="agents" className="py-28 relative">
+      <section id="agents" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
-            <motion.div variants={fadeInUp} className="text-center mb-16">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
-                <span className="w-2 h-2 rounded-full bg-primary" />
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Success Stories
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
                 Case <span className="gradient-text">Studies</span>
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">Real results from AI-powered n8n workflows</p>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">Real results from AI-powered n8n workflows</p>
             </motion.div>
 
-            <div className="grid lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {[
                 {
                   icon: Mail, tag: "AI Email Automation", title: "Intelligent Email Classifier Agent",
@@ -752,9 +863,9 @@ const Index = () => {
             </div>
 
             {/* CTA */}
-            <motion.div variants={fadeInUp} className="mt-16 text-center">
-              <div className="inline-block p-10 rounded-3xl bg-card/30 border border-border/40 backdrop-blur-xl">
-                <h3 className="text-2xl md:text-3xl font-bold mb-4 text-foreground font-display">Ready to Transform Your Business?</h3>
+            <motion.div variants={fadeInUp} className="mt-10 sm:mt-16 text-center">
+              <div className="inline-block p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl bg-card/30 border border-border/40 backdrop-blur-xl">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-foreground font-display">Ready to Transform Your Business?</h3>
                 <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
                   Let's discuss how AI-powered automation can solve your specific challenges.
                 </p>
@@ -774,21 +885,21 @@ const Index = () => {
       </section>
 
       {/* ==================== FEATURED PROJECTS ==================== */}
-      <section id="products" className="py-28 relative">
-        <div className="container mx-auto px-6">
+      <section id="products" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
-            <motion.div variants={fadeInUp} className="text-center mb-16">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
-                <span className="w-2 h-2 rounded-full bg-primary" />
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 AI-Powered Products
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
                 Our <span className="gradient-text">Products</span>
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">Five AI-powered SaaS platforms, each solving a critical business problem at scale</p>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">Five AI-powered SaaS platforms, each solving a critical business problem at scale</p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
               {[
                 {
                   name: "Autonomous OS",
@@ -856,10 +967,10 @@ const Index = () => {
                   features: ["Automated lead generation & scoring", "AI outreach sequences & follow-ups", "Pipeline tracking & deal management", "n8n workflow execution engine", "Real-time growth analytics dashboard"],
                 },
               ].map((product, i) => (
-                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }} transition={{ duration: 0.3 }} className={i === 4 ? "md:col-span-2" : undefined}>
+                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }} transition={{ duration: 0.3 }} className={i === 4 ? "sm:col-span-2" : undefined}>
                   <Card className={`h-full bg-gradient-to-br ${product.color} border-border/50 ${product.border} transition-all duration-500 overflow-hidden group relative`}>
-                    <CardHeader className="p-8">
-                      <div className="flex items-start justify-between mb-4">
+                    <CardHeader className="p-5 sm:p-6 md:p-8">
+                      <div className="flex items-start justify-between mb-3 sm:mb-4">
                         <div className="w-14 h-14 rounded-2xl bg-background/60 border border-border/60 flex items-center justify-center group-hover:scale-110 transition-transform">
                           <product.icon className={`w-7 h-7 ${product.iconColor}`} />
                         </div>
@@ -871,11 +982,11 @@ const Index = () => {
                           </a>
                         </div>
                       </div>
-                      <CardTitle className="text-2xl text-foreground mb-1 font-display">{product.name}</CardTitle>
-                      <p className="text-sm text-primary font-medium mb-3">{product.tagline}</p>
-                      <CardDescription className="text-sm text-muted-foreground leading-relaxed">{product.description}</CardDescription>
+                      <CardTitle className="text-lg sm:text-xl md:text-2xl text-foreground mb-1 font-display">{product.name}</CardTitle>
+                      <p className="text-xs sm:text-sm text-primary font-medium mb-2 sm:mb-3">{product.tagline}</p>
+                      <CardDescription className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{product.description}</CardDescription>
                     </CardHeader>
-                    <CardContent className="px-8 pb-8">
+                    <CardContent className="px-5 pb-5 sm:px-6 sm:pb-6 md:px-8 md:pb-8">
                       <ul className="space-y-2.5 mb-6">
                         {product.features.map((f, idx) => (
                           <li key={idx} className="flex items-center gap-2.5 text-sm text-muted-foreground">
@@ -898,23 +1009,23 @@ const Index = () => {
       </section>
 
       {/* ==================== PRODUCT ECOSYSTEM ==================== */}
-      <section id="ecosystem" className="py-28 relative">
+      <section id="ecosystem" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
-            <motion.div variants={fadeInUp} className="text-center mb-16">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
-                <span className="w-2 h-2 rounded-full bg-primary" />
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Product Ecosystem
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
                 One Brand. <span className="gradient-text">Five Independent Systems.</span>
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+              <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
                 srpailabs.com is the main hub. Each product is a fully independent SaaS with its own login, database, and deployment — intentional for performance, security, and clarity.
               </p>
             </motion.div>
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
+            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto mb-8 sm:mb-12">
               {[
                 { icon: Shield, title: "Separate Logins", desc: "Each product has its own authentication system. Users log in directly to the product they need — no cross-product confusion." },
                 { icon: Database, title: "Isolated Databases", desc: "Every product runs on its own database. Hospital data, HR data, and marketing data never mix." },
@@ -935,7 +1046,7 @@ const Index = () => {
             <motion.div variants={fadeInUp} className="max-w-4xl mx-auto">
               <div className="p-8 rounded-3xl bg-card/30 border border-border/40 backdrop-blur-xl">
                 <p className="text-center text-sm font-semibold text-foreground mb-6">Access each product directly at its own subdomain:</p>
-                <div className="grid sm:grid-cols-2 md:grid-cols-5 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
                   {[
                     { name: "Autonomous OS", url: "https://autonomous.srpailabs.com", icon: Monitor, color: "text-blue-400", desc: "Business automation" },
                     { name: "Marketing OS", url: "https://app.srpailabs.com", icon: BarChart3, color: "text-purple-400", desc: "AI marketing" },
@@ -966,21 +1077,21 @@ const Index = () => {
       </section>
 
       {/* ==================== USE CASES ==================== */}
-      <section id="use-cases" className="py-28 relative">
+      <section id="use-cases" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
-            <motion.div variants={fadeInUp} className="text-center mb-16">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
-                <span className="w-2 h-2 rounded-full bg-primary" />
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Who It's For
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
                 Built for <span className="gradient-text">Every Industry</span>
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">From startups to enterprises — SRP AI Labs platforms fit your workflow</p>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">From startups to enterprises — SRP AI Labs platforms fit your workflow</p>
             </motion.div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {[
                 { icon: Building2, title: "Enterprises & Agencies", product: "Marketing OS", desc: "Automate 80% of your marketing ops — content, outreach, reporting — while your team focuses on strategy.", tag: "Marketing OS" },
                 { icon: HeartPulse, title: "Healthcare Providers", product: "MediFlow", desc: "Reduce admin burden with AI-driven patient intake, scheduling, and documentation that integrates with your EHR.", tag: "MediFlow" },
@@ -1008,53 +1119,56 @@ const Index = () => {
       </section>
 
       {/* ==================== PRICING ==================== */}
-      <section id="pricing" className="py-28 relative">
-        <div className="container mx-auto px-6">
+      <section id="pricing" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
-            <motion.div variants={fadeInUp} className="text-center mb-16">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
-                <span className="w-2 h-2 rounded-full bg-primary" />
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Flexible Pricing
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
                 Plans for <span className="gradient-text">Every Stage</span>
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">Flexible packages for businesses adopting AI automation — start small and scale with confidence.</p>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg mb-3 sm:mb-4">
+                Start automating your business in days — not months.
+              </p>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-xs sm:text-sm">Flexible packages for businesses adopting AI automation — start small and scale with confidence.</p>
             </motion.div>
-            <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
               {[
                 {
-                  name: "Starter",
+                  name: "Starter – Basic Automation",
                   price: "$19",
                   period: "/mo",
-                  desc: "For small businesses with simple automation needs",
-                  features: ["1 solution setup", "Up to 3 active workflows", "Basic n8n automation", "Standard integrations", "Email support", "Simple reporting"],
-                  cta: "Get Started",
+                  desc: "Best for freelancers & small teams",
+                  features: ["1 workflow setup", "Up to 3 active workflows", "Basic n8n automation", "Standard integrations", "Email support"],
+                  cta: "Start Free Setup",
                   popular: false,
                 },
                 {
-                  name: "Growth",
+                  name: "Growth – AI Automation Suite",
                   price: "$49",
                   period: "/mo",
-                  desc: "For growing teams that need stronger automation power",
-                  features: ["Advanced automation workflows", "Up to 10 active workflows", "AI-assisted process automation", "Custom integrations", "Priority support", "Analytics dashboard"],
-                  cta: "Book Demo",
+                  desc: "Most Popular — Save 20–40 hrs/month",
+                  features: ["Up to 10 active workflows", "AI-powered automation (LLM integration)", "Custom integrations", "Priority support", "Analytics dashboard"],
+                  cta: "See Live Demo",
                   popular: true,
                 },
                 {
-                  name: "Enterprise",
+                  name: "Enterprise – Full Automation Platform",
                   price: "Custom",
                   period: "",
-                  desc: "For larger organizations with bespoke requirements",
-                  features: ["Custom solution setup", "Dedicated AI agent deployment", "Advanced integrations", "Enterprise SLA & support", "White-label / multi-team options", "Dedicated onboarding"],
-                  cta: "Contact Sales",
+                  desc: "Built for scaling teams & agencies",
+                  features: ["Unlimited workflows", "Dedicated AI agents", "Custom SaaS deployment", "SLA + onboarding", "White-label options"],
+                  cta: "Talk to Automation Expert",
                   popular: false,
                 },
               ].map((plan, i) => (
                 <motion.div key={i} variants={fadeInUp} whileHover={{ y: -6 }} transition={{ duration: 0.3 }} className="relative">
                   {plan.popular && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-                      <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold bg-primary text-primary-foreground shadow-lg">
+                    <div className="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2 z-10">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold bg-primary text-primary-foreground shadow-lg whitespace-nowrap">
                         <Star className="w-3 h-3" /> Most Popular
                       </span>
                     </div>
@@ -1064,24 +1178,24 @@ const Index = () => {
                       ? "bg-primary/5 border-primary/40 shadow-[0_0_40px_hsl(var(--primary)/0.15)]"
                       : "bg-card/50 border-border/50 hover:border-primary/30"
                   }`}>
-                    <CardHeader className="p-8 pb-6">
-                      <CardTitle className="text-xl font-display mb-2">{plan.name}</CardTitle>
-                      <div className="flex items-end gap-1 mb-3">
-                        <span className="text-4xl font-bold text-foreground font-display">{plan.price}</span>
-                        <span className="text-muted-foreground text-sm mb-1.5">{plan.period}</span>
+                    <CardHeader className="p-5 sm:p-6 md:p-8 pb-4 sm:pb-6">
+                      <CardTitle className="text-sm sm:text-base md:text-lg font-display mb-2 leading-tight">{plan.name}</CardTitle>
+                      <div className="flex items-end gap-1 mb-2 sm:mb-3">
+                        <span className="text-3xl sm:text-4xl font-bold text-foreground font-display">{plan.price}</span>
+                        <span className="text-muted-foreground text-xs sm:text-sm mb-1 sm:mb-1.5">{plan.period}</span>
                       </div>
-                      <CardDescription className="text-sm">{plan.desc}</CardDescription>
+                      <CardDescription className="text-xs sm:text-sm">{plan.desc}</CardDescription>
                     </CardHeader>
-                    <CardContent className="px-8 pb-8">
-                      <ul className="space-y-3 mb-8">
+                    <CardContent className="px-5 pb-5 sm:px-6 sm:pb-6 md:px-8 md:pb-8">
+                      <ul className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8">
                         {plan.features.map((f, idx) => (
-                          <li key={idx} className="flex items-center gap-2.5 text-sm text-muted-foreground">
-                            <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                          <li key={idx} className="flex items-center gap-2 sm:gap-2.5 text-xs sm:text-sm text-muted-foreground">
+                            <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary flex-shrink-0" />
                             {f}
                           </li>
                         ))}
                       </ul>
-                      <Button asChild className={`w-full rounded-full ${
+                      <Button asChild className={`w-full rounded-full text-xs sm:text-sm ${
                         plan.popular ? "bg-primary text-primary-foreground hover:bg-primary/90" : "variant-outline"
                       }`} variant={plan.popular ? "default" : "outline"}>
                         <a href="#contact">{plan.cta}</a>
@@ -1091,7 +1205,49 @@ const Index = () => {
                 </motion.div>
               ))}
             </div>
-            <motion.p variants={fadeInUp} className="text-center text-sm text-muted-foreground mt-10 max-w-2xl mx-auto p-4 rounded-xl bg-card/30 border border-border/40">
+
+            {/* Feature Comparison Row */}
+            <motion.div variants={fadeInUp} className="mt-8 sm:mt-12 max-w-5xl mx-auto">
+              <div className="rounded-2xl bg-card/30 border border-border/40 overflow-hidden">
+                <div className="p-4 sm:p-6">
+                  <h4 className="text-sm sm:text-base font-semibold text-foreground mb-4 sm:mb-6 text-center font-display">Feature Comparison</h4>
+                  <div className="overflow-x-auto -mx-4 sm:mx-0">
+                    <table className="w-full min-w-[400px] text-xs sm:text-sm">
+                      <thead>
+                        <tr className="border-b border-border/40">
+                          <th className="text-left py-2 sm:py-3 px-3 sm:px-4 text-muted-foreground font-medium">Feature</th>
+                          <th className="text-center py-2 sm:py-3 px-2 sm:px-4 text-muted-foreground font-medium">Starter</th>
+                          <th className="text-center py-2 sm:py-3 px-2 sm:px-4 text-primary font-medium">Growth</th>
+                          <th className="text-center py-2 sm:py-3 px-2 sm:px-4 text-muted-foreground font-medium">Enterprise</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          { feature: "AI Automation", starter: false, growth: true, enterprise: true },
+                          { feature: "Custom Workflows", starter: false, growth: true, enterprise: true },
+                          { feature: "Priority Support", starter: false, growth: true, enterprise: true },
+                        ].map((row, idx) => (
+                          <tr key={idx} className="border-b border-border/20 last:border-0">
+                            <td className="py-2.5 sm:py-3 px-3 sm:px-4 text-foreground font-medium">{row.feature}</td>
+                            <td className="py-2.5 sm:py-3 px-2 sm:px-4 text-center">
+                              {row.starter ? <CheckCircle className="w-4 h-4 text-primary mx-auto" /> : <Minus className="w-4 h-4 text-muted-foreground/40 mx-auto" />}
+                            </td>
+                            <td className="py-2.5 sm:py-3 px-2 sm:px-4 text-center">
+                              {row.growth ? <CheckCircle className="w-4 h-4 text-primary mx-auto" /> : <Minus className="w-4 h-4 text-muted-foreground/40 mx-auto" />}
+                            </td>
+                            <td className="py-2.5 sm:py-3 px-2 sm:px-4 text-center">
+                              {row.enterprise ? <CheckCircle className="w-4 h-4 text-primary mx-auto" /> : <Minus className="w-4 h-4 text-muted-foreground/40 mx-auto" />}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.p variants={fadeInUp} className="text-center text-xs sm:text-sm text-muted-foreground mt-6 sm:mt-10 max-w-2xl mx-auto p-3 sm:p-4 rounded-xl bg-card/30 border border-border/40">
               Need a hospital, recruitment, marketing, or custom automation solution?{" "}
               <a href="#contact" className="text-primary hover:underline font-medium">Contact SRP AI Labs</a>{" "}
               for tailored pricing.
@@ -1101,52 +1257,52 @@ const Index = () => {
       </section>
 
       {/* ==================== TOOLS & TECHNOLOGIES ==================== */}
-      <section className="py-28 relative overflow-hidden">
+      <section className="py-14 sm:py-20 md:py-24 lg:py-28 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger} className="text-center">
-            <motion.div variants={fadeInUp} className="mb-6">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium">
-                <span className="w-2 h-2 rounded-full bg-primary" />
+            <motion.div variants={fadeInUp} className="mb-4 sm:mb-6">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Tech Stack
               </span>
             </motion.div>
-            <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-bold font-display mb-4">
+            <motion.h2 variants={fadeInUp} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
               Tools & <span className="gradient-text">Technologies</span>
             </motion.h2>
-            <motion.p variants={fadeInUp} className="text-muted-foreground text-lg mb-6 max-w-2xl mx-auto">
+            <motion.p variants={fadeInUp} className="text-muted-foreground text-sm sm:text-base md:text-lg mb-4 sm:mb-6 max-w-2xl mx-auto">
               The exact tools and frameworks powering every SRP AI Labs product and workflow
             </motion.p>
-            <motion.p variants={fadeInUp} className="text-sm text-muted-foreground mb-14 max-w-3xl mx-auto bg-card/40 border border-border/40 rounded-xl px-6 py-4">
+            <motion.p variants={fadeInUp} className="text-xs sm:text-sm text-muted-foreground mb-8 sm:mb-14 max-w-3xl mx-auto bg-card/40 border border-border/40 rounded-xl px-4 py-3 sm:px-6 sm:py-4">
               <span className="text-foreground font-medium">5 Live Products · 40+ Automation Workflows</span> — built hands-on with agentic AI, Python, n8n orchestration, and LLM integrations across every layer of the stack.
             </motion.p>
 
-            <motion.div variants={fadeInUp} className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-12">
+            <motion.div variants={fadeInUp} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto mb-8 sm:mb-12">
               {toolsAndTechnologies.map((tool, i) => (
                 <motion.div
                   key={i}
                   whileHover={{ scale: 1.05, y: -6 }}
-                  className="group relative p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-500 cursor-default"
+                  className="group relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-500 cursor-default"
                 >
-                  <div className="absolute inset-0 rounded-2xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="relative z-10 flex flex-col items-center">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-                      <tool.icon className="w-7 h-7 text-primary" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl sm:rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
+                      <tool.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-primary" />
                     </div>
-                    <h4 className="font-semibold text-foreground mb-1">{tool.name}</h4>
-                    <p className="text-xs text-muted-foreground">{tool.description}</p>
+                    <h4 className="font-semibold text-foreground mb-1 text-xs sm:text-sm">{tool.name}</h4>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground">{tool.description}</p>
                   </div>
                 </motion.div>
               ))}
             </motion.div>
 
             {/* Scrolling tech tags */}
-            <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+            <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-2 sm:gap-3 max-w-4xl mx-auto">
               {["n8n", "Python", "FastAPI", "Pydantic", "Fire", "OpenAI GPT-4o", "Claude Sonnet", "Gemini", "Supabase", "Cursor", "VS Code", "LangChain / LangGraph", "REST APIs", "Webhooks", "RAG Pipelines", "Agentic AI", "Apify", "WhatsApp Cloud API", "Google API Suite"].map((tech, i) => (
                 <motion.span
                   key={i}
                   whileHover={{ scale: 1.05, y: -2 }}
-                  className="px-5 py-2.5 bg-card/50 border border-border/50 text-foreground rounded-full text-sm font-medium hover:border-primary/40 transition-all duration-300 cursor-default"
+                  className="px-3 py-1.5 sm:px-5 sm:py-2.5 bg-card/50 border border-border/50 text-foreground rounded-full text-xs sm:text-sm font-medium hover:border-primary/40 transition-all duration-300 cursor-default"
                 >
                   {tech}
                 </motion.span>
@@ -1157,15 +1313,15 @@ const Index = () => {
       </section>
 
       {/* ==================== FAQ ==================== */}
-      <section id="faq" className="py-28 relative">
-        <div className="container mx-auto px-6">
+      <section id="faq" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}
             className="max-w-3xl mx-auto"
           >
-            <motion.div variants={fadeInUp} className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">Frequently Asked Questions</h2>
-              <p className="text-muted-foreground text-lg">Get answers to common questions about our services</p>
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">Frequently Asked Questions</h2>
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg">Get answers to common questions about our services</p>
             </motion.div>
             <motion.div variants={fadeInUp}>
               <Accordion type="single" collapsible className="w-full space-y-4">
@@ -1191,29 +1347,29 @@ const Index = () => {
       </section>
 
       {/* ==================== CONTACT ==================== */}
-      <section id="contact" className="py-28 relative">
+      <section id="contact" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}
             className="max-w-5xl mx-auto"
           >
-            <motion.div variants={fadeInUp} className="text-center mb-12">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
-                <span className="w-2 h-2 rounded-full bg-primary" />
+            <motion.div variants={fadeInUp} className="text-center mb-8 sm:mb-12">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Let's Work Together
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
                 Ready to <span className="gradient-text">Automate</span>?
               </h2>
             </motion.div>
-            <motion.p variants={fadeInUp} className="text-lg text-muted-foreground mb-14 text-center max-w-2xl mx-auto">
+            <motion.p variants={fadeInUp} className="text-sm sm:text-base md:text-lg text-muted-foreground mb-8 sm:mb-14 text-center max-w-2xl mx-auto">
               Whether you need a custom AI agent, workflow automation, or just want to explore what's possible—I'm here to help.
             </motion.p>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              <motion.div variants={fadeInUp} className="space-y-6">
-                <h4 className="text-xl font-semibold text-foreground font-display">Contact Information</h4>
+            <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+              <motion.div variants={fadeInUp} className="space-y-4 sm:space-y-6">
+                <h4 className="text-lg sm:text-xl font-semibold text-foreground font-display">Contact Information</h4>
                 <div className="space-y-4">
                   <a href="mailto:info@srpailabs.com" className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors p-4 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30">
                     <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
@@ -1268,10 +1424,10 @@ const Index = () => {
       </section>
 
       {/* ==================== FOOTER ==================== */}
-      <footer className="py-20 relative border-t border-border/40">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-5 gap-10 mb-12">
-            <div className="md:col-span-2">
+      <footer className="py-12 sm:py-16 md:py-20 relative border-t border-border/40">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 sm:gap-10 mb-8 sm:mb-12">
+            <div className="col-span-2">
               <img src={srpLogo} alt="SRP AI Labs" className="h-10 w-auto mb-4" />
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
                 SRP AI Labs builds AI-powered SaaS products that automate the hardest parts of running a business.

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Monitor, BarChart3, Activity, UserCheck, TrendingUp, X, Grid3X3 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const apps = [
   {
@@ -8,7 +9,7 @@ const apps = [
     url: "https://autonomous.srpailabs.com",
     icon: Monitor,
     color: "from-blue-500 to-cyan-500",
-    badge: "Live",
+    badge: "Live" as const,
   },
   {
     name: "Marketing OS",
@@ -16,7 +17,7 @@ const apps = [
     url: "https://app.srpailabs.com",
     icon: BarChart3,
     color: "from-purple-500 to-pink-500",
-    badge: "Live",
+    badge: "Live" as const,
   },
   {
     name: "MediFlow",
@@ -24,7 +25,7 @@ const apps = [
     url: "https://mediflow.srpailabs.com",
     icon: Activity,
     color: "from-emerald-500 to-teal-500",
-    badge: "Beta",
+    badge: "Beta" as const,
   },
   {
     name: "SmartRecruit",
@@ -32,7 +33,7 @@ const apps = [
     url: "https://recruit.srpailabs.com",
     icon: UserCheck,
     color: "from-orange-500 to-amber-500",
-    badge: "Live",
+    badge: "Live" as const,
   },
   {
     name: "Growth",
@@ -40,63 +41,126 @@ const apps = [
     url: "https://growth.srpailabs.com",
     icon: TrendingUp,
     color: "from-green-500 to-lime-500",
-    badge: "Live",
+    badge: "Live" as const,
   },
 ];
 
 export default function AppSwitcher() {
   const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Close on escape
+  const handleKey = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") setOpen(false);
+  }, []);
+
+  useEffect(() => {
+    if (open) {
+      document.addEventListener("keydown", handleKey);
+      return () => document.removeEventListener("keydown", handleKey);
+    }
+  }, [open, handleKey]);
 
   return (
     <>
       {/* Trigger button */}
-      <button
+      <motion.button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-24 left-6 z-50 w-12 h-12 rounded-2xl bg-card border border-border/60 shadow-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-all hover:scale-105"
+        whileTap={{ scale: 0.95 }}
+        className="fixed bottom-20 left-4 sm:bottom-24 sm:left-6 z-50 w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-card border border-border/60 shadow-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-all"
         aria-label="Switch product"
       >
-        {open ? <X className="w-5 h-5" /> : <Grid3X3 className="w-5 h-5" />}
-      </button>
+        {open ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Grid3X3 className="w-4 h-4 sm:w-5 sm:h-5" />}
+      </motion.button>
 
-      {/* App grid panel */}
-      {open && (
-        <div className="fixed bottom-40 left-6 z-50 w-72 rounded-2xl bg-card border border-border/60 shadow-2xl p-4 backdrop-blur-sm">
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-1">
-            SRP AI Labs — Switch Product
-          </p>
-          <div className="grid grid-cols-2 gap-2">
-            {apps.map((app) => {
-              const Icon = app.icon;
-              return (
-                <a
-                  key={app.name}
-                  href={app.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex flex-col gap-2 p-3 rounded-xl border border-border/40 hover:border-primary/30 hover:bg-accent/30 transition-all"
+      <AnimatePresence>
+        {open && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+              onClick={() => setOpen(false)}
+            />
+
+            {/* Panel - Mobile: bottom drawer, Desktop: floating panel */}
+            <motion.div
+              initial={isMobile ? { y: "100%" } : { opacity: 0, scale: 0.95, y: 10 }}
+              animate={isMobile ? { y: 0 } : { opacity: 1, scale: 1, y: 0 }}
+              exit={isMobile ? { y: "100%" } : { opacity: 0, scale: 0.95, y: 10 }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className={
+                isMobile
+                  ? "fixed bottom-0 left-0 right-0 z-50 rounded-t-3xl bg-card border-t border-border/60 shadow-2xl p-5 pb-8 max-h-[70vh] overflow-y-auto"
+                  : "fixed bottom-36 left-6 z-50 w-80 rounded-2xl bg-card border border-border/60 shadow-2xl p-4 backdrop-blur-xl max-h-[70vh] overflow-y-auto"
+              }
+            >
+              {/* Mobile drag handle */}
+              {isMobile && (
+                <div className="flex justify-center mb-3">
+                  <div className="w-10 h-1 rounded-full bg-border" />
+                </div>
+              )}
+
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-1">
+                  SRP AI Labs — Products
+                </p>
+                <button
                   onClick={() => setOpen(false)}
+                  className="w-7 h-7 rounded-lg bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Close"
                 >
-                  <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${app.color} flex items-center justify-center`}>
-                    <Icon className="w-4.5 h-4.5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold text-foreground leading-tight">{app.name}</p>
-                    <p className="text-[10px] text-muted-foreground">{app.description}</p>
-                  </div>
-                  <span className={`self-start text-[9px] font-bold px-1.5 py-0.5 rounded-full ${app.badge === "Beta" ? "bg-yellow-500/20 text-yellow-400" : "bg-emerald-500/20 text-emerald-400"}`}>
-                    {app.badge}
-                  </span>
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              <div className={isMobile ? "grid grid-cols-1 gap-2" : "grid grid-cols-2 gap-2"}>
+                {apps.map((app) => {
+                  const Icon = app.icon;
+                  return (
+                    <a
+                      key={app.name}
+                      href={app.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center gap-3 p-3 rounded-xl border border-border/40 hover:border-primary/30 hover:bg-accent/10 transition-all active:scale-[0.98]"
+                      onClick={() => setOpen(false)}
+                    >
+                      <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${app.color} flex items-center justify-center flex-shrink-0`}>
+                        <Icon className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-foreground leading-tight truncate">{app.name}</p>
+                        <p className="text-xs text-muted-foreground truncate">{app.description}</p>
+                      </div>
+                      <span className={`flex-shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full ${app.badge === "Beta" ? "bg-yellow-500/20 text-yellow-400" : "bg-emerald-500/20 text-emerald-400"}`}>
+                        {app.badge}
+                      </span>
+                    </a>
+                  );
+                })}
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-border/40 text-center">
+                <a href="https://srpailabs.com" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+                  srpailabs.com
                 </a>
-              );
-            })}
-          </div>
-          <div className="mt-3 pt-3 border-t border-border/40 text-center">
-            <a href="https://srpailabs.com" className="text-[10px] text-muted-foreground hover:text-primary transition-colors">
-              srpailabs.com
-            </a>
-          </div>
-        </div>
-      )}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }

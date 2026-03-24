@@ -272,10 +272,23 @@
   }
 }
 
+/* Prevent horizontal overflow globally */
+html, body {
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile-first responsive typography */
+@media (max-width: 640px) {
+  html {
+    font-size: 15px;
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -295,4 +308,21 @@
 ::selection {
   background: hsl(var(--primary) / 0.3);
   color: hsl(var(--foreground));
+}
+
+/* Mobile menu backdrop */
+.mobile-menu-backdrop {
+  @apply fixed inset-0 z-40;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Mobile drawer */
+.mobile-drawer {
+  @apply fixed top-0 right-0 bottom-0 z-50 w-[85vw] max-w-sm;
+  @apply bg-background border-l border-border/40;
+  @apply flex flex-col;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
