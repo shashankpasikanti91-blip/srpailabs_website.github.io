@@ -27,3 +27,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Build artifacts
+dist.tar.gz
+*.tar.gz
+*.zip
+
+# Vite temp files
+vite.config.ts.timestamp-*

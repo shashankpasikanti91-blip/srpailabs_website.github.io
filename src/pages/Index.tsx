@@ -4,7 +4,8 @@ import {
   Zap, Clock, Bell, BarChart3, CheckCircle, Rocket, Shield, Users, Code, Wrench,
   HelpCircle, MapPin, Phone, Sparkles, FileText, TrendingUp, Target, ExternalLink,
   MousePointer2, Layers, Database, Cpu, ArrowUpRight, ChevronDown, Monitor, Activity,
-  Brain, Briefcase, HeartPulse, UserCheck, Building2, Star, Menu, X, Minus
+  Brain, Briefcase, HeartPulse, UserCheck, Building2, Star, Menu, X, Minus,
+  CircleDot, MousePointerClick, CalendarCheck, PhoneCall
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,6 +22,7 @@ import {
 } from "@/components/ui/accordion";
 import { ChatWidget } from "@/components/ChatWidget";
 import AppSwitcher from "@/components/AppSwitcher";
+import { products, PRODUCT_COUNT } from "@/config/products";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -218,24 +220,21 @@ const Index = () => {
                 <button className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300">
                   Products <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" />
                 </button>
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-72 bg-background/95 backdrop-blur-xl border border-border/60 rounded-2xl shadow-2xl p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                  {[
-                    { name: "Autonomous OS", desc: "AI-powered work OS", url: "https://autonomous.srpailabs.com", icon: Monitor, color: "text-blue-400" },
-                    { name: "Marketing OS", desc: "AI marketing automation", url: "https://app.srpailabs.com", icon: BarChart3, color: "text-purple-400" },
-                    { name: "MediFlow", desc: "Healthcare workflow AI", url: "https://mediflow.srpailabs.com", icon: Activity, color: "text-emerald-400" },
-                    { name: "SmartRecruit", desc: "AI recruitment platform", url: "https://recruit.srpailabs.com", icon: UserCheck, color: "text-orange-400" },
-                    { name: "Growth", desc: "Business growth & lead-gen", url: "https://growth.srpailabs.com", icon: TrendingUp, color: "text-green-400" },
-                  ].map((p) => (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-72 bg-background/95 backdrop-blur-xl border border-border/60 rounded-2xl shadow-2xl p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 max-h-[70vh] overflow-y-auto">
+                  {products.map((p) => (
                     <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
                       className="flex items-center gap-3 p-3 rounded-xl hover:bg-primary/5 transition-colors group/item">
                       <div className="w-9 h-9 rounded-lg bg-card border border-border/60 flex items-center justify-center flex-shrink-0">
-                        <p.icon className={`w-4 h-4 ${p.color}`} />
+                        <p.icon className={`w-4 h-4 ${p.iconColor}`} />
                       </div>
-                      <div>
-                        <div className="text-sm font-medium text-foreground">{p.name}</div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-medium text-foreground flex items-center gap-1.5">
+                          {p.name}
+                          {p.tag && <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-rose-500/20 text-rose-400">{p.tag}</span>}
+                        </div>
                         <div className="text-xs text-muted-foreground">{p.desc}</div>
                       </div>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground ml-auto opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                      <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground ml-auto opacity-0 group-hover/item:opacity-100 transition-opacity flex-shrink-0" />
                     </a>
                   ))}
                 </div>
@@ -317,13 +316,7 @@ const Index = () => {
                         className="overflow-hidden"
                       >
                         <div className="pl-3 pb-2 space-y-1">
-                          {[
-                            { name: "Autonomous OS", url: "https://autonomous.srpailabs.com", icon: Monitor, color: "text-blue-400" },
-                            { name: "Marketing OS", url: "https://app.srpailabs.com", icon: BarChart3, color: "text-purple-400" },
-                            { name: "MediFlow", url: "https://mediflow.srpailabs.com", icon: Activity, color: "text-emerald-400" },
-                            { name: "SmartRecruit", url: "https://recruit.srpailabs.com", icon: UserCheck, color: "text-orange-400" },
-                            { name: "Growth", url: "https://growth.srpailabs.com", icon: TrendingUp, color: "text-green-400" },
-                          ].map((p) => (
+                          {products.map((p) => (
                             <a
                               key={p.name}
                               href={p.url}
@@ -332,8 +325,9 @@ const Index = () => {
                               className="flex items-center gap-3 py-2.5 px-3 rounded-lg hover:bg-muted/50 transition-colors"
                               onClick={() => setMobileMenuOpen(false)}
                             >
-                              <p.icon className={`w-4 h-4 ${p.color}`} />
+                              <p.icon className={`w-4 h-4 ${p.iconColor}`} />
                               <span className="text-sm text-muted-foreground">{p.name}</span>
+                              {p.tag && <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-rose-500/20 text-rose-400">{p.tag}</span>}
                             </a>
                           ))}
                         </div>
@@ -431,34 +425,29 @@ const Index = () => {
                 className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-5 sm:mb-8"
               >
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary animate-pulse" />
-                SRP AI Labs Platform — 5 Products Live
+                SRP AI Labs Platform — {PRODUCT_COUNT} Products Live
               </motion.div>
 
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] tracking-tight font-display mb-5 sm:mb-8">
-                <span className="text-foreground">One Platform.</span>
+                <span className="text-foreground">AI Business</span>
                 <br />
-                <span className="text-foreground">Infinite</span>
+                <span className="text-foreground">Automation</span>
                 <br />
-                <span className="gradient-text text-glow">Automation.</span>
+                <span className="gradient-text text-glow">Platform.</span>
               </h1>
 
               <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed mb-6 sm:mb-10 max-w-xl">
-                SRP AI Labs builds AI-powered SaaS products that automate the hardest parts of running a business — from recruitment and marketing to healthcare and operations.
+                {PRODUCT_COUNT} AI Products + Custom Automation — Built for real business workflows across recruitment, healthcare, marketing, and operations.
               </p>
 
               {/* Product pills */}
               <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6 sm:mb-10">
-                {[
-                  { label: "Autonomous OS", url: "https://autonomous.srpailabs.com" },
-                  { label: "Marketing OS", url: "https://app.srpailabs.com" },
-                  { label: "MediFlow", url: "https://mediflow.srpailabs.com" },
-                  { label: "SmartRecruit", url: "https://recruit.srpailabs.com" },
-                  { label: "Growth", url: "https://growth.srpailabs.com" },
-                ].map((p) => (
-                  <a key={p.label} href={p.url} target="_blank" rel="noopener noreferrer"
+                {products.map((p) => (
+                  <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium bg-card border border-border/60 text-muted-foreground hover:border-primary/40 hover:text-primary transition-all">
                     <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-primary" />
-                    {p.label}
+                    {p.name}
+                    {p.tag && <span className="ml-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-rose-500/20 text-rose-400">{p.tag}</span>}
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 ))}
@@ -471,13 +460,13 @@ const Index = () => {
                 className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2"
               >
                 <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 sm:px-8 shadow-[0_4px_25px_hsl(var(--primary)/0.4)] hover:shadow-[0_8px_40px_hsl(var(--primary)/0.5)] hover:-translate-y-0.5 transition-all w-full sm:w-auto">
-                  <a href="#services" className="group flex items-center justify-center gap-2">
-                    Explore Solutions
+                  <a href="#products" className="group flex items-center justify-center gap-2">
+                    Explore Products
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </Button>
                 <Button size="lg" variant="outline" asChild className="rounded-full px-6 sm:px-8 w-full sm:w-auto">
-                  <a href="#contact" className="flex items-center justify-center">Book Demo</a>
+                  <a href="#custom-automation" className="flex items-center justify-center">Build Custom Automation</a>
                 </Button>
               </motion.div>
             </motion.div>
@@ -615,7 +604,7 @@ const Index = () => {
                 </motion.blockquote>
                 <div className="grid grid-cols-2 gap-4">
                   {[
-                    { value: "5", label: "Live Products" },
+                    { value: "6", label: "Live Products" },
                     { value: "40+", label: "Workflows Built" },
                     { value: "24/7", label: "Uptime" },
                     { value: "Multi", label: "Industry" },
@@ -884,6 +873,141 @@ const Index = () => {
         </div>
       </section>
 
+      {/* ==================== HOW TO GET STARTED ==================== */}
+      <section id="get-started" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
+        <div className="container mx-auto px-4 sm:px-6">
+          <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
+                Get Started
+              </span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+                How to <span className="gradient-text">Get Started</span>
+              </h2>
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-2xl mx-auto">Start automating your business in 4 simple steps</p>
+            </motion.div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 max-w-5xl mx-auto">
+              {[
+                { step: "01", icon: MousePointerClick, title: "Choose a Product", desc: "Browse our 6 AI products and find the one that fits your industry and workflow needs." },
+                { step: "02", icon: UserCheck, title: "Sign Up Directly", desc: "Go to the product's website and create your account. Each product has its own login." },
+                { step: "03", icon: Settings, title: "Or Request Custom Automation", desc: "Need something unique? We build custom automation systems using n8n, AI agents, and APIs." },
+                { step: "04", icon: CalendarCheck, title: "Book a Demo", desc: "Not sure where to start? Book a free demo and our team will guide you to the right solution." },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  variants={fadeInUp}
+                  whileHover={{ y: -8 }}
+                  className="group relative p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-500"
+                >
+                  <div className="absolute top-4 right-4 sm:top-6 sm:right-6 text-3xl sm:text-4xl md:text-6xl font-bold text-primary/10 font-display group-hover:text-primary/20 transition-colors">
+                    {item.step}
+                  </div>
+                  <div className="relative z-10">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl sm:rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
+                      <item.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-primary" />
+                    </div>
+                    <h4 className="font-bold text-sm sm:text-base md:text-xl mb-2 sm:mb-3 text-foreground font-display">{item.title}</h4>
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ==================== CUSTOM AUTOMATION ==================== */}
+      <section id="custom-automation" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+        <div className="container mx-auto px-4 sm:px-6">
+          <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
+                Custom Solutions
+              </span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+                Need <span className="gradient-text">Custom Automation?</span>
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
+                We build custom automation systems using n8n, AI agents, and APIs tailored to your business.
+              </p>
+            </motion.div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto mb-10">
+              {[
+                { icon: Workflow, title: "Workflow Automation", desc: "End-to-end n8n workflows for any business process — from data entry to complex multi-step operations." },
+                { icon: Bot, title: "AI Agents (OpenAI / Claude)", desc: "Intelligent AI agents that reason, plan, and execute tasks — customer support, lead gen, content creation." },
+                { icon: Wrench, title: "CRM & Internal Tools", desc: "Custom CRM systems, admin dashboards, and internal tools built for your specific team needs." },
+                { icon: Building2, title: "Multi-Tenant SaaS Builds", desc: "Full SaaS platforms with tenant isolation, authentication, billing, and scalable architecture." },
+              ].map((item, i) => (
+                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -6 }}
+                  className="group p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-500">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all">
+                    <item.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <h4 className="font-semibold mb-2 text-foreground">{item.title}</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+            <motion.div variants={fadeInUp} className="text-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8">
+                  <a href="#contact" className="group flex items-center gap-2">
+                    Talk to Expert
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </Button>
+                <Button size="lg" variant="outline" asChild className="rounded-full px-8">
+                  <a href="#contact">Request Demo</a>
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ==================== PLATFORM POSITIONING ==================== */}
+      <section id="platform" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
+        <div className="container mx-auto px-4 sm:px-6">
+          <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
+                Platform Overview
+              </span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+                One Platform. <span className="gradient-text">Multiple AI Systems.</span>
+              </h2>
+              <p className="text-muted-foreground max-w-3xl mx-auto text-sm sm:text-base md:text-lg">
+                SRP AI Labs is an AI Business Automation Platform offering {PRODUCT_COUNT} AI SaaS Products, Custom Automation (n8n + AI), and industry-specific systems.
+              </p>
+            </motion.div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
+              {products.map((product, i) => (
+                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }}
+                  className={`group flex items-start gap-4 p-6 rounded-2xl bg-gradient-to-br ${product.gradientColor} border border-border/50 ${product.border} transition-all duration-500`}>
+                  <div className="w-12 h-12 rounded-xl bg-background/60 border border-border/60 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <product.icon className={`w-6 h-6 ${product.iconColor}`} />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-1 text-foreground flex items-center gap-2">
+                      {product.name}
+                      {product.tag && <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-rose-500/20 text-rose-400">{product.tag}</span>}
+                    </h4>
+                    <p className="text-sm text-muted-foreground mb-2">{product.desc}</p>
+                    <a href={product.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:gap-2 transition-all">
+                      Visit Product <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ==================== FEATURED PROJECTS ==================== */}
       <section id="products" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
         <div className="container mx-auto px-4 sm:px-6">
@@ -896,86 +1020,21 @@ const Index = () => {
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
                 Our <span className="gradient-text">Products</span>
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">Five AI-powered SaaS platforms, each solving a critical business problem at scale</p>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">Six AI-powered SaaS platforms, each solving a critical business problem at scale</p>
             </motion.div>
 
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-              {[
-                {
-                  name: "Autonomous OS",
-                  tagline: "AI Business Application Generator",
-                  description: "AI-powered platform that generates full business applications, workflows, dashboards, automation rules, compliance logic, and data systems from natural language. Multi-industry, multi-tenant.",
-                  url: "https://autonomous.srpailabs.com",
-                  subdomain: "autonomous.srpailabs.com",
-                  icon: Monitor,
-                  color: "from-blue-500/20 to-cyan-500/10",
-                  border: "hover:border-blue-500/40",
-                  iconColor: "text-blue-400",
-                  badge: "Live",
-                  features: ["Generate apps from natural language", "Multi-industry, multi-tenant", "Automated workflow & dashboard generation", "Compliance & business logic AI"],
-                },
-                {
-                  name: "Marketing OS",
-                  tagline: "AI Marketing SaaS Platform",
-                  description: "AI marketing SaaS with CRM, lead capture, multilingual creative generation, campaign automation, social media scheduling, localization, and analytics.",
-                  url: "https://app.srpailabs.com",
-                  subdomain: "app.srpailabs.com",
-                  icon: BarChart3,
-                  color: "from-purple-500/20 to-pink-500/10",
-                  border: "hover:border-purple-500/40",
-                  iconColor: "text-purple-400",
-                  badge: "Live",
-                  features: ["CRM & lead capture automation", "Multilingual creative generation", "Campaign & social media scheduling", "Analytics & performance dashboard"],
-                },
-                {
-                  name: "MediFlow",
-                  tagline: "Healthcare Operating System",
-                  description: "AI-powered hospital management SaaS with patient lifecycle, chatbot booking, prescriptions, lab, billing, pharmacy, staff dashboards, and multi-tenant hospital isolation.",
-                  url: "https://mediflow.srpailabs.com",
-                  subdomain: "mediflow.srpailabs.com",
-                  icon: Activity,
-                  color: "from-emerald-500/20 to-teal-500/10",
-                  border: "hover:border-emerald-500/40",
-                  iconColor: "text-emerald-400",
-                  badge: "Live",
-                  features: ["Patient lifecycle & chatbot booking", "Prescriptions, lab & billing", "Pharmacy & staff dashboards", "Multi-tenant hospital isolation"],
-                },
-                {
-                  name: "SmartRecruit",
-                  tagline: "AI-Powered Recruitment ATS",
-                  description: "AI-powered recruitment ATS with resume screening, hiring workflows, job generation, AI writing, OTP login, and full pipeline automation.",
-                  url: "https://recruit.srpailabs.com",
-                  subdomain: "recruit.srpailabs.com",
-                  icon: UserCheck,
-                  color: "from-orange-500/20 to-amber-500/10",
-                  border: "hover:border-orange-500/40",
-                  iconColor: "text-orange-400",
-                  badge: "Live",
-                  features: ["AI resume screening & scoring", "OTP login & secure access", "AI-generated job descriptions", "Full hiring pipeline automation"],
-                },
-                {
-                  name: "Growth",
-                  tagline: "AI-Driven Business Growth Platform",
-                  description: "AI-powered growth platform with automated lead generation, pipeline management, outreach sequences, workflow execution, and real-time business analytics — built for scale.",
-                  url: "https://growth.srpailabs.com",
-                  subdomain: "growth.srpailabs.com",
-                  icon: TrendingUp,
-                  color: "from-green-500/20 to-lime-500/10",
-                  border: "hover:border-green-500/40",
-                  iconColor: "text-green-400",
-                  badge: "Live",
-                  features: ["Automated lead generation & scoring", "AI outreach sequences & follow-ups", "Pipeline tracking & deal management", "n8n workflow execution engine", "Real-time growth analytics dashboard"],
-                },
-              ].map((product, i) => (
-                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }} transition={{ duration: 0.3 }} className={i === 4 ? "sm:col-span-2" : undefined}>
-                  <Card className={`h-full bg-gradient-to-br ${product.color} border-border/50 ${product.border} transition-all duration-500 overflow-hidden group relative`}>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {products.map((product, i) => (
+                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }} transition={{ duration: 0.3 }}>
+                  <Card className={`h-full bg-gradient-to-br ${product.gradientColor} border-border/50 ${product.border} transition-all duration-500 overflow-hidden group relative`}>
                     <CardHeader className="p-5 sm:p-6 md:p-8">
                       <div className="flex items-start justify-between mb-3 sm:mb-4">
                         <div className="w-14 h-14 rounded-2xl bg-background/60 border border-border/60 flex items-center justify-center group-hover:scale-110 transition-transform">
                           <product.icon className={`w-7 h-7 ${product.iconColor}`} />
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 border border-primary/20 text-primary">{product.badge}</span>
+                          <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${product.badge === "New" ? "bg-rose-500/10 border-rose-500/20 text-rose-400" : "bg-primary/10 border-primary/20 text-primary"}`}>{product.badge}</span>
+                          {product.tag && <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-400 animate-pulse">{product.tag}</span>}
                           <a href={product.url} target="_blank" rel="noopener noreferrer"
                             className="w-8 h-8 rounded-lg bg-background/60 border border-border/60 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-all">
                             <ExternalLink className="w-4 h-4" />
@@ -995,10 +1054,15 @@ const Index = () => {
                           </li>
                         ))}
                       </ul>
-                      <a href={product.url} target="_blank" rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:gap-3 transition-all">
-                        Visit {product.subdomain} <ArrowRight className="w-4 h-4" />
-                      </a>
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <a href={product.url} target="_blank" rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-2 text-sm font-medium text-primary-foreground bg-primary hover:bg-primary/90 px-4 py-2 rounded-full transition-all">
+                          Open Product <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                        <a href="#pricing" className="inline-flex items-center justify-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary border border-border/60 hover:border-primary/40 px-4 py-2 rounded-full transition-all">
+                          View Pricing
+                        </a>
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -1019,7 +1083,7 @@ const Index = () => {
                 Product Ecosystem
               </span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
-                One Brand. <span className="gradient-text">Five Independent Systems.</span>
+                One Platform. <span className="gradient-text">Six Independent Systems.</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
                 srpailabs.com is the main hub. Each product is a fully independent SaaS with its own login, database, and deployment — intentional for performance, security, and clarity.
@@ -1046,21 +1110,18 @@ const Index = () => {
             <motion.div variants={fadeInUp} className="max-w-4xl mx-auto">
               <div className="p-8 rounded-3xl bg-card/30 border border-border/40 backdrop-blur-xl">
                 <p className="text-center text-sm font-semibold text-foreground mb-6">Access each product directly at its own subdomain:</p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
-                  {[
-                    { name: "Autonomous OS", url: "https://autonomous.srpailabs.com", icon: Monitor, color: "text-blue-400", desc: "Business automation" },
-                    { name: "Marketing OS", url: "https://app.srpailabs.com", icon: BarChart3, color: "text-purple-400", desc: "AI marketing" },
-                    { name: "MediFlow", url: "https://mediflow.srpailabs.com", icon: Activity, color: "text-emerald-400", desc: "Healthcare OS" },
-                    { name: "SmartRecruit", url: "https://recruit.srpailabs.com", icon: UserCheck, color: "text-orange-400", desc: "HR & Recruitment" },
-                    { name: "Growth", url: "https://growth.srpailabs.com", icon: TrendingUp, color: "text-green-400", desc: "Business Growth" },
-                  ].map((p) => (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4">
+                  {products.map((p) => (
                     <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
                       className="flex flex-col items-center gap-3 p-5 rounded-2xl bg-background/60 border border-border/60 hover:border-primary/40 transition-all group/card text-center">
                       <div className="w-10 h-10 rounded-xl bg-card border border-border/60 flex items-center justify-center group-hover/card:scale-110 transition-transform">
-                        <p.icon className={`w-5 h-5 ${p.color}`} />
+                        <p.icon className={`w-5 h-5 ${p.iconColor}`} />
                       </div>
                       <div>
-                        <div className="text-sm font-semibold text-foreground">{p.name}</div>
+                        <div className="text-sm font-semibold text-foreground flex items-center gap-1 justify-center">
+                          {p.name}
+                          {p.tag && <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-rose-500/20 text-rose-400">{p.tag}</span>}
+                        </div>
                         <div className="text-xs text-muted-foreground">{p.desc}</div>
                       </div>
                       <ExternalLink className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover/card:opacity-100 transition-opacity" />
@@ -1128,129 +1189,62 @@ const Index = () => {
                 Flexible Pricing
               </span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
-                Plans for <span className="gradient-text">Every Stage</span>
+                Flexible Pricing <span className="gradient-text">Per Product</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg mb-3 sm:mb-4">
-                Start automating your business in days — not months.
+                Each product has its own pricing based on features and usage. Choose the product that fits your needs and sign up directly.
               </p>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-xs sm:text-sm">Flexible packages for businesses adopting AI automation — start small and scale with confidence.</p>
             </motion.div>
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
-              {[
-                {
-                  name: "Starter – Basic Automation",
-                  price: "$19",
-                  period: "/mo",
-                  desc: "Best for freelancers & small teams",
-                  features: ["1 workflow setup", "Up to 3 active workflows", "Basic n8n automation", "Standard integrations", "Email support"],
-                  cta: "Start Free Setup",
-                  popular: false,
-                },
-                {
-                  name: "Growth – AI Automation Suite",
-                  price: "$49",
-                  period: "/mo",
-                  desc: "Most Popular — Save 20–40 hrs/month",
-                  features: ["Up to 10 active workflows", "AI-powered automation (LLM integration)", "Custom integrations", "Priority support", "Analytics dashboard"],
-                  cta: "See Live Demo",
-                  popular: true,
-                },
-                {
-                  name: "Enterprise – Full Automation Platform",
-                  price: "Custom",
-                  period: "",
-                  desc: "Built for scaling teams & agencies",
-                  features: ["Unlimited workflows", "Dedicated AI agents", "Custom SaaS deployment", "SLA + onboarding", "White-label options"],
-                  cta: "Talk to Automation Expert",
-                  popular: false,
-                },
-              ].map((plan, i) => (
-                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -6 }} transition={{ duration: 0.3 }} className="relative">
-                  {plan.popular && (
-                    <div className="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2 z-10">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold bg-primary text-primary-foreground shadow-lg whitespace-nowrap">
-                        <Star className="w-3 h-3" /> Most Popular
-                      </span>
-                    </div>
-                  )}
-                  <Card className={`h-full transition-all duration-500 ${
-                    plan.popular
-                      ? "bg-primary/5 border-primary/40 shadow-[0_0_40px_hsl(var(--primary)/0.15)]"
-                      : "bg-card/50 border-border/50 hover:border-primary/30"
-                  }`}>
-                    <CardHeader className="p-5 sm:p-6 md:p-8 pb-4 sm:pb-6">
-                      <CardTitle className="text-sm sm:text-base md:text-lg font-display mb-2 leading-tight">{plan.name}</CardTitle>
-                      <div className="flex items-end gap-1 mb-2 sm:mb-3">
-                        <span className="text-3xl sm:text-4xl font-bold text-foreground font-display">{plan.price}</span>
-                        <span className="text-muted-foreground text-xs sm:text-sm mb-1 sm:mb-1.5">{plan.period}</span>
+
+            <div className="max-w-4xl mx-auto">
+              <motion.div variants={fadeInUp} className="p-8 sm:p-12 rounded-3xl bg-card/30 border border-border/40 backdrop-blur-xl text-center">
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-6">
+                  <Sparkles className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground font-display mb-4">
+                  Every Product. Its Own Pricing.
+                </h3>
+                <p className="text-muted-foreground text-sm sm:text-base md:text-lg mb-8 max-w-xl mx-auto">
+                  SRP AI Labs offers {PRODUCT_COUNT} independent products, each with tailored pricing based on features, usage, and scale. Visit any product to see its plans.
+                </p>
+
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                  {products.map((product) => (
+                    <a key={product.name} href={product.url} target="_blank" rel="noopener noreferrer"
+                      className={`flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br ${product.gradientColor} border border-border/50 ${product.border} transition-all group/price`}>
+                      <div className="w-10 h-10 rounded-lg bg-background/60 border border-border/60 flex items-center justify-center flex-shrink-0 group-hover/price:scale-110 transition-transform">
+                        <product.icon className={`w-5 h-5 ${product.iconColor}`} />
                       </div>
-                      <CardDescription className="text-xs sm:text-sm">{plan.desc}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="px-5 pb-5 sm:px-6 sm:pb-6 md:px-8 md:pb-8">
-                      <ul className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8">
-                        {plan.features.map((f, idx) => (
-                          <li key={idx} className="flex items-center gap-2 sm:gap-2.5 text-xs sm:text-sm text-muted-foreground">
-                            <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary flex-shrink-0" />
-                            {f}
-                          </li>
-                        ))}
-                      </ul>
-                      <Button asChild className={`w-full rounded-full text-xs sm:text-sm ${
-                        plan.popular ? "bg-primary text-primary-foreground hover:bg-primary/90" : "variant-outline"
-                      }`} variant={plan.popular ? "default" : "outline"}>
-                        <a href="#contact">{plan.cta}</a>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+                      <div className="text-left flex-1 min-w-0">
+                        <div className="text-sm font-semibold text-foreground flex items-center gap-1.5">
+                          {product.name}
+                          {product.tag && <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-rose-500/20 text-rose-400">{product.tag}</span>}
+                        </div>
+                        <div className="text-xs text-muted-foreground truncate">{product.desc}</div>
+                      </div>
+                      <ExternalLink className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0" />
+                    </a>
+                  ))}
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8">
+                    <a href="#products" className="group flex items-center gap-2">
+                      View Product Pricing
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </a>
+                  </Button>
+                  <Button size="lg" variant="outline" asChild className="rounded-full px-8">
+                    <a href="#contact">Contact Sales</a>
+                  </Button>
+                </div>
+              </motion.div>
             </div>
 
-            {/* Feature Comparison Row */}
-            <motion.div variants={fadeInUp} className="mt-8 sm:mt-12 max-w-5xl mx-auto">
-              <div className="rounded-2xl bg-card/30 border border-border/40 overflow-hidden">
-                <div className="p-4 sm:p-6">
-                  <h4 className="text-sm sm:text-base font-semibold text-foreground mb-4 sm:mb-6 text-center font-display">Feature Comparison</h4>
-                  <div className="overflow-x-auto -mx-4 sm:mx-0">
-                    <table className="w-full min-w-[400px] text-xs sm:text-sm">
-                      <thead>
-                        <tr className="border-b border-border/40">
-                          <th className="text-left py-2 sm:py-3 px-3 sm:px-4 text-muted-foreground font-medium">Feature</th>
-                          <th className="text-center py-2 sm:py-3 px-2 sm:px-4 text-muted-foreground font-medium">Starter</th>
-                          <th className="text-center py-2 sm:py-3 px-2 sm:px-4 text-primary font-medium">Growth</th>
-                          <th className="text-center py-2 sm:py-3 px-2 sm:px-4 text-muted-foreground font-medium">Enterprise</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {[
-                          { feature: "AI Automation", starter: false, growth: true, enterprise: true },
-                          { feature: "Custom Workflows", starter: false, growth: true, enterprise: true },
-                          { feature: "Priority Support", starter: false, growth: true, enterprise: true },
-                        ].map((row, idx) => (
-                          <tr key={idx} className="border-b border-border/20 last:border-0">
-                            <td className="py-2.5 sm:py-3 px-3 sm:px-4 text-foreground font-medium">{row.feature}</td>
-                            <td className="py-2.5 sm:py-3 px-2 sm:px-4 text-center">
-                              {row.starter ? <CheckCircle className="w-4 h-4 text-primary mx-auto" /> : <Minus className="w-4 h-4 text-muted-foreground/40 mx-auto" />}
-                            </td>
-                            <td className="py-2.5 sm:py-3 px-2 sm:px-4 text-center">
-                              {row.growth ? <CheckCircle className="w-4 h-4 text-primary mx-auto" /> : <Minus className="w-4 h-4 text-muted-foreground/40 mx-auto" />}
-                            </td>
-                            <td className="py-2.5 sm:py-3 px-2 sm:px-4 text-center">
-                              {row.enterprise ? <CheckCircle className="w-4 h-4 text-primary mx-auto" /> : <Minus className="w-4 h-4 text-muted-foreground/40 mx-auto" />}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
             <motion.p variants={fadeInUp} className="text-center text-xs sm:text-sm text-muted-foreground mt-6 sm:mt-10 max-w-2xl mx-auto p-3 sm:p-4 rounded-xl bg-card/30 border border-border/40">
-              Need a hospital, recruitment, marketing, or custom automation solution?{" "}
+              Need a custom automation solution?{" "}
               <a href="#contact" className="text-primary hover:underline font-medium">Contact SRP AI Labs</a>{" "}
-              for tailored pricing.
+              for tailored pricing and enterprise plans.
             </motion.p>
           </motion.div>
         </div>
@@ -1274,7 +1268,7 @@ const Index = () => {
               The exact tools and frameworks powering every SRP AI Labs product and workflow
             </motion.p>
             <motion.p variants={fadeInUp} className="text-xs sm:text-sm text-muted-foreground mb-8 sm:mb-14 max-w-3xl mx-auto bg-card/40 border border-border/40 rounded-xl px-4 py-3 sm:px-6 sm:py-4">
-              <span className="text-foreground font-medium">5 Live Products · 40+ Automation Workflows</span> — built hands-on with agentic AI, Python, n8n orchestration, and LLM integrations across every layer of the stack.
+              <span className="text-foreground font-medium">{PRODUCT_COUNT} Live Products · 40+ Automation Workflows</span> — built hands-on with agentic AI, Python, n8n orchestration, and LLM integrations across every layer of the stack.
             </motion.p>
 
             <motion.div variants={fadeInUp} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto mb-8 sm:mb-12">
@@ -1308,6 +1302,39 @@ const Index = () => {
                 </motion.span>
               ))}
             </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ==================== NEED HELP CHOOSING ==================== */}
+      <section id="help" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
+        <div className="container mx-auto px-4 sm:px-6">
+          <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+                Need Help <span className="gradient-text">Choosing?</span>
+              </h2>
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-2xl mx-auto">Our team and AI assistant are here to help you find the right solution</p>
+            </motion.div>
+            <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
+              {[
+                { icon: MessageSquare, title: "Chat with AI Assistant", desc: "Talk to SRPA, our AI assistant, to get instant product recommendations based on your use case.", cta: "Open Chat", action: "chat" },
+                { icon: CalendarCheck, title: "Book a Demo", desc: "Schedule a free walkthrough with our team. We'll show you the right product for your business.", cta: "Book Demo", href: "#contact" },
+                { icon: Mail, title: "Contact Team", desc: "Reach out directly via email or WhatsApp. We respond quickly and love helping businesses automate.", cta: "Contact Us", href: "#contact" },
+              ].map((item, i) => (
+                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -6 }}
+                  className="group p-6 sm:p-8 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-500 text-center">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 group-hover:bg-primary/20 transition-all">
+                    <item.icon className="w-7 h-7 text-primary" />
+                  </div>
+                  <h4 className="font-semibold text-lg mb-2 text-foreground font-display">{item.title}</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-5">{item.desc}</p>
+                  <Button variant="outline" asChild className="rounded-full">
+                    <a href={item.href || "#contact"}>{item.cta}</a>
+                  </Button>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </section>
@@ -1437,11 +1464,9 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4 text-foreground">Products</h4>
               <ul className="space-y-3">
-                <li><a href="https://autonomous.srpailabs.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"><Monitor className="w-3.5 h-3.5" />Autonomous OS</a></li>
-                <li><a href="https://app.srpailabs.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"><BarChart3 className="w-3.5 h-3.5" />Marketing OS</a></li>
-                <li><a href="https://mediflow.srpailabs.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"><Activity className="w-3.5 h-3.5" />MediFlow</a></li>
-                <li><a href="https://recruit.srpailabs.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"><UserCheck className="w-3.5 h-3.5" />SmartRecruit</a></li>
-                <li><a href="https://growth.srpailabs.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"><TrendingUp className="w-3.5 h-3.5" />Growth</a></li>
+                {products.map((p) => (
+                  <li key={p.name}><a href={p.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"><p.icon className="w-3.5 h-3.5" />{p.name}{p.tag && <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-rose-500/20 text-rose-400">{p.tag}</span>}</a></li>
+                ))}
               </ul>
             </div>
             <div>

@@ -1,49 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
-import { Monitor, BarChart3, Activity, UserCheck, TrendingUp, X, Grid3X3 } from "lucide-react";
+import { X, Grid3X3 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const apps = [
-  {
-    name: "Autonomous OS",
-    description: "AI work automation",
-    url: "https://autonomous.srpailabs.com",
-    icon: Monitor,
-    color: "from-blue-500 to-cyan-500",
-    badge: "Live" as const,
-  },
-  {
-    name: "Marketing OS",
-    description: "Growth & campaigns",
-    url: "https://app.srpailabs.com",
-    icon: BarChart3,
-    color: "from-purple-500 to-pink-500",
-    badge: "Live" as const,
-  },
-  {
-    name: "MediFlow",
-    description: "Healthcare workflows",
-    url: "https://mediflow.srpailabs.com",
-    icon: Activity,
-    color: "from-emerald-500 to-teal-500",
-    badge: "Beta" as const,
-  },
-  {
-    name: "SmartRecruit",
-    description: "AI recruitment",
-    url: "https://recruit.srpailabs.com",
-    icon: UserCheck,
-    color: "from-orange-500 to-amber-500",
-    badge: "Live" as const,
-  },
-  {
-    name: "Growth",
-    description: "Business growth & lead-gen",
-    url: "https://growth.srpailabs.com",
-    icon: TrendingUp,
-    color: "from-green-500 to-lime-500",
-    badge: "Live" as const,
-  },
-];
+import { products } from "@/config/products";
 
 export default function AppSwitcher() {
   const [open, setOpen] = useState(false);
@@ -126,7 +84,7 @@ export default function AppSwitcher() {
               </div>
 
               <div className={isMobile ? "grid grid-cols-1 gap-2" : "grid grid-cols-2 gap-2"}>
-                {apps.map((app) => {
+                {products.map((app) => {
                   const Icon = app.icon;
                   return (
                     <a
@@ -141,10 +99,13 @@ export default function AppSwitcher() {
                         <Icon className="w-5 h-5 text-white" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-foreground leading-tight truncate">{app.name}</p>
-                        <p className="text-xs text-muted-foreground truncate">{app.description}</p>
+                        <p className="text-sm font-semibold text-foreground leading-tight truncate flex items-center gap-1.5">
+                          {app.name}
+                          {app.tag && <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-rose-500/20 text-rose-400">{app.tag}</span>}
+                        </p>
+                        <p className="text-xs text-muted-foreground truncate">{app.desc}</p>
                       </div>
-                      <span className={`flex-shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full ${app.badge === "Beta" ? "bg-yellow-500/20 text-yellow-400" : "bg-emerald-500/20 text-emerald-400"}`}>
+                      <span className={`flex-shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full ${app.badge === "New" ? "bg-rose-500/20 text-rose-400" : app.badge === "Beta" ? "bg-yellow-500/20 text-yellow-400" : "bg-emerald-500/20 text-emerald-400"}`}>
                         {app.badge}
                       </span>
                     </a>

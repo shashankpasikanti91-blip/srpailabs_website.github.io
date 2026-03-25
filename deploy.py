@@ -1,16 +1,25 @@
 """
 Deploy dist/ to Hetzner server via SFTP (paramiko).
 Usage: python deploy.py
+
+Required environment variables (set in .env or shell before running):
+  DEPLOY_HOST     — server IP/hostname
+  DEPLOY_USER     — SSH username (default: root)
+  DEPLOY_PASSWORD — SSH password OR leave empty to use key-based auth
 """
 import os
 import sys
 import paramiko
 from pathlib import Path
 
-HOST = "5.223.67.236"
-PORT = 22
-USER = "root"
-PASSWORD = "856Reey@nsh"
+HOST = os.environ.get("DEPLOY_HOST", "")
+PORT = int(os.environ.get("DEPLOY_PORT", "22"))
+USER = os.environ.get("DEPLOY_USER", "root")
+PASSWORD = os.environ.get("DEPLOY_PASSWORD", "")
+
+if not HOST:
+    print("ERROR: DEPLOY_HOST environment variable is not set.")
+    sys.exit(1)
 LOCAL_DIST = Path(__file__).parent / "dist"
 REMOTE_BASE = "/var/www/srp/dist"
 
@@ -48,7 +57,10 @@ def main():
     print(f"Connecting to {HOST}...")
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(HOST, port=PORT, username=USER, password=PASSWORD, timeout=30)
+    if PASSWORD:
+        ssh.connect(HOST, port=PORT, username=USER, password=PASSWORD, timeout=30)
+    else:
+        ssh.connect(HOST, port=PORT, username=USER, timeout=30)  # key-based auth
     print("Connected.")
 
     print("Ensuring remote directories exist...")
