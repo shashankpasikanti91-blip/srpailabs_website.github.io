@@ -117,7 +117,7 @@ export const ChatWidget = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: `Hi! 👋 I'm SRPA, the SRP AI Labs assistant. We're an AI Business Automation Platform with ${PRODUCT_COUNT} AI-powered products — covering Healthcare, Recruitment, Marketing, Sales, CRM, and Business Automation.\n\nWhat are you looking for?\n• Recruitment\n• Marketing\n• Healthcare\n• Sales & Growth\n• CRM & Revenue\n• Custom Automation\n\nTell me your use case and I'll guide you to the right product!`,
+      content: `Hi! 👋 I'm SRPA, SRP AI Labs' assistant. What business problem are you solving? I'll point you to the right AI product!`,
     },
   ]);
   const [input, setInput] = useState("");
@@ -154,9 +154,9 @@ export const ChatWidget = () => {
           Authorization: `Bearer ${OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
-          model: "gpt-4o-mini",
+          model: "gpt-4.1-mini",
           messages: openaiMessages,
-          max_tokens: 1024,
+          max_tokens: 512,
           temperature: 0.7,
         }),
       });
