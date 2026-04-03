@@ -152,56 +152,21 @@ Schemas: `auth` · `autonomous` · `marketing` · `mediflow` · `recruit` · `gr
 ## Mobile-First Responsive Design
 
 - Hamburger menu with slide-over drawer + expandable Products section
-- Hero scales `text-3xl` (mobile) → `text-7xl` (desktop)
+- Hero scales `text-4xl` (mobile) → `text-8xl` (desktop)
 - Product grids: 1 col → 2 col → 3 col
 - App Switcher: bottom drawer (mobile) / floating panel (desktop)
 - Touch-friendly throughout
 
 ---
 
-© 2026 SRP AI Labs · [srpailabs.com](https://srpailabs.com)
-python deploy.py
-```
+## Visual Design & UX
 
-### Nginx + SSL
-
-```sh
-sudo cp nginx/srpailabs.conf /etc/nginx/sites-available/srpailabs.conf
-sudo ln -s /etc/nginx/sites-available/srpailabs.conf /etc/nginx/sites-enabled/
-sudo certbot --nginx \
-  -d srpailabs.com -d www.srpailabs.com \
-  -d autonomous.srpailabs.com -d app.srpailabs.com \
-  -d mediflow.srpailabs.com -d recruit.srpailabs.com \
-  -d growth.srpailabs.com -d automation.srpailabs.com
-sudo nginx -t && sudo systemctl reload nginx
-```
-
-### Database
-
-```sh
-psql -U postgres -d srpailabs -f database/init.sql
-```
-
-Schemas: `auth` · `autonomous` · `marketing` · `mediflow` · `recruit` · `growth` · `automation`
-
----
-
-## Security
-
-- Credentials are in `.env` only — never committed to git
-- `deploy.py` reads from environment variables — no hardcoded secrets
-- Per-product isolated database schemas
-- Multi-tenant isolation enforced at application + database level
-
----
-
-## Mobile-First Responsive Design
-
-- Hamburger menu with slide-over drawer + expandable Products section
-- Hero scales `text-3xl` (mobile) → `text-7xl` (desktop)
-- Product grids: 1 col → 2 col → 3 col
-- App Switcher: bottom drawer (mobile) / floating panel (desktop)
-- Touch-friendly throughout
+- **Interactive particle constellation** — Canvas-based particle network hero background with mouse/touch interaction, connection lines, nebula clouds, star field, and flowing waves
+- **Day/Night theme toggle** — Sun/Moon toggle in header (desktop + mobile) switches between dark space theme and clean light theme
+- **SRP brand colors** — Purple→Magenta→Blue→Cyan gradient system matching the SRP logo across all elements
+- **Enhanced hover effects** — All cards glow with purple border + shadow on hover, icons scale up, smooth transitions
+- **Framer Motion animations** — Scroll-triggered fade-in, stagger, and parallax effects throughout
+- **Responsive particle network** — Adapts density to viewport size, supports touch interaction on mobile
 
 ---
 

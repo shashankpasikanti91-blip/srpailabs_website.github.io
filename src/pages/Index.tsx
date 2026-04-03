@@ -5,7 +5,7 @@ import {
   HelpCircle, MapPin, Phone, Sparkles, FileText, TrendingUp, Target, ExternalLink,
   MousePointer2, Layers, Database, Cpu, ArrowUpRight, ChevronDown, Monitor, Activity,
   Brain, Briefcase, HeartPulse, UserCheck, Building2, Star, Menu, X, Minus,
-  CircleDot, MousePointerClick, CalendarCheck, PhoneCall
+  CircleDot, MousePointerClick, CalendarCheck, PhoneCall, Sun, Moon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/accordion";
 import { ChatWidget } from "@/components/ChatWidget";
 import AppSwitcher from "@/components/AppSwitcher";
+import ParticleNetwork from "@/components/ParticleNetwork";
 import { products, PRODUCT_COUNT } from "@/config/products";
 
 const contactSchema = z.object({
@@ -73,6 +74,15 @@ const Index = () => {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains("dark"));
+
+  const toggleTheme = () => {
+    const next = !isDark;
+    setIsDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    document.documentElement.style.colorScheme = next ? "dark" : "light";
+  };
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20 });
@@ -188,14 +198,14 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background dark relative">
-      {/* Cursor glow follower */}
+    <div className="min-h-screen bg-background relative">
+      {/* Cursor glow follower — SRP brand purple/cyan */}
       <motion.div
-        className="fixed w-[500px] h-[500px] rounded-full pointer-events-none z-0 opacity-[0.07]"
+        className="fixed w-[600px] h-[600px] rounded-full pointer-events-none z-0 opacity-[0.06]"
         style={{
-          x: useTransform(smoothX, (v) => v - 250),
-          y: useTransform(smoothY, (v) => v - 250),
-          background: "radial-gradient(circle, hsl(var(--primary)) 0%, transparent 70%)",
+          x: useTransform(smoothX, (v) => v - 300),
+          y: useTransform(smoothY, (v) => v - 300),
+          background: "radial-gradient(circle, hsl(265 85% 65%) 0%, hsl(190 100% 50% / 0.5) 40%, transparent 70%)",
         }}
       />
 
@@ -204,13 +214,13 @@ const Index = () => {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="sticky top-0 z-50 backdrop-blur-2xl bg-background/70 border-b border-border/40"
+        className="sticky top-0 z-50 backdrop-blur-2xl bg-background/80 border-b border-border/30"
       >
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
             <a href="#home" className="flex items-center gap-2 sm:gap-3">
               <img src={srpLogo} alt="SRP AI Labs" className="h-7 sm:h-8 w-auto" />
-              <span className="text-base sm:text-lg font-bold text-foreground hidden sm:inline font-display">SRP AI Labs</span>
+              <span className="text-base sm:text-lg font-bold text-foreground hidden sm:inline font-display">SRP <span className="gradient-text">AI Labs</span></span>
             </a>
 
             {/* Desktop navigation */}
@@ -251,19 +261,35 @@ const Index = () => {
                   <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary group-hover:w-full transition-all duration-300" />
                 </a>
               ))}
-              <Button size="sm" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6">
+              <button
+                onClick={toggleTheme}
+                className="w-9 h-9 rounded-full bg-card/60 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-all duration-300"
+                aria-label="Toggle theme"
+              >
+                {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
+              <Button size="sm" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-6 border-0 shadow-[0_2px_15px_hsl(265_85%_65%/0.3)]">
                 <a href="#contact">Get Started</a>
               </Button>
             </div>
 
             {/* Mobile hamburger */}
-            <button
-              onClick={() => setMobileMenuOpen(true)}
-              className="md:hidden w-10 h-10 rounded-xl bg-card/50 border border-border/50 flex items-center justify-center text-foreground hover:text-primary transition-colors"
-              aria-label="Open menu"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
+            <div className="flex md:hidden items-center gap-2">
+              <button
+                onClick={toggleTheme}
+                className="w-10 h-10 rounded-xl bg-card/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
+                aria-label="Toggle theme"
+              >
+                {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
+              <button
+                onClick={() => setMobileMenuOpen(true)}
+                className="w-10 h-10 rounded-xl bg-card/50 border border-border/50 flex items-center justify-center text-foreground hover:text-primary transition-colors"
+                aria-label="Open menu"
+              >
+                <Menu className="w-5 h-5" />
+              </button>
+            </div>
           </nav>
         </div>
       </motion.header>
@@ -352,7 +378,7 @@ const Index = () => {
                 ))}
               </div>
               <div className="p-4 border-t border-border/40">
-                <Button asChild className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-full" size="lg">
+                <Button asChild className="w-full bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full border-0" size="lg">
                   <a href="#contact" onClick={() => setMobileMenuOpen(false)}>Get Started</a>
                 </Button>
               </div>
@@ -362,52 +388,13 @@ const Index = () => {
       </AnimatePresence>
 
       {/* ==================== HERO ==================== */}
-      <section id="home" className="relative py-12 sm:py-16 md:py-24 lg:py-32">
-        {/* Abstract animated background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {/* Large gradient orb - right side */}
-          <motion.div
-            className="absolute top-1/2 right-0 -translate-y-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] md:w-[700px] md:h-[700px] lg:w-[900px] lg:h-[900px]"
-            animate={{ rotate: [0, 360] }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-          >
-            <div className="w-full h-full rounded-full" style={{
-              background: "conic-gradient(from 0deg, hsl(var(--primary) / 0.15), transparent, hsl(var(--primary) / 0.08), transparent, hsl(var(--primary) / 0.12))",
-              filter: "blur(60px)",
-            }} />
-          </motion.div>
-          
-          {/* Floating geometric shapes - hidden on small screens */}
-          <motion.div
-            className="absolute top-[15%] right-[20%] w-14 h-14 md:w-20 md:h-20 border border-primary/20 rounded-2xl hidden sm:block"
-            animate={{ y: [0, -30, 0], rotate: [0, 45, 0] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="absolute top-[35%] right-[10%] w-10 h-10 md:w-14 md:h-14 border border-primary/15 rounded-full hidden sm:block"
-            animate={{ y: [0, 20, 0], x: [0, -10, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          />
-          <motion.div
-            className="absolute bottom-[25%] right-[25%] w-8 h-8 md:w-10 md:h-10 bg-primary/10 rounded-lg hidden md:block"
-            animate={{ y: [0, -20, 0], rotate: [0, -30, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          />
-          <motion.div
-            className="absolute top-[60%] right-[5%] w-5 h-5 md:w-6 md:h-6 bg-primary/20 rounded-full hidden md:block"
-            animate={{ y: [0, 15, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-          />
-          {/* Connection dots - fewer on mobile */}
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1.5 h-1.5 md:w-2 md:h-2 bg-primary/30 rounded-full hidden sm:block"
-              style={{ top: `${20 + i * 12}%`, right: `${8 + (i % 3) * 15}%` }}
-              animate={{ opacity: [0.2, 0.6, 0.2], scale: [1, 1.5, 1] }}
-              transition={{ duration: 3, repeat: Infinity, delay: i * 0.4 }}
-            />
-          ))}
+      <section id="home" className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+        {/* Interactive particle network background */}
+        <div className="absolute inset-0">
+          <ParticleNetwork />
+          {/* Subtle gradient overlay at top and bottom for readability */}
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent z-[1]" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent z-[1]" />
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
@@ -424,19 +411,25 @@ const Index = () => {
                 transition={{ delay: 0.2 }}
                 className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-5 sm:mb-8"
               >
-                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary animate-pulse" />
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 animate-pulse" />
                 SRP AI Labs Platform — {PRODUCT_COUNT} Products Live
               </motion.div>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] tracking-tight font-display mb-5 sm:mb-8">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.05] tracking-tight font-display mb-5 sm:mb-8">
                 <span className="text-foreground">AI Business</span>
                 <br />
                 <span className="text-foreground">Automation</span>
                 <br />
-                <span className="gradient-text text-glow">Platform.</span>
+                <span className="gradient-text-glow text-glow" style={{
+                  backgroundImage: "linear-gradient(135deg, hsl(320 90% 65%), hsl(265 85% 65%), hsl(220 85% 60%), hsl(190 100% 50%))",
+                  backgroundSize: "200% 200%",
+                  animation: "text-shimmer 4s ease-in-out infinite",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}>Platform.</span>
               </h1>
 
-              <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed mb-6 sm:mb-10 max-w-xl">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed mb-6 sm:mb-10 max-w-xl">
                 {PRODUCT_COUNT} AI Products + Custom Automation — Built for real business workflows across recruitment, healthcare, marketing, and operations.
               </p>
 
@@ -444,8 +437,8 @@ const Index = () => {
               <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6 sm:mb-10">
                 {products.map((p) => (
                   <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium bg-card border border-border/60 text-muted-foreground hover:border-primary/40 hover:text-primary transition-all">
-                    <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-primary" />
+                    className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium bg-card/60 border border-border/50 text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all duration-300">
+                    <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-cyan-400" />
                     {p.name}
                     {p.tag && <span className="ml-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-rose-500/20 text-rose-400">{p.tag}</span>}
                     <ExternalLink className="w-3 h-3" />
@@ -459,45 +452,64 @@ const Index = () => {
                 transition={{ delay: 0.3 }}
                 className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2"
               >
-                <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 sm:px-8 shadow-[0_4px_25px_hsl(var(--primary)/0.4)] hover:shadow-[0_8px_40px_hsl(var(--primary)/0.5)] hover:-translate-y-0.5 transition-all w-full sm:w-auto">
+                <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-6 sm:px-8 shadow-[0_4px_30px_hsl(265_85%_65%/0.4),0_2px_15px_hsl(190_100%_50%/0.2)] hover:shadow-[0_8px_50px_hsl(265_85%_65%/0.5),0_4px_25px_hsl(190_100%_50%/0.3)] hover:-translate-y-0.5 transition-all border-0 w-full sm:w-auto">
                   <a href="#products" className="group flex items-center justify-center gap-2">
                     Explore Products
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </Button>
-                <Button size="lg" variant="outline" asChild className="rounded-full px-6 sm:px-8 w-full sm:w-auto">
+                <Button size="lg" variant="outline" asChild className="rounded-full px-6 sm:px-8 border-purple-500/30 hover:border-purple-500/60 hover:bg-purple-500/5 w-full sm:w-auto">
                   <a href="#custom-automation" className="flex items-center justify-center">Build Custom Automation</a>
                 </Button>
               </motion.div>
             </motion.div>
 
-            {/* Right - Logo + visual */}
+            {/* Right - Logo */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.4, duration: 0.8 }}
               className="hidden lg:flex items-center justify-center relative"
             >
-              <div className="relative">
-                {/* Glow behind logo */}
-                <div className="absolute inset-0 bg-primary/15 rounded-full blur-[80px] scale-150" />
-                <motion.img
-                  src={srpLogo}
-                  alt="SRP AI Automation Labs"
-                  className="relative z-10 w-[200px] lg:w-[280px] h-auto drop-shadow-2xl"
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                />
-              </div>
+              <motion.img
+                src={srpLogo}
+                alt="SRP AI Automation Labs"
+                className="relative z-10 w-[220px] lg:w-[300px] h-auto"
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              />
             </motion.div>
           </div>
 
-          {/* Stats section - responsive grid */}
+          {/* Scrolling marquee ticker */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className="mt-6 sm:mt-10 md:mt-14 py-4 sm:py-5 border-y border-border/30"
+          >
+            <div className="marquee-container">
+              <div className="marquee-track">
+                {[...Array(2)].map((_, setIdx) => (
+                  <div key={setIdx} className="flex items-center gap-6 sm:gap-10 px-3 sm:px-5">
+                    {["AI AUTOMATION", "n8n WORKFLOWS", "SaaS PRODUCTS", "HEALTHCARE AI", "RECRUITMENT AI", "MARKETING OS", "CUSTOM AGENTS", "RAG PIPELINES", "ENTERPRISE GRADE", "MULTI-TENANT", "GPT-4 POWERED", "FULL-STACK AI"].map((text, i) => (
+                      <span key={`${setIdx}-${i}`} className="flex items-center gap-3 sm:gap-4 whitespace-nowrap">
+                        <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-muted-foreground/60 hover:text-primary/80 transition-colors duration-300">{text}</span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 opacity-40" />
+                      </span>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Stats section */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.6 }}
-            className="mt-8 sm:mt-12 md:mt-16 border-t border-border/40 bg-background/60 backdrop-blur-xl rounded-lg py-6 sm:py-8"
+            className="mt-8 sm:mt-12 md:mt-16 bg-card/30 backdrop-blur-xl rounded-2xl border border-border/30 py-6 sm:py-8 px-4 sm:px-8"
           >
             <div className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-8 text-center">
               {[
@@ -506,7 +518,11 @@ const Index = () => {
                 { value: "24/7", suffix: "", label: "Automation Uptime" },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary font-display">
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold font-display" style={{
+                    backgroundImage: "linear-gradient(135deg, hsl(320 90% 65%), hsl(265 85% 65%), hsl(190 100% 50%))",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}>
                     {stat.value === "24/7" ? "24/7" : <AnimatedCounter value={stat.value} suffix={stat.suffix} />}
                   </div>
                   <div className="text-[10px] sm:text-xs md:text-sm text-muted-foreground mt-1">{stat.label}</div>
@@ -517,8 +533,16 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== CAPABILITIES / HIGHLIGHTS ==================== */}
-      <section className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
+      <section className="py-14 sm:py-20 md:py-24 lg:py-28 relative overflow-hidden">
+        {/* Subtle background gradient */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-[20%] -left-[10%] w-[400px] h-[400px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, hsl(265 85% 65%), transparent 70%)', filter: 'blur(60px)' }} />
+          <div className="absolute bottom-[10%] -right-[10%] w-[300px] h-[300px] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, hsl(190 100% 50%), transparent 70%)', filter: 'blur(60px)' }} />
+        </div>
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}
@@ -527,7 +551,7 @@ const Index = () => {
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-display mb-3 sm:mb-4">
                 What We <span className="gradient-text">Deliver</span>
               </h2>
-              <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto">
                 End-to-end automation capabilities for modern businesses
               </p>
             </motion.div>
@@ -546,11 +570,11 @@ const Index = () => {
                   key={i}
                   variants={fadeInUp}
                   whileHover={{ y: -6, scale: 1.02 }}
-                  className="group relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-card/50 border border-border/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-500 cursor-default"
+                  className="group relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-card/50 border border-border/50 backdrop-blur-sm hover:border-primary/60 hover:bg-primary/[0.04] hover:shadow-[0_0_30px_hsl(265_85%_65%/0.2)] transition-all duration-500 cursor-default"
                 >
                   <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="relative z-10">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-purple-500/10 to-cyan-500/10 border border-purple-500/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 group-hover:from-purple-500/20 group-hover:to-cyan-500/20 transition-all duration-300">
                       <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                     </div>
                     <h4 className="font-semibold text-xs sm:text-sm text-foreground mb-1">{item.title}</h4>
@@ -563,9 +587,12 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== ABOUT ==================== */}
       <section id="about" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}
@@ -577,7 +604,7 @@ const Index = () => {
                   <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                   About SRP AI Labs
                 </span>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-4 sm:mb-6 leading-tight">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-4 sm:mb-6 leading-tight">
                   AI Business Operating{" "}
                   <span className="gradient-text">System Company</span>
                 </h2>
@@ -598,7 +625,7 @@ const Index = () => {
               <div className="space-y-6">
                 <motion.blockquote
                   variants={fadeInUp}
-                  className="text-xl font-medium text-foreground italic border-l-4 border-primary pl-6 py-4 bg-card/30 rounded-r-2xl"
+                  className="text-xl font-medium text-foreground italic border-l-4 border-transparent pl-6 py-4 bg-card/30 rounded-r-2xl" style={{ borderImage: 'linear-gradient(to bottom, hsl(320 90% 60%), hsl(265 85% 65%), hsl(190 100% 50%)) 1' }}
                 >
                   "We believe every business deserves purpose-built AI — not generic tools, but systems designed for your industry."
                 </motion.blockquote>
@@ -612,7 +639,7 @@ const Index = () => {
                     <motion.div
                       key={i}
                       variants={fadeInUp}
-                      className="p-5 rounded-2xl bg-card border border-border/50 text-center hover:border-primary/30 transition-colors"
+                      className="p-5 rounded-2xl bg-card border border-border/50 text-center hover:border-primary/60 hover:bg-primary/[0.04] hover:shadow-[0_0_25px_hsl(265_85%_65%/0.15)] transition-all duration-500"
                     >
                       <div className="text-2xl font-bold text-primary font-display">{stat.value}</div>
                       <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
@@ -620,14 +647,14 @@ const Index = () => {
                   ))}
                 </div>
                 <div className="flex gap-4">
-                  <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full">
+                  <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full border-0">
                     <a href="#contact" className="group flex items-center gap-2">
                       <Sparkles className="w-5 h-5" />
                       Book Demo
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </a>
                   </Button>
-                  <Button size="lg" variant="outline" asChild className="rounded-full">
+                  <Button size="lg" variant="outline" asChild className="rounded-full border-purple-500/30 hover:border-purple-500/60 hover:bg-purple-500/5">
                     <a href="#products">Explore Products</a>
                   </Button>
                 </div>
@@ -637,6 +664,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== HOW WE WORK ==================== */}
       <section className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
         <div className="container mx-auto px-4 sm:px-6">
@@ -645,8 +675,8 @@ const Index = () => {
             className="max-w-6xl mx-auto"
           >
             <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">How We Work</h2>
-              <p className="text-muted-foreground text-sm sm:text-base md:text-lg">Simple, transparent process from discovery to deployment</p>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">How We Work</h2>
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl">Simple, transparent process from discovery to deployment</p>
             </motion.div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               {[
@@ -678,9 +708,13 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== SERVICES ==================== */}
-      <section id="services" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+      <section id="services" className="py-14 sm:py-20 md:py-24 lg:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
+        <div className="absolute top-[40%] right-0 w-[400px] h-[400px] rounded-full opacity-[0.04] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(190 100% 50%), transparent 70%)', filter: 'blur(60px)' }} />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
             <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
@@ -688,7 +722,7 @@ const Index = () => {
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 What We Do
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">
                 Our <span className="gradient-text">Services</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
@@ -698,7 +732,7 @@ const Index = () => {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {services.map((service, i) => (
                 <motion.div key={i} variants={fadeInUp} whileHover={{ y: -8 }} transition={{ duration: 0.3 }}>
-                  <Card className="h-full bg-card/50 border-border/50 hover:border-primary/30 transition-all duration-500 overflow-hidden group backdrop-blur-sm">
+                  <Card className="h-full bg-card/50 border-border/50 hover:border-primary/60 hover:bg-primary/[0.04] hover:shadow-[0_0_30px_hsl(265_85%_65%/0.2)] transition-all duration-500 overflow-hidden group backdrop-blur-sm">
                     <CardHeader>
                       <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
                         <service.icon className="w-7 h-7 text-primary" />
@@ -726,8 +760,12 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== WHY SRP AI LABS ==================== */}
-      <section id="why-srp" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
+      <section id="why-srp" className="py-14 sm:py-20 md:py-24 lg:py-28 relative overflow-hidden">
+        <div className="absolute top-[30%] -left-[5%] w-[350px] h-[350px] rounded-full opacity-[0.05] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(320 90% 60%), transparent 70%)', filter: 'blur(60px)' }} />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
             <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
@@ -735,8 +773,8 @@ const Index = () => {
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Why SRP AI Labs
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">The Right AI Partner <span className="gradient-text">for Your Business</span></h2>
-              <p className="text-muted-foreground text-sm sm:text-base md:text-lg">What makes SRP AI Labs different from generic automation vendors</p>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">The Right AI Partner <span className="gradient-text">for Your Business</span></h2>
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl">What makes SRP AI Labs different from generic automation vendors</p>
             </motion.div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
               {[
@@ -751,13 +789,13 @@ const Index = () => {
                   key={i}
                   variants={fadeInUp}
                   whileHover={{ y: -6 }}
-                  className="flex items-start gap-4 p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-500 group"
+                  className="flex items-start gap-4 p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/60 hover:bg-primary/[0.04] hover:shadow-[0_0_30px_hsl(265_85%_65%/0.2)] transition-all duration-500 group"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-primary/20 transition-all">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-primary/25 group-hover:border-primary/50 transition-all">
                     <item.icon className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1 text-foreground">{item.title}</h4>
+                    <h4 className="font-semibold mb-1 text-foreground group-hover:text-primary transition-colors">{item.title}</h4>
                     <p className="text-sm text-muted-foreground">{item.description}</p>
                   </div>
                 </motion.div>
@@ -767,9 +805,13 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== CASE STUDIES ==================== */}
-      <section id="agents" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+      <section id="agents" className="py-14 sm:py-20 md:py-24 lg:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
+        <div className="absolute bottom-[20%] right-[10%] w-[300px] h-[300px] rounded-full opacity-[0.05] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(265 85% 65%), transparent 70%)', filter: 'blur(60px)' }} />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
             <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
@@ -777,7 +819,7 @@ const Index = () => {
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Success Stories
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">
                 Case <span className="gradient-text">Studies</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">Real results from AI-powered n8n workflows</p>
@@ -808,9 +850,9 @@ const Index = () => {
                 },
               ].map((study, i) => (
                 <motion.div key={i} variants={fadeInUp} whileHover={{ y: -6 }}>
-                  <Card className="h-full bg-card/50 border-border/50 hover:border-primary/30 transition-all duration-500 overflow-hidden group">
+                  <Card className="h-full bg-card/50 border-border/50 hover:border-primary/60 hover:bg-primary/[0.04] hover:shadow-[0_0_30px_hsl(265_85%_65%/0.2)] transition-all duration-500 overflow-hidden group">
                     <CardHeader>
-                      <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4">
+                      <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/25 transition-all">
                         <study.icon className="w-7 h-7 text-primary" />
                       </div>
                       <span className="text-xs font-semibold text-primary uppercase tracking-wider">{study.tag}</span>
@@ -859,7 +901,7 @@ const Index = () => {
                   Let's discuss how AI-powered automation can solve your specific challenges.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full">
+                  <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full border-0">
                     <a href="#contact" className="group flex items-center gap-2">
                       <Sparkles className="w-5 h-5" />
                       Book a Free Consultation
@@ -873,6 +915,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== HOW TO GET STARTED ==================== */}
       <section id="get-started" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
         <div className="container mx-auto px-4 sm:px-6">
@@ -882,10 +927,10 @@ const Index = () => {
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Get Started
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">
                 How to <span className="gradient-text">Get Started</span>
               </h2>
-              <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-2xl mx-auto">Start automating your business in 4 simple steps</p>
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto">Start automating your business in 4 simple steps</p>
             </motion.div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 max-w-5xl mx-auto">
               {[
@@ -897,18 +942,18 @@ const Index = () => {
                 <motion.div
                   key={i}
                   variants={fadeInUp}
-                  whileHover={{ y: -8 }}
-                  className="group relative p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-500"
+                  whileHover={{ y: -8, scale: 1.03 }}
+                  className="group relative p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-card/50 border border-border/50 hover:border-primary/60 hover:bg-primary/[0.06] hover:shadow-[0_0_40px_hsl(265_85%_65%/0.25),0_0_80px_hsl(190_100%_50%/0.1)] transition-all duration-500"
                 >
-                  <div className="absolute top-4 right-4 sm:top-6 sm:right-6 text-3xl sm:text-4xl md:text-6xl font-bold text-primary/10 font-display group-hover:text-primary/20 transition-colors">
+                  <div className="absolute top-4 right-4 sm:top-6 sm:right-6 text-3xl sm:text-4xl md:text-6xl font-bold text-primary/10 font-display group-hover:text-primary/30 transition-colors duration-500">
                     {item.step}
                   </div>
                   <div className="relative z-10">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl sm:rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
-                      <item.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-primary" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl sm:rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 group-hover:bg-primary/25 group-hover:border-primary/50 group-hover:shadow-[0_0_20px_hsl(265_85%_65%/0.3)] transition-all duration-300">
+                      <item.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-primary group-hover:text-primary transition-colors duration-300" />
                     </div>
-                    <h4 className="font-bold text-sm sm:text-base md:text-xl mb-2 sm:mb-3 text-foreground font-display">{item.title}</h4>
-                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                    <h4 className="font-bold text-sm sm:text-base md:text-xl mb-2 sm:mb-3 text-foreground font-display group-hover:text-primary transition-colors duration-300">{item.title}</h4>
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed group-hover:text-muted-foreground/90 transition-colors duration-300">{item.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -917,9 +962,12 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== CUSTOM AUTOMATION ==================== */}
-      <section id="custom-automation" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+      <section id="custom-automation" className="py-14 sm:py-20 md:py-24 lg:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
             <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
@@ -927,7 +975,7 @@ const Index = () => {
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Custom Solutions
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">
                 Need <span className="gradient-text">Custom Automation?</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
@@ -942,24 +990,24 @@ const Index = () => {
                 { icon: Building2, title: "Multi-Tenant SaaS Builds", desc: "Full SaaS platforms with tenant isolation, authentication, billing, and scalable architecture." },
               ].map((item, i) => (
                 <motion.div key={i} variants={fadeInUp} whileHover={{ y: -6 }}
-                  className="group p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-500">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all">
+                  className="group p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/60 hover:bg-primary/[0.04] hover:shadow-[0_0_30px_hsl(265_85%_65%/0.2)] transition-all duration-500">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/25 group-hover:border-primary/50 transition-all">
                     <item.icon className="w-6 h-6 text-primary" />
                   </div>
-                  <h4 className="font-semibold mb-2 text-foreground">{item.title}</h4>
+                  <h4 className="font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">{item.title}</h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
             <motion.div variants={fadeInUp} className="text-center">
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8">
+                <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-8 border-0">
                   <a href="#contact" className="group flex items-center gap-2">
                     Talk to Expert
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </Button>
-                <Button size="lg" variant="outline" asChild className="rounded-full px-8">
+                <Button size="lg" variant="outline" asChild className="rounded-full px-8 border-purple-500/30 hover:border-purple-500/60 hover:bg-purple-500/5">
                   <a href="#contact">Request Demo</a>
                 </Button>
               </div>
@@ -967,6 +1015,9 @@ const Index = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Section divider */}
+      <div className="section-divider" />
 
       {/* ==================== PLATFORM POSITIONING ==================== */}
       <section id="platform" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
@@ -977,7 +1028,7 @@ const Index = () => {
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Platform Overview
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">
                 One Platform. <span className="gradient-text">Multiple AI Systems.</span>
               </h2>
               <p className="text-muted-foreground max-w-3xl mx-auto text-sm sm:text-base md:text-lg">
@@ -1008,6 +1059,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== FEATURED PROJECTS ==================== */}
       <section id="products" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
         <div className="container mx-auto px-4 sm:px-6">
@@ -1017,7 +1071,7 @@ const Index = () => {
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 AI-Powered Products
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">
                 Our <span className="gradient-text">Products</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">Six AI-powered SaaS platforms, each solving a critical business problem at scale</p>
@@ -1072,9 +1126,12 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== PRODUCT ECOSYSTEM ==================== */}
-      <section id="ecosystem" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+      <section id="ecosystem" className="py-14 sm:py-20 md:py-24 lg:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
             <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
@@ -1082,7 +1139,7 @@ const Index = () => {
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Product Ecosystem
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">
                 One Platform. <span className="gradient-text">Six Independent Systems.</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
@@ -1096,12 +1153,12 @@ const Index = () => {
                 { icon: Layers, title: "Independent Deployments", desc: "Each product is deployed and scaled independently. A change in one product never affects another." },
                 { icon: Building2, title: "Unified Brand", desc: "All products are built and maintained by SRP AI Labs. Same quality standards, different domain expertise." },
               ].map((item, i) => (
-                <motion.div key={i} variants={fadeInUp} className="flex items-start gap-4 p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-500 group">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-primary/20 transition-all">
+                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }} className="flex items-start gap-4 p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/60 hover:bg-primary/[0.04] hover:shadow-[0_0_30px_hsl(265_85%_65%/0.2)] transition-all duration-500 group">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-primary/25 group-hover:border-primary/50 transition-all">
                     <item.icon className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1 text-foreground">{item.title}</h4>
+                    <h4 className="font-semibold mb-1 text-foreground group-hover:text-primary transition-colors">{item.title}</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                   </div>
                 </motion.div>
@@ -1137,9 +1194,13 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== USE CASES ==================== */}
-      <section id="use-cases" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+      <section id="use-cases" className="py-14 sm:py-20 md:py-24 lg:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
+        <div className="absolute top-[50%] -left-[5%] w-[400px] h-[400px] rounded-full opacity-[0.04] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(320 90% 60%), transparent 70%)', filter: 'blur(60px)' }} />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
             <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
@@ -1147,7 +1208,7 @@ const Index = () => {
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Who It's For
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">
                 Built for <span className="gradient-text">Every Industry</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg">From startups to enterprises — SRP AI Labs platforms fit your workflow</p>
@@ -1162,9 +1223,9 @@ const Index = () => {
                 { icon: Globe, title: "E-Commerce Brands", product: "Marketing OS", desc: "Automate product launches, customer segmentation, abandonment emails, and review campaigns at scale.", tag: "Marketing OS" },
               ].map((uc, i) => (
                 <motion.div key={i} variants={fadeInUp} whileHover={{ y: -6 }} transition={{ duration: 0.3 }}>
-                  <Card className="h-full bg-card/50 border-border/50 hover:border-primary/30 transition-all duration-500 group">
+                  <Card className="h-full bg-card/50 border-border/50 hover:border-primary/60 hover:bg-primary/[0.04] hover:shadow-[0_0_30px_hsl(265_85%_65%/0.2)] transition-all duration-500 group">
                     <CardContent className="p-8">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-primary/25 transition-all">
                         <uc.icon className="w-6 h-6 text-primary" />
                       </div>
                       <span className="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20 mb-3">{uc.tag}</span>
@@ -1179,6 +1240,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== PRICING ==================== */}
       <section id="pricing" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
         <div className="container mx-auto px-4 sm:px-6">
@@ -1188,7 +1252,7 @@ const Index = () => {
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Flexible Pricing
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">
                 Flexible Pricing <span className="gradient-text">Per Product</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base md:text-lg mb-3 sm:mb-4">
@@ -1204,7 +1268,7 @@ const Index = () => {
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground font-display mb-4">
                   Every Product. Its Own Pricing.
                 </h3>
-                <p className="text-muted-foreground text-sm sm:text-base md:text-lg mb-8 max-w-xl mx-auto">
+                <p className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl mb-8 max-w-xl mx-auto">
                   SRP AI Labs offers {PRODUCT_COUNT} independent products, each with tailored pricing based on features, usage, and scale. Visit any product to see its plans.
                 </p>
 
@@ -1228,13 +1292,13 @@ const Index = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8">
+                  <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-8 border-0">
                     <a href="#products" className="group flex items-center gap-2">
                       View Product Pricing
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </a>
                   </Button>
-                  <Button size="lg" variant="outline" asChild className="rounded-full px-8">
+                  <Button size="lg" variant="outline" asChild className="rounded-full px-8 border-purple-500/30 hover:border-purple-500/60 hover:bg-purple-500/5">
                     <a href="#contact">Contact Sales</a>
                   </Button>
                 </div>
@@ -1250,9 +1314,13 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== TOOLS & TECHNOLOGIES ==================== */}
       <section className="py-14 sm:py-20 md:py-24 lg:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
+        <div className="absolute top-[30%] right-[5%] w-[350px] h-[350px] rounded-full opacity-[0.04] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(265 85% 65%), transparent 70%)', filter: 'blur(60px)' }} />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger} className="text-center">
             <motion.div variants={fadeInUp} className="mb-4 sm:mb-6">
@@ -1261,10 +1329,10 @@ const Index = () => {
                 Tech Stack
               </span>
             </motion.div>
-            <motion.h2 variants={fadeInUp} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+            <motion.h2 variants={fadeInUp} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">
               Tools & <span className="gradient-text">Technologies</span>
             </motion.h2>
-            <motion.p variants={fadeInUp} className="text-muted-foreground text-sm sm:text-base md:text-lg mb-4 sm:mb-6 max-w-2xl mx-auto">
+            <motion.p variants={fadeInUp} className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl mb-4 sm:mb-6 max-w-2xl mx-auto">
               The exact tools and frameworks powering every SRP AI Labs product and workflow
             </motion.p>
             <motion.p variants={fadeInUp} className="text-xs sm:text-sm text-muted-foreground mb-8 sm:mb-14 max-w-3xl mx-auto bg-card/40 border border-border/40 rounded-xl px-4 py-3 sm:px-6 sm:py-4">
@@ -1276,7 +1344,7 @@ const Index = () => {
                 <motion.div
                   key={i}
                   whileHover={{ scale: 1.05, y: -6 }}
-                  className="group relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-500 cursor-default"
+                  className="group relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-card/50 border border-border/50 hover:border-primary/60 hover:bg-primary/[0.04] hover:shadow-[0_0_30px_hsl(265_85%_65%/0.2)] transition-all duration-500 cursor-default"
                 >
                   <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="relative z-10 flex flex-col items-center">
@@ -1296,7 +1364,7 @@ const Index = () => {
                 <motion.span
                   key={i}
                   whileHover={{ scale: 1.05, y: -2 }}
-                  className="px-3 py-1.5 sm:px-5 sm:py-2.5 bg-card/50 border border-border/50 text-foreground rounded-full text-xs sm:text-sm font-medium hover:border-primary/40 transition-all duration-300 cursor-default"
+                  className="px-3 py-1.5 sm:px-5 sm:py-2.5 bg-card/50 border border-border/50 text-foreground rounded-full text-xs sm:text-sm font-medium hover:border-primary/60 hover:bg-primary/[0.06] hover:text-primary hover:shadow-[0_0_20px_hsl(265_85%_65%/0.15)] transition-all duration-300 cursor-default"
                 >
                   {tech}
                 </motion.span>
@@ -1306,15 +1374,18 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== NEED HELP CHOOSING ==================== */}
       <section id="help" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
             <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">
                 Need Help <span className="gradient-text">Choosing?</span>
               </h2>
-              <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-2xl mx-auto">Our team and AI assistant are here to help you find the right solution</p>
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto">Our team and AI assistant are here to help you find the right solution</p>
             </motion.div>
             <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
               {[
@@ -1339,6 +1410,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== FAQ ==================== */}
       <section id="faq" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
         <div className="container mx-auto px-4 sm:px-6">
@@ -1347,8 +1421,8 @@ const Index = () => {
             className="max-w-3xl mx-auto"
           >
             <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-16">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">Frequently Asked Questions</h2>
-              <p className="text-muted-foreground text-sm sm:text-base md:text-lg">Get answers to common questions about our services</p>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">Frequently Asked Questions</h2>
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl">Get answers to common questions about our services</p>
             </motion.div>
             <motion.div variants={fadeInUp}>
               <Accordion type="single" collapsible className="w-full space-y-4">
@@ -1373,9 +1447,12 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== CONTACT ==================== */}
-      <section id="contact" className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+      <section id="contact" className="py-14 sm:py-20 md:py-24 lg:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}
@@ -1386,7 +1463,7 @@ const Index = () => {
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
                 Let's Work Together
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-3 sm:mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-3 sm:mb-4">
                 Ready to <span className="gradient-text">Automate</span>?
               </h2>
             </motion.div>
@@ -1438,7 +1515,7 @@ const Index = () => {
                       <Input type="email" placeholder="Email *" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} required className="bg-muted/30 border-border/50 focus:border-primary/50 text-foreground placeholder:text-muted-foreground rounded-xl" />
                       <Input type="tel" placeholder="Phone" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="bg-muted/30 border-border/50 focus:border-primary/50 text-foreground placeholder:text-muted-foreground rounded-xl" />
                       <Textarea placeholder="Message *" value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} required rows={5} className="bg-muted/30 border-border/50 focus:border-primary/50 text-foreground placeholder:text-muted-foreground rounded-xl" />
-                      <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-full" size="lg">
+                      <Button type="submit" className="w-full bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full border-0" size="lg">
                         Send Message
                       </Button>
                     </form>
@@ -1451,7 +1528,8 @@ const Index = () => {
       </section>
 
       {/* ==================== FOOTER ==================== */}
-      <footer className="py-12 sm:py-16 md:py-20 relative border-t border-border/40">
+      <footer className="py-12 sm:py-16 md:py-20 relative border-t border-transparent" style={{ borderImage: 'linear-gradient(90deg, transparent, hsl(320 90% 60% / 0.3), hsl(265 85% 65% / 0.5), hsl(190 100% 50% / 0.3), transparent) 1' }}>
+        <div className="absolute inset-0 bg-gradient-to-t from-purple-500/[0.02] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 sm:gap-10 mb-8 sm:mb-12">
             <div className="col-span-2">

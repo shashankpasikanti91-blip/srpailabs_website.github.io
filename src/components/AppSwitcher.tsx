@@ -60,7 +60,7 @@ export default function AppSwitcher() {
               className={
                 isMobile
                   ? "fixed bottom-0 left-0 right-0 z-50 rounded-t-3xl bg-card border-t border-border/60 shadow-2xl p-5 pb-8 max-h-[70vh] overflow-y-auto"
-                  : "fixed bottom-36 left-6 z-50 w-80 rounded-2xl bg-card border border-border/60 shadow-2xl p-4 backdrop-blur-xl max-h-[70vh] overflow-y-auto"
+                  : "fixed bottom-36 left-6 z-50 w-[22rem] rounded-2xl bg-card border border-border/60 shadow-2xl p-4 backdrop-blur-xl max-h-[70vh] overflow-y-auto"
               }
             >
               {/* Mobile drag handle */}
@@ -99,11 +99,11 @@ export default function AppSwitcher() {
                         <Icon className="w-5 h-5 text-white" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-foreground leading-tight truncate flex items-center gap-1.5">
+                        <p className="text-sm font-semibold text-foreground leading-tight flex items-center gap-1.5">
                           {app.name}
-                          {app.tag && <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-rose-500/20 text-rose-400">{app.tag}</span>}
+                          {app.tag && <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-rose-500/20 text-rose-400 flex-shrink-0">{app.tag}</span>}
                         </p>
-                        <p className="text-xs text-muted-foreground truncate">{app.desc}</p>
+                        <p className="text-xs text-muted-foreground">{app.desc}</p>
                       </div>
                       <span className={`flex-shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full ${app.badge === "New" ? "bg-rose-500/20 text-rose-400" : app.badge === "Beta" ? "bg-yellow-500/20 text-yellow-400" : "bg-emerald-500/20 text-emerald-400"}`}>
                         {app.badge}
