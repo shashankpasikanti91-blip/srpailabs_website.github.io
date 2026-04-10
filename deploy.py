@@ -21,7 +21,7 @@ if not HOST:
     print("ERROR: DEPLOY_HOST environment variable is not set.")
     sys.exit(1)
 LOCAL_DIST = Path(__file__).parent / "dist"
-REMOTE_BASE = "/var/www/srp/dist"
+REMOTE_BASE = "/var/www/srpailabs/dist"
 
 def upload_dir(sftp, local_path: Path, remote_path: str):
     """Recursively upload a local directory to remote."""
@@ -40,7 +40,7 @@ def upload_dir(sftp, local_path: Path, remote_path: str):
 
 def ensure_remote_dirs(ssh):
     """Make sure /var/www/srpailabs/dist exists on the server."""
-    ssh.exec_command("mkdir -p /var/www/srp/dist")
+    ssh.exec_command("mkdir -p /var/www/srpailabs/dist")
     # Also ensure nginx is set up to serve React SPA
     # Check if nginx site config exists
     _, stdout, _ = ssh.exec_command("test -f /etc/nginx/sites-enabled/srpailabs.conf && echo yes || echo no")

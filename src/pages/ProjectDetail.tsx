@@ -106,15 +106,15 @@ const projectsData: Record<string, {
   },
   "linkedin-content": {
     title: "LinkedIn Content Parasystem",
-    description: "An AI-powered content generation workflow that scrapes LinkedIn posts from your favorite creators using Apify, analyzes them with GPT-4.1, and generates engaging content ideas tailored to your style.",
+    description: "An AI-powered content generation workflow that scrapes LinkedIn posts from your favorite creators using Apify, analyzes them with the latest AI models, and generates engaging content ideas tailored to your style.",
     features: [
       "LinkedIn profile URL input via form",
       "Apify LinkedIn Post Scraper integration",
       "Batch processing of scraped posts",
-      "GPT-4.1-Mini AI analysis and content generation",
+      "Latest-model AI analysis and content generation",
       "Structured output with content recommendations"
     ],
-    techUsed: ["n8n", "Apify", "LinkedIn Scraper", "OpenAI GPT-4.1", "AI Content Generation", "Form Handling"],
+    techUsed: ["n8n", "Apify", "LinkedIn Scraper", "Latest AI Models", "AI Content Generation", "Form Handling"],
     workflowFile: "/workflows/linkedin-content.json"
   },
   "gmail-agent": {
@@ -132,16 +132,16 @@ const projectsData: Record<string, {
   },
   "srp-rag-chatbot": {
     title: "SRP RAG Chatbot - AI Telegram Assistant",
-    description: "An AI-powered Telegram chatbot with RAG (Retrieval-Augmented Generation) capabilities that provides intelligent customer support responses using GPT-4.1 Mini and Supabase Vector Store.",
+    description: "An AI-powered Telegram chatbot with RAG (Retrieval-Augmented Generation) capabilities that provides intelligent customer support responses using the latest AI models and Supabase Vector Store.",
     features: [
       "Telegram trigger for incoming messages",
       "Google Drive RAG integration for knowledge base",
       "Supabase Vector Store for document retrieval",
-      "GPT-4.1 Mini for intelligent responses",
+      "Latest AI models for intelligent responses",
       "Message formatting for Telegram-friendly output",
       "Window Buffer Memory for conversation context"
     ],
-    techUsed: ["n8n", "Telegram API", "OpenAI GPT-4.1", "Supabase Vector Store", "RAG Pipeline", "LangChain"],
+    techUsed: ["n8n", "Telegram API", "Latest AI Models", "Supabase Vector Store", "RAG Pipeline", "LangChain"],
     workflowFile: "/workflows/srp-rag-chatbot.json"
   },
   "self-learning-agent": {
@@ -151,12 +151,12 @@ const projectsData: Record<string, {
       "Telegram trigger for voice and text messages",
       "Audio transcription using OpenAI Whisper",
       "Pinecone Vector Store for knowledge retrieval",
-      "GPT-4.1 Mini for intelligent responses",
+      "Latest AI models for intelligent responses",
       "Switch routing for audio vs text input",
       "Recursive character text splitting for documents",
       "Window Buffer Memory for conversation context"
     ],
-    techUsed: ["n8n", "Telegram API", "OpenAI Whisper", "Pinecone", "OpenAI GPT-4.1", "RAG Pipeline", "LangChain"],
+    techUsed: ["n8n", "Telegram API", "OpenAI Whisper", "Pinecone", "Latest AI Models", "RAG Pipeline", "LangChain"],
     workflowFile: "/workflows/self-learning-agent.json"
   },
   "twitter-parasyte-system": {
@@ -166,16 +166,16 @@ const projectsData: Record<string, {
       "Form trigger for keyword-based searches",
       "Apify Tweet Scraper integration",
       "AI-powered tweet analysis and classification",
-      "GPT-4.1 for response generation",
+      "Latest AI models for response generation",
       "Batch processing of scraped tweets",
       "Content relevance scoring"
     ],
-    techUsed: ["n8n", "Apify", "Twitter/X Scraper", "OpenAI GPT-4.1", "AI Classification", "Form Handling"],
+    techUsed: ["n8n", "Apify", "Twitter/X Scraper", "Latest AI Models", "AI Classification", "Form Handling"],
     workflowFile: "/workflows/twitter-parasyte-system.json"
   },
   "ig-scraping-posts": {
     title: "Instagram Scraping Posts - Content Curation",
-    description: "An AI-powered Instagram content scraper that extracts posts from profiles, classifies content relevance using GPT-4.1 Mini, and automates content curation workflows for AI-focused audiences.",
+    description: "An AI-powered Instagram content scraper that extracts posts from profiles, classifies content relevance using the latest AI models, and automates content curation workflows for AI-focused audiences.",
     features: [
       "Apify Instagram Post Scraper integration",
       "AI-powered content classification",
@@ -184,7 +184,7 @@ const projectsData: Record<string, {
       "Batch processing of scraped posts",
       "Structured JSON output"
     ],
-    techUsed: ["n8n", "Apify", "Instagram Scraper", "OpenAI GPT-4.1", "AI Classification", "Data Processing"],
+    techUsed: ["n8n", "Apify", "Instagram Scraper", "Latest AI Models", "AI Classification", "Data Processing"],
     workflowFile: "/workflows/ig-scraping-posts.json"
   },
   "email-classifier-agent": {

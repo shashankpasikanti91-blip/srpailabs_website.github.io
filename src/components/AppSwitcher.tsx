@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { X, Grid3X3 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { products } from "@/config/products";
+import { products, productsByCategory } from "@/config/products";
 
 export default function AppSwitcher() {
   const [open, setOpen] = useState(false);
@@ -83,34 +83,42 @@ export default function AppSwitcher() {
                 </button>
               </div>
 
-              <div className={isMobile ? "grid grid-cols-1 gap-2" : "grid grid-cols-2 gap-2"}>
-                {products.map((app) => {
-                  const Icon = app.icon;
-                  return (
-                    <a
-                      key={app.name}
-                      href={app.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group flex items-center gap-3 p-3 rounded-xl border border-border/40 hover:border-primary/30 hover:bg-accent/10 transition-all active:scale-[0.98]"
-                      onClick={() => setOpen(false)}
-                    >
-                      <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${app.color} flex items-center justify-center flex-shrink-0`}>
-                        <Icon className="w-5 h-5 text-white" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-foreground leading-tight flex items-center gap-1.5">
-                          {app.name}
-                          {app.tag && <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-rose-500/20 text-rose-400 flex-shrink-0">{app.tag}</span>}
-                        </p>
-                        <p className="text-xs text-muted-foreground">{app.desc}</p>
-                      </div>
-                      <span className={`flex-shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full ${app.badge === "New" ? "bg-rose-500/20 text-rose-400" : app.badge === "Beta" ? "bg-yellow-500/20 text-yellow-400" : "bg-emerald-500/20 text-emerald-400"}`}>
-                        {app.badge}
-                      </span>
-                    </a>
-                  );
-                })}
+              <div className={isMobile ? "grid grid-cols-1 gap-1" : "space-y-1"}>
+                {productsByCategory.map(({ category, items }) => (
+                  <div key={category}>
+                    <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/40 px-1 pt-2 pb-1">{category}</p>
+                    <div className={isMobile ? "grid grid-cols-1 gap-1.5" : "grid grid-cols-2 gap-1.5"}>
+                      {items.map((app) => {
+                        const Icon = app.icon;
+                        return (
+                          <a
+                            key={app.name}
+                            href={app.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-center gap-3 p-2.5 rounded-xl border border-border/40 hover:border-primary/30 hover:bg-accent/10 transition-all active:scale-[0.98]"
+                            onClick={() => setOpen(false)}
+                          >
+                            <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${app.color} flex items-center justify-center flex-shrink-0`}>
+                              <Icon className="w-4 h-4 text-white" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs font-semibold text-foreground leading-tight flex items-center gap-1">
+                                {app.name}
+                                {app.isNew && <span className="px-1 py-0.5 rounded-full text-[7px] font-bold bg-rose-500/20 text-rose-400 flex-shrink-0">NEW</span>}
+                                {app.isComingSoon && <span className="px-1 py-0.5 rounded-full text-[7px] font-bold bg-yellow-500/20 text-yellow-400 flex-shrink-0">SOON</span>}
+                              </p>
+                              <p className="text-[10px] text-muted-foreground truncate">{app.desc}</p>
+                            </div>
+                            <span className={`flex-shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded-full ${app.isComingSoon ? "bg-yellow-500/20 text-yellow-400" : app.badge === "New" ? "bg-rose-500/20 text-rose-400" : "bg-emerald-500/20 text-emerald-400"}`}>
+                              {app.badge}
+                            </span>
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
               </div>
 
               <div className="mt-4 pt-3 border-t border-border/40 text-center">

@@ -104,10 +104,10 @@ export default function ParticleNetwork() {
   const initNebulae = useCallback(() => {
     const { w, h } = dimRef.current;
     const nebulae: Nebula[] = [
-      { x: w * 0.75, y: h * 0.25, rx: w * 0.35, ry: h * 0.25, color: "120,60,200", phase: 0,     speed: 0.0003 },
-      { x: w * 0.2,  y: h * 0.6,  rx: w * 0.3,  ry: h * 0.2,  color: "60,120,220",  phase: 1,     speed: 0.0004 },
-      { x: w * 0.55, y: h * 0.8,  rx: w * 0.25, ry: h * 0.18, color: "200,80,180",   phase: 2.5,   speed: 0.00025 },
-      { x: w * 0.9,  y: h * 0.55, rx: w * 0.2,  ry: h * 0.22, color: "40,180,240",   phase: 3.8,   speed: 0.00035 },
+      { x: w * 0.15, y: h * 0.2,  rx: w * 0.25, ry: h * 0.2,  color: "120,60,200", phase: 0,     speed: 0.0003 },
+      { x: w * 0.2,  y: h * 0.6,  rx: w * 0.25, ry: h * 0.18, color: "60,120,220",  phase: 1,     speed: 0.0004 },
+      { x: w * 0.4,  y: h * 0.85, rx: w * 0.2,  ry: h * 0.15, color: "200,80,180",   phase: 2.5,   speed: 0.00025 },
+      { x: w * 0.1,  y: h * 0.45, rx: w * 0.18, ry: h * 0.18, color: "40,180,240",   phase: 3.8,   speed: 0.00035 },
     ];
     nebulaeRef.current = nebulae;
   }, []);
