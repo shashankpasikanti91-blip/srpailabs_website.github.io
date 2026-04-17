@@ -12,6 +12,17 @@ import sys
 import paramiko
 from pathlib import Path
 
+# Load .env file if present
+env_file = Path(__file__).parent / ".env"
+if env_file.exists():
+    with open(env_file) as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                key, _, val = line.partition("=")
+                val = val.strip().strip('"').strip("'")
+                os.environ.setdefault(key.strip(), val)
+
 HOST = os.environ.get("DEPLOY_HOST", "")
 PORT = int(os.environ.get("DEPLOY_PORT", "22"))
 USER = os.environ.get("DEPLOY_USER", "root")
