@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Building2, UserCheck, HeartPulse, TrendingUp, Leaf, GraduationCap, ChevronDown, Menu, X } from "lucide-react";
+import { ArrowRight, Building2, UserCheck, HeartPulse, TrendingUp, Leaf, GraduationCap, BookOpen, ChevronDown, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import srpLogo from "@/assets/srp-ai-logo.png";
@@ -43,6 +43,12 @@ const industries = [
     desc: "Snap a photo of your meal and instantly get accurate calorie, macro, and micro nutrient analysis powered by our proprietary AI Nutrition Engine.",
     product: "NutriSutra", productDesc: "NutriSutra — AI Nutrition App", color: "text-emerald-400",
     features: ["Photo-based food recognition", "Instant calorie & macro analysis", "Personalized meal plans", "Progress tracking", "Nutritionist-grade insights"],
+  },
+  {
+    icon: BookOpen, title: "Education & Institutions",
+    desc: "AI-powered education platform for students, teachers, and institutions — structured learning workflows, student progress analytics, AI study support, and institutional management.",
+    product: "SRP Education AI", productDesc: "SRP Education AI — Student Success Platform", color: "text-indigo-400",
+    features: ["Student progress & success analytics", "AI-powered study support", "Institutional management dashboards", "Structured learning workflows", "Academic performance tracking"],
   },
   {
     icon: GraduationCap, title: "Parents & Kids",

@@ -6,7 +6,7 @@ import {
   MousePointer2, Layers, Database, Cpu, ArrowUpRight, ChevronDown, Monitor, Activity,
   Brain, Briefcase, HeartPulse, UserCheck, Building2, Star, Menu, X, Minus,
   CircleDot, MousePointerClick, CalendarCheck, PhoneCall, Sun, Moon,
-  Leaf, GraduationCap
+  Leaf, GraduationCap, BookOpen
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,7 +21,7 @@ import srpLogo from "@/assets/srp-ai-logo.png";
 import { ChatWidget } from "@/components/ChatWidget";
 import AppSwitcher from "@/components/AppSwitcher";
 import ParticleNetwork from "@/components/ParticleNetwork";
-import { products, productsByCategory, PRODUCT_COUNT } from "@/config/products";
+import { products, productsByCategory } from "@/config/products";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -188,7 +188,7 @@ const Index = () => {
                 </div>
               </div>
               {[
-                { label: "Agentic AI", href: "/agentic-ai" },
+                { label: "Technology", href: "/technology" },
                 { label: "Platform", href: "/platform" },
                 { label: "Industries", href: "/industries" },
                 { label: "Pricing", href: "/pricing" },
@@ -312,7 +312,7 @@ const Index = () => {
                   </AnimatePresence>
                 </div>
                 {[
-                  { label: "Agentic AI", href: "/agentic-ai" },
+                  { label: "Technology", href: "/technology" },
                   { label: "Platform", href: "/platform" },
                   { label: "Industries", href: "/industries" },
                   { label: "Pricing", href: "/pricing" },
@@ -370,11 +370,11 @@ const Index = () => {
                 className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-5 sm:mb-8"
               >
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 animate-pulse" />
-                SRP AI Labs — {PRODUCT_COUNT} Agentic AI Products + 1 Coming Soon
+                SRP AI Labs — 10 Specialized Products for Modern Business
               </motion.div>
 
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.05] tracking-tight font-display mb-5 sm:mb-8">
-                <span className="text-foreground">Agentic AI.</span>
+                <span className="text-foreground">Intelligent Systems.</span>
                 <br />
                 <span className="gradient-text-glow text-glow" style={{
                   backgroundImage: "linear-gradient(135deg, hsl(320 90% 65%), hsl(265 85% 65%), hsl(220 85% 60%), hsl(190 100% 50%))",
@@ -382,11 +382,11 @@ const Index = () => {
                   animation: "text-shimmer 4s ease-in-out infinite",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
-                }}>Real Outcomes.</span>
+                }}>Measurable Outcomes.</span>
               </h1>
 
               <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed mb-6 sm:mb-10 max-w-xl">
-                9 autonomous AI systems across HR, Recruitment, Sales, Healthcare, Nutrition, and more — agents that <strong className="text-foreground">think, plan, and execute</strong> so your team doesn't have to.
+                SRP AI Labs builds specialized software for HR, recruitment, sales, healthcare, education, and operations — designed to <strong className="text-foreground">automate workflows and deliver measurable results</strong>.
               </p>
 
               {/* Product pills */}
@@ -410,15 +410,15 @@ const Index = () => {
                 className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2"
               >
                 <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-6 sm:px-8 shadow-[0_4px_30px_hsl(265_85%_65%/0.4),0_2px_15px_hsl(190_100%_50%/0.2)] hover:shadow-[0_8px_50px_hsl(265_85%_65%/0.5),0_4px_25px_hsl(190_100%_50%/0.3)] hover:-translate-y-0.5 transition-all border-0 w-full sm:w-auto">
-                  <a href="#products" className="group flex items-center justify-center gap-2">
-                    Explore AI Products
+                  <a href="#products-overview" className="group flex items-center justify-center gap-2">
+                    Explore Products
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </Button>
                 <Button size="lg" variant="outline" asChild className="rounded-full px-6 sm:px-8 border-purple-500/30 hover:border-purple-500/60 hover:bg-purple-500/5 w-full sm:w-auto">
-                  <Link to="/agentic-ai" className="flex items-center justify-center gap-2">
-                    <Brain className="w-4 h-4" /> How Agentic AI Works
-                  </Link>
+                  <a href="#contact" className="flex items-center justify-center gap-2">
+                    Book a Demo
+                  </a>
                 </Button>
               </motion.div>
             </motion.div>
@@ -451,7 +451,7 @@ const Index = () => {
               <div className="marquee-track">
                 {[...Array(2)].map((_, setIdx) => (
                   <div key={setIdx} className="flex items-center gap-6 sm:gap-10 px-3 sm:px-5">
-                    {["AGENTIC AI", "AUTONOMOUS AGENTS", "9 AI PRODUCTS", "HRMS PLATFORM", "RECRUIT AI", "HEALTHCARE AI", "MULTI-STEP ORCHESTRATION", "AGENT MEMORY", "SALES AUTOMATION", "KIDS AI", "MARKETING OS", "n8n WORKFLOWS", "CUSTOM AGENTS", "SELF-HEALING LOOPS", "LATEST MODEL STACK", "ENTERPRISE GRADE"].map((text, i) => (
+                    {["10 PRODUCTS LIVE", "MULTI-PRODUCT PLATFORM", "ENTERPRISE HRMS", "SMART RECRUITMENT", "HEALTHCARE SYSTEMS", "EDUCATION PLATFORM", "GROWTH AUTOMATION", "MARKETING AUTOMATION", "REVENUE OPERATIONS", "SECURE INFRASTRUCTURE", "MODULAR ARCHITECTURE", "INDEPENDENT DEPLOYMENTS", "WORKFLOW AUTOMATION", "MULTI-INDUSTRY", "AI-POWERED SYSTEMS", "SCALABLE BY DESIGN"].map((text, i) => (
                       <span key={`${setIdx}-${i}`} className="flex items-center gap-3 sm:gap-4 whitespace-nowrap">
                         <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-muted-foreground/60 hover:text-primary/80 transition-colors duration-300">{text}</span>
                         <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 opacity-40" />
@@ -472,9 +472,9 @@ const Index = () => {
           >
             <div className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-8 text-center">
               {[
-                { value: "9", suffix: "+", label: "Agentic AI Products" },
-                { value: "40", suffix: "+", label: "Agent Workflows Live" },
-                { value: "95", suffix: "%", label: "Task Completion Rate" },
+                { value: "10", suffix: "", label: "Product Systems Live" },
+                { value: "6", suffix: "+", label: "Industries Served" },
+                { value: "40", suffix: "+", label: "Workflow Automations" },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="text-2xl sm:text-3xl md:text-4xl font-bold font-display" style={{
@@ -505,13 +505,13 @@ const Index = () => {
             <motion.div variants={fadeInUp} className="text-center mb-8 sm:mb-12">
               <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                AI Product Ecosystem
+                Product Ecosystem
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-3">
-                One Platform. <span className="gradient-text">Nine AI Systems.</span>
+                One Platform. <span className="gradient-text">Ten Specialized Products.</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base">
-                Each product is fully independent — separate login, isolated database, independent deployment. All under the SRP AI Labs umbrella.
+                Each product operates independently with its own login, database, and deployment — all under the SRP AI Labs platform. Use one product or the entire ecosystem.
               </p>
             </motion.div>
             {productsByCategory.map(({ category, items }) => (
@@ -560,8 +560,8 @@ const Index = () => {
       {/* Section divider */}
       <div className="section-divider" />
 
-      {/* ==================== AGENTIC AI SPOTLIGHT ==================== */}
-      <section id="agentic-ai" className="py-14 sm:py-20 md:py-24 relative overflow-hidden">
+      {/* ==================== TECHNOLOGY / INTELLIGENCE ==================== */}
+      <section id="technology" className="py-14 sm:py-20 md:py-24 relative overflow-hidden">
         <div className="absolute top-[20%] right-[5%] w-[400px] h-[400px] rounded-full opacity-[0.05] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(265 85% 65%), transparent 70%)', filter: 'blur(80px)' }} />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
@@ -571,21 +571,21 @@ const Index = () => {
                 <motion.div variants={fadeInUp}>
                   <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-6">
                     <span className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 animate-pulse" />
-                    Advanced Agentic AI
+                    Platform Intelligence
                   </span>
                   <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-5">
-                    Agents that <span className="gradient-text">think, plan,</span>
-                    <br />and get it done.
+                    Intelligence <span className="gradient-text">Built Into</span>
+                    <br />Every Workflow.
                   </h2>
                   <p className="text-muted-foreground text-sm sm:text-base lg:text-lg leading-relaxed mb-8">
-                    SRP AI Labs isn't just automation — it's <strong className="text-foreground">agentic intelligence</strong>. Our agents perceive context, form multi-step plans, call real tools, verify outcomes, and self-heal on errors. No hand-holding required.
+                    SRP AI Labs products use <strong className="text-foreground">contextual intelligence and workflow automation</strong> to handle complex business processes — so your team can focus on decisions, not repetitive tasks.
                   </p>
                   <div className="space-y-3 mb-8">
                     {[
-                      { icon: Brain, text: "Autonomous multi-step reasoning with the latest frontier models" },
-                      { icon: Workflow, text: "Orchestrated agent pipelines via n8n with 500+ tool integrations" },
-                      { icon: Database, text: "Persistent vector memory — agents learn across sessions" },
-                      { icon: Shield, text: "Sandboxed execution with full audit trail per agent action" },
+                      { icon: Brain, text: "Contextual understanding — processes inputs from data, user actions, and prior interactions" },
+                      { icon: Workflow, text: "Workflow orchestration with 500+ integrations and automated multi-step execution" },
+                      { icon: Database, text: "Continuous learning — systems adapt based on outcomes and usage patterns" },
+                      { icon: Shield, text: "Secure execution with role-based access and full audit trails" },
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-3 text-sm text-muted-foreground">
                         <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
@@ -597,12 +597,12 @@ const Index = () => {
                   </div>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Button asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-7 border-0 shadow-[0_4px_20px_hsl(265_85%_65%/0.3)]">
-                      <Link to="/agentic-ai" className="flex items-center gap-2">
-                        Explore Agentic AI <ArrowRight className="w-4 h-4" />
+                      <Link to="/technology" className="flex items-center gap-2">
+                        Explore Technology <ArrowRight className="w-4 h-4" />
                       </Link>
                     </Button>
                     <Button variant="outline" asChild className="rounded-full px-7 border-purple-500/30 hover:border-purple-500/60 hover:bg-purple-500/5">
-                      <Link to="/platform">View Architecture</Link>
+                      <Link to="/platform">View Platform Architecture</Link>
                     </Button>
                   </div>
                 </motion.div>
@@ -610,10 +610,10 @@ const Index = () => {
                 {/* Right — agent capability cards */}
                 <motion.div variants={fadeInUp} className="grid grid-cols-2 gap-4">
                   {[
-                    { icon: Bot, title: "Perceive", desc: "Reads context from emails, data, triggers, and memory", color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/5" },
-                    { icon: Brain, title: "Plan", desc: "LLM formulates multi-step action plan with tool selection", color: "text-pink-400", bg: "from-pink-500/10 to-pink-500/5" },
-                    { icon: Zap, title: "Execute", desc: "Calls APIs, writes data, sends emails, triggers sub-agents", color: "text-cyan-400", bg: "from-cyan-500/10 to-cyan-500/5" },
-                    { icon: CheckCircle, title: "Verify", desc: "Validates results, auto-retries errors, alerts on exceptions", color: "text-green-400", bg: "from-green-500/10 to-green-500/5" },
+                    { icon: Bot, title: "Understand Context", desc: "Processes inputs from emails, data sources, user actions, and prior interactions to determine the right next step.", color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/5" },
+                    { icon: Brain, title: "Recommend Actions", desc: "Analyzes patterns and context to surface the right action — whether it's a follow-up, approval, or escalation.", color: "text-pink-400", bg: "from-pink-500/10 to-pink-500/5" },
+                    { icon: Zap, title: "Execute Workflows", desc: "Runs multi-step processes automatically — API calls, data updates, notifications, and downstream triggers.", color: "text-cyan-400", bg: "from-cyan-500/10 to-cyan-500/5" },
+                    { icon: CheckCircle, title: "Learn & Improve", desc: "Adapts over time based on outcomes, feedback, and usage patterns to deliver better results with every cycle.", color: "text-green-400", bg: "from-green-500/10 to-green-500/5" },
                   ].map((card, i) => (
                     <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }}
                       className={`p-5 rounded-2xl bg-gradient-to-br ${card.bg} border border-border/40 hover:border-primary/30 transition-all`}>
@@ -644,18 +644,19 @@ const Index = () => {
                 <span className="w-1.5 h-1.5 rounded-full bg-primary" /> Industry Solutions
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold font-display mb-3">
-                Built for <span className="gradient-text">Every Sector</span>
+                Purpose-Built for <span className="gradient-text">Your Industry</span>
               </h2>
-              <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">Purpose-built agents and systems for your industry — not generic templates.</p>
+              <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">Specialized software designed around real workflows — not generic templates.</p>
             </motion.div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
               {[
-                { icon: Building2, title: "Enterprise & HR", desc: "AI HRMS, full employee lifecycle, payroll, and analytics.", tag: "HRMS", href: "https://hrms.srpailabs.com" },
-                { icon: UserCheck, title: "Recruitment", desc: "60% faster hiring with agentic resume screening & ATS.", tag: "SmartRecruit", href: "https://recruit.srpailabs.com" },
-                { icon: HeartPulse, title: "Healthcare", desc: "Clinical AI for patient intake, billing, and lab workflows.", tag: "MediFlow", href: "https://mediflow.srpailabs.com" },
-                { icon: TrendingUp, title: "Sales & Growth", desc: "Lead gen, pipeline automation, and revenue intelligence.", tag: "Growth OS", href: "https://growth.srpailabs.com" },
-                { icon: Leaf, title: "Health & Nutrition", desc: "AI nutrition engine — snap a meal for instant macros.", tag: "NutriSutra", href: "https://nutrisutra.srpailabs.com" },
-                { icon: GraduationCap, title: "Kids Learning", desc: "Adaptive AI-powered learning for children. Coming soon.", tag: "SRP Kids", href: "https://kids.srpailabs.com" },
+                { icon: Building2, title: "Enterprise & HR", desc: "Complete HRMS with employee lifecycle management, payroll automation, and workforce analytics.", tag: "HRMS", href: "https://hrms.srpailabs.com" },
+                { icon: UserCheck, title: "Recruitment", desc: "Applicant tracking, AI resume screening, and structured hiring pipelines that reduce time-to-hire.", tag: "SmartRecruit", href: "https://recruit.srpailabs.com" },
+                { icon: HeartPulse, title: "Healthcare", desc: "Patient management, appointment scheduling, prescriptions, billing, and multi-facility workflows.", tag: "MediFlow", href: "https://mediflow.srpailabs.com" },
+                { icon: TrendingUp, title: "Sales & Growth", desc: "Lead management, pipeline automation, outreach sequences, and revenue tracking in one system.", tag: "Growth OS", href: "https://growth.srpailabs.com" },
+                { icon: Leaf, title: "Health & Nutrition", desc: "AI-powered meal analysis with instant calorie and macro breakdowns from photos or descriptions.", tag: "NutriSutra", href: "https://nutrisutra.srpailabs.com" },
+                { icon: BookOpen, title: "Education", desc: "Student progress tracking, institutional analytics, and AI-assisted learning for modern education.", tag: "Education AI", href: "https://edu.srpailabs.com" },
+                { icon: GraduationCap, title: "Kids Learning", desc: "Adaptive and gamified learning paths for children — personalized to age and skill level.", tag: "SRP Kids", href: "https://kids.srpailabs.com" },
               ].map((uc, i) => (
                 <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }}>
                   <a href={uc.href} target="_blank" rel="noopener noreferrer"
@@ -687,6 +688,46 @@ const Index = () => {
       {/* Section divider */}
       <div className="section-divider" />
 
+      {/* ==================== WHY SRP ==================== */}
+      <section id="why-srp" className="py-14 sm:py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.015] to-transparent pointer-events-none" />
+        <div className="container mx-auto px-4 sm:px-6">
+          <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
+            <motion.div variants={fadeInUp} className="text-center mb-10">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary" /> Why SRP AI Labs
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold font-display mb-3">
+                Why Teams Choose <span className="gradient-text">SRP AI Labs</span>
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">Enterprise capability. Startup speed. Real products for real operations.</p>
+            </motion.div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+              {[
+                { icon: Layers, title: "Multi-Product Ecosystem", desc: "Ten specialized products across five categories — use one or build your entire operations stack on SRP." },
+                { icon: Rocket, title: "Deploy in Days, Not Months", desc: "Each product ships production-ready with its own infrastructure. No lengthy implementation cycles." },
+                { icon: Brain, title: "AI That Adds Real Value", desc: "Intelligence is built into workflows — not bolted on. Every AI feature solves a specific operational problem." },
+                { icon: Database, title: "Modular Architecture", desc: "Independent databases, separate deployments, isolated environments. Scale what you need, when you need it." },
+                { icon: Users, title: "Built for Real Teams", desc: "Designed for operators, HR managers, recruiters, and growth teams who need software that works on day one." },
+                { icon: Shield, title: "Secure by Design", desc: "Multi-tenant isolation, encrypted data, role-based access, and audit trails across every product." },
+              ].map((item, i) => (
+                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }}
+                  className="group p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/50 hover:bg-primary/[0.03] hover:shadow-[0_0_25px_hsl(265_85%_65%/0.15)] transition-all duration-400">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all">
+                    <item.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="text-sm font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Section divider */}
+      <div className="section-divider" />
+
       {/* ==================== CONTACT ==================== */}
       <section id="contact" className="py-14 sm:py-20 md:py-24 lg:py-28 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
@@ -698,11 +739,11 @@ const Index = () => {
                 Let's Work Together
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-3">
-                Ready to Deploy <span className="gradient-text">Agentic AI</span>?
+                Ready to Upgrade <span className="gradient-text">Your Operations</span>?
               </h2>
             </motion.div>
             <motion.p variants={fadeInUp} className="text-sm sm:text-base text-muted-foreground mb-8 sm:mb-14 text-center max-w-2xl mx-auto">
-              Whether you need a custom AI agent, autonomous workflow, agentic HRMS, or want to explore what's possible — our team responds within hours.
+              Whether you need a product for your industry, a custom workflow, or enterprise integration — our team responds within hours.
             </motion.p>
             <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
               <motion.div variants={fadeInUp} className="space-y-4 sm:space-y-6">
@@ -773,7 +814,7 @@ const Index = () => {
             <div className="col-span-2">
               <img src={srpLogo} alt="SRP AI Labs" className="h-14 w-auto mb-4 drop-shadow-[0_0_10px_rgba(139,92,246,0.2)]" />
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                SRP AI Labs builds agentic AI systems that autonomously operate the hardest parts of your business — hiring, HR, sales, healthcare, and more.
+                SRP AI Labs builds specialized software for HR, recruitment, growth, healthcare, and education — helping teams automate operations and deliver better outcomes.
               </p>
               <p className="text-xs text-muted-foreground">Part of SRP AI Labs Platform &mdash; <a href="https://srpailabs.com" className="hover:text-primary transition-colors">srpailabs.com</a></p>
             </div>
@@ -789,7 +830,7 @@ const Index = () => {
               <h4 className="font-semibold mb-4 text-foreground">Company</h4>
               <ul className="space-y-3">
                 <li><Link to="/products" className="text-sm text-muted-foreground hover:text-primary transition-colors">All Products</Link></li>
-                <li><Link to="/agentic-ai" className="text-sm text-muted-foreground hover:text-primary transition-colors">Agentic AI</Link></li>
+                <li><Link to="/technology" className="text-sm text-muted-foreground hover:text-primary transition-colors">Technology</Link></li>
                 <li><Link to="/platform" className="text-sm text-muted-foreground hover:text-primary transition-colors">Platform</Link></li>
                 <li><Link to="/services" className="text-sm text-muted-foreground hover:text-primary transition-colors">Services</Link></li>
                 <li><Link to="/industries" className="text-sm text-muted-foreground hover:text-primary transition-colors">Industries</Link></li>

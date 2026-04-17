@@ -1,13 +1,13 @@
 # SRP AI Labs — AI Ecosystem for Business, Enterprise & Consumers
 
-> **Unified AI Ecosystem** — 9 AI Products (Enterprise + Industry + Consumer) + Custom Automation (n8n + AI)
+> **Unified AI Ecosystem** — 10 AI Products (Enterprise + Industry + Consumer) + Custom Automation (n8n + AI)
 
 **Website:** [srpailabs.com](https://srpailabs.com)  
 **Contact:** info@srpailabs.com
 
 ---
 
-## Product Ecosystem (9 AI Products)
+## Product Ecosystem (10 AI Products)
 
 ### AI Business Platforms
 | Product | Subdomain | Focus | Status |
@@ -31,6 +31,7 @@
 | Product | Subdomain | Focus | Status |
 |---|---|---|---|
 | MediFlow | [mediflow.srpailabs.com](https://mediflow.srpailabs.com) | Healthcare Workflow AI | Live |
+| SRP Education AI | [edu.srpailabs.com](https://edu.srpailabs.com) | Student Success & Institutional Intelligence | **NEW** |
 
 ### Consumer AI Apps
 | Product | Subdomain | Focus | Status |
@@ -55,36 +56,36 @@ Main brand hub + platform landing page (`srpailabs.com`). Each product lives in 
 
 ## What's on srpailabs.com
 
-- **Hero** — "AI Ecosystem for Business, Enterprise & Consumers" (9 products + custom automation)
-- **Product Tags** — HRMS OS · Recruitment AI · Sales Automation · Healthcare AI · Nutri AI · Kids AI
+- **Hero** — "AI Ecosystem for Business, Enterprise & Consumers" (10 products + custom automation)
+- **Product Tags** — HRMS OS · Recruitment AI · Sales Automation · Healthcare AI · Education AI · Nutri AI · Kids AI
 - **Get Started** — 4-step onboarding: Choose Product → Sign Up → Custom Automation → Book Demo
-- **Platform Overview** — One Ecosystem. Nine AI Systems. Categorized by type.
+- **Platform Overview** — One Ecosystem. Ten AI Systems. Categorized by type.
 - **Custom Automation Section** — n8n + AI agents + CRM + multi-tenant SaaS builds
-- **Products Section** — 9 product cards with category groupings, NEW/SOON badges
+- **Products Section** — 10 product cards with category groupings, NEW/SOON badges
 - **Product Ecosystem** — Independent deployment model explained
-- **Industries** — Healthcare, HRMS, Recruitment, Marketing, Sales, Nutrition, Kids
+- **Industries** — Healthcare, Education, HRMS, Recruitment, Marketing, Sales, Nutrition, Kids
 - **Pricing** — Flexible per-product pricing
-- **AI Chatbot (SRPA)** — Updated with all 9 products, clear routing logic, key distinctions
+- **AI Chatbot (SRPA)** — Updated with all 10 products, clear routing logic, key distinctions
 - **App Switcher** — Category-grouped product switcher (bottom drawer mobile / panel desktop)
 
 ---
 
 ## Product Config (Single Source of Truth)
 
-All 9 products are in [`src/config/products.ts`](src/config/products.ts) with categories.  
+All 10 products are in [`src/config/products.ts`](src/config/products.ts) with categories.  
 This drives **every** part of the site automatically:
 
 - Hero pills · Nav dropdown (categorized) · Mobile menu (categorized) · App Switcher (categorized)
 - Product cards · Ecosystem grid · Platform overview · Pricing section · Footer
 - Chatbot (SRPA) knowledge base
 
-**To add a 10th product:** update `products.ts` only — everything else auto-updates.
+**To add an 11th product:** update `products.ts` only — everything else auto-updates.
 
 ```ts
 products.ts exports:
-  - products[]         — all 9 products
+  - products[]         — all 10 products
   - productsByCategory — grouped by category
-  - PRODUCT_COUNT      — count of non-coming-soon products (8)
+  - PRODUCT_COUNT      — count of non-coming-soon products (9)
   - PRODUCT_CATEGORIES — list of 5 category names
 ```
 
@@ -160,7 +161,7 @@ sudo certbot --nginx \
   -d mediflow.srpailabs.com -d recruit.srpailabs.com \
   -d growth.srpailabs.com -d automation.srpailabs.com \
   -d hrms.srpailabs.com -d nutrisutra.srpailabs.com \
-  -d kids.srpailabs.com
+  -d edu.srpailabs.com -d kids.srpailabs.com
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
@@ -170,7 +171,7 @@ sudo nginx -t && sudo systemctl reload nginx
 psql -U postgres -d srpailabs -f database/init.sql
 ```
 
-Schemas: `auth` · `autonomous` · `marketing` · `mediflow` · `recruit` · `growth` · `automation` · `hrms` · `nutrisutra` · `kids`
+Schemas: `auth` · `autonomous` · `marketing` · `mediflow` · `recruit` · `growth` · `automation` · `hrms` · `nutrisutra` · `edu` · `kids`
 
 ---
 
@@ -195,7 +196,7 @@ Schemas: `auth` · `autonomous` · `marketing` · `mediflow` · `recruit` · `gr
 
 ## SEO Keywords
 
-`AI HRMS Software` · `Recruitment Automation Platform` · `Sales Automation AI` · `Healthcare AI System` · `AI Nutrition App` · `AI Kids Learning App` · `AI Business Automation` · `n8n Workflow Automation`
+`AI HRMS Software` · `Recruitment Automation Platform` · `Sales Automation AI` · `Healthcare AI System` · `AI Education Platform` · `AI Nutrition App` · `AI Kids Learning App` · `AI Business Automation` · `n8n Workflow Automation`
 
 ---
 
@@ -211,14 +212,14 @@ This repo contains the **main brand hub + platform landing page** (`srpailabs.co
 
 ## What's on srpailabs.com
 
-- **Hero** — AI Business Automation Platform (6 products + custom automation)
+- **Hero** — AI Business Automation Platform (10 products + custom automation)
 - **Get Started** — 4-step onboarding: Choose Product → Sign Up → Custom Automation → Book Demo
 - **Platform Positioning** — One Platform. Multiple AI Systems.
 - **Custom Automation Section** — n8n + AI agents + CRM + multi-tenant SaaS builds
-- **Products Section** — 6 product cards with Open Product + View Pricing CTAs
+- **Products Section** — 10 product cards with Open Product + View Pricing CTAs
 - **Product Ecosystem** — Independent deployment model explained
-- **Industries** — Healthcare, Recruitment, Marketing, Enterprise, SMEs, Startups
-- **Pricing** — Flexible per-product pricing (no confusing $19/$49 tiers)
+- **Industries** — Healthcare, Education, Recruitment, Marketing, Enterprise, SMEs, Startups
+- **Pricing** — Flexible per-product pricing
 - **Need Help Choosing** — AI Chat, Book Demo, Contact Team
 - **Contact / Demo** — Lead capture form + Telegram notification
 - **AI Chatbot (SRPA)** — Routes by industry, handles pricing, guides to correct product
@@ -228,14 +229,14 @@ This repo contains the **main brand hub + platform landing page** (`srpailabs.co
 
 ## Product Config (Single Source of Truth)
 
-All 6 products are defined in [`src/config/products.ts`](src/config/products.ts).  
+All 10 products are defined in [`src/config/products.ts`](src/config/products.ts).  
 This drives **every** part of the site — no hardcoded product lists anywhere:
 
 - Hero pills · Nav dropdown · Mobile menu · App Switcher
 - Product cards · Ecosystem grid · Pricing section · Footer
 - Chatbot knowledge base
 
-**To add a 7th product:** update `products.ts` only — everything else auto-updates.
+**To add an 11th product:** update `products.ts` only — everything else auto-updates.
 
 ---
 

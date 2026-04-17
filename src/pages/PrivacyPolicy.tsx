@@ -285,10 +285,10 @@ const PrivacyPolicy = () => {
       {/* Footer */}
       <footer className="py-10 border-t border-border mt-4">
         <div className="container mx-auto px-4 text-center text-muted-foreground text-sm">
-          <p className="mb-3">© 2026 SRP AI Labs — Advanced Agentic AI for Business, Enterprise &amp; Consumers</p>
+          <p className="mb-3">© 2026 SRP AI Labs — Specialized Software for Modern Business</p>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <Link to="/" className="hover:text-primary transition-colors">Home</Link>
-            <Link to="/agentic-ai" className="hover:text-primary transition-colors">Agentic AI</Link>
+            <Link to="/technology" className="hover:text-primary transition-colors">Technology</Link>
             <Link to="/products" className="hover:text-primary transition-colors">Products</Link>
             <Link to="/security" className="hover:text-primary transition-colors">Security</Link>
             <Link to="/terms-of-service" className="hover:text-primary transition-colors">Terms of Service</Link>

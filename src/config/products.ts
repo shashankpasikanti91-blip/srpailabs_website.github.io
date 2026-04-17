@@ -1,12 +1,12 @@
-import { Monitor, BarChart3, Activity, UserCheck, TrendingUp, Settings, Users2, Leaf, GraduationCap } from "lucide-react";
+import { Monitor, BarChart3, Activity, UserCheck, TrendingUp, Settings, Users2, Leaf, GraduationCap, BookOpen } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 export type ProductCategory =
-  | "AI Business Platforms"
-  | "Enterprise Systems"
-  | "Growth & Revenue Systems"
+  | "Business Platforms"
+  | "Enterprise HR & Hiring"
+  | "Growth & Revenue"
   | "Industry Solutions"
-  | "Consumer AI Apps";
+  | "Consumer Products";
 
 export interface Product {
   name: string;
@@ -29,12 +29,12 @@ export interface Product {
 }
 
 export const products: Product[] = [
-  // ── AI Business Platforms ──
+  // ── Business Platforms ──
   {
     name: "Autonomous OS",
-    desc: "AI-powered business operating system",
+    desc: "AI-powered business application generator",
     tagline: "AI Business Application Generator",
-    description: "AI-powered platform that generates full business applications, workflows, dashboards, automation rules, compliance logic, and data systems from natural language. Multi-industry, multi-tenant.",
+    description: "Generate full business applications, dashboards, and workflow systems from natural language — multi-tenant and multi-industry.",
     url: "https://autonomous.srpailabs.com",
     subdomain: "autonomous.srpailabs.com",
     icon: Monitor,
@@ -43,14 +43,14 @@ export const products: Product[] = [
     border: "hover:border-blue-500/40",
     iconColor: "text-blue-400",
     badge: "Live",
-    category: "AI Business Platforms",
+    category: "Business Platforms",
     features: ["Generate apps from natural language", "Multi-industry, multi-tenant", "Automated workflow & dashboard generation", "Compliance & business logic AI"],
   },
   {
     name: "Automation OS",
-    desc: "AI CRM, revenue automation & workflow system",
-    tagline: "AI CRM & Revenue Automation",
-    description: "AI-powered CRM and revenue automation platform with intelligent pipeline management, automated invoicing, workflow orchestration, and real-time revenue analytics.",
+    desc: "CRM, revenue automation & workflow system",
+    tagline: "CRM & Revenue Automation",
+    description: "Manage pipelines, automate invoicing, orchestrate workflows, and track revenue — all from one intelligent CRM.",
     url: "https://automation.srpailabs.com",
     subdomain: "automation.srpailabs.com",
     icon: Settings,
@@ -60,16 +60,16 @@ export const products: Product[] = [
     iconColor: "text-rose-400",
     badge: "New",
     tag: "NEW",
-    category: "AI Business Platforms",
+    category: "Business Platforms",
     features: ["AI-powered CRM & pipeline", "Automated invoicing & billing", "Workflow orchestration engine", "Real-time revenue analytics"],
   },
 
-  // ── Enterprise Systems ──
+  // ── Enterprise HR & Hiring ──
   {
     name: "HRMS",
-    desc: "AI-Native HRMS Platform — Beyond Workday, Oracle, and SAP",
-    tagline: "AI-Native Human Resource Management System",
-    description: "Full employee lifecycle management from hiring to retirement — onboarding, payroll, performance, leave, attendance, and AI-powered HR analytics. Built to replace legacy HRMS platforms.",
+    desc: "Complete human resource management system",
+    tagline: "Complete Human Resource Management",
+    description: "Full employee lifecycle from onboarding to payroll, performance, attendance, and HR analytics — built to replace legacy systems.",
     url: "https://hrms.srpailabs.com",
     subdomain: "hrms.srpailabs.com",
     icon: Users2,
@@ -80,14 +80,14 @@ export const products: Product[] = [
     badge: "New",
     tag: "NEW",
     isNew: true,
-    category: "Enterprise Systems",
+    category: "Enterprise HR & Hiring",
     features: ["Full employee lifecycle management", "Payroll, attendance & leave automation", "AI-powered HR analytics & reporting", "Hiring to retirement — one platform"],
   },
   {
     name: "SmartRecruit",
-    desc: "AI Recruitment Platform — ATS + Screening",
-    tagline: "AI-Powered Recruitment ATS",
-    description: "Pure ATS and hiring system — AI-powered resume screening, job pipeline automation, interview scheduling, and candidate management. Purpose-built for recruitment teams.",
+    desc: "Hiring & applicant tracking system",
+    tagline: "Hiring & Applicant Tracking",
+    description: "AI-powered resume screening, pipeline management, interview scheduling, and candidate tracking for modern recruitment teams.",
     url: "https://recruit.srpailabs.com",
     subdomain: "recruit.srpailabs.com",
     icon: UserCheck,
@@ -96,16 +96,16 @@ export const products: Product[] = [
     border: "hover:border-orange-500/40",
     iconColor: "text-orange-400",
     badge: "Live",
-    category: "Enterprise Systems",
+    category: "Enterprise HR & Hiring",
     features: ["AI resume screening & scoring", "OTP login & secure access", "AI-generated job descriptions", "Full hiring pipeline automation"],
   },
 
-  // ── Growth & Revenue Systems ──
+  // ── Growth & Revenue ──
   {
     name: "Growth OS",
-    desc: "Recruitment + Sales Automation Platform",
-    tagline: "AI-Powered Recruitment + Sales Automation",
-    description: "AI-powered Recruitment + Sales Automation Platform — manage leads, candidates, and conversions in one system. Automated outreach, pipeline management, and real-time growth analytics.",
+    desc: "Recruitment + sales automation platform",
+    tagline: "Recruitment + Sales Automation",
+    description: "Unified lead and candidate management with automated outreach, pipeline tracking, and growth analytics.",
     url: "https://growth.srpailabs.com",
     subdomain: "growth.srpailabs.com",
     icon: TrendingUp,
@@ -114,14 +114,14 @@ export const products: Product[] = [
     border: "hover:border-green-500/40",
     iconColor: "text-green-400",
     badge: "Live",
-    category: "Growth & Revenue Systems",
+    category: "Growth & Revenue",
     features: ["Recruitment pipeline automation", "Lead generation & sales CRM", "AI outreach sequences & follow-ups", "Real-time growth analytics dashboard"],
   },
   {
     name: "Marketing OS",
-    desc: "AI Marketing Automation Platform",
-    tagline: "AI Marketing SaaS Platform",
-    description: "AI marketing SaaS with CRM, lead capture, multilingual creative generation, campaign automation, social media scheduling, localization, and analytics.",
+    desc: "Marketing automation platform",
+    tagline: "Marketing Automation Platform",
+    description: "CRM, lead capture, campaign management, multilingual creative generation, social scheduling, and performance analytics.",
     url: "https://app.srpailabs.com",
     subdomain: "app.srpailabs.com",
     icon: BarChart3,
@@ -130,16 +130,16 @@ export const products: Product[] = [
     border: "hover:border-purple-500/40",
     iconColor: "text-purple-400",
     badge: "Live",
-    category: "Growth & Revenue Systems",
+    category: "Growth & Revenue",
     features: ["CRM & lead capture automation", "Multilingual creative generation", "Campaign & social media scheduling", "Analytics & performance dashboard"],
   },
 
   // ── Industry Solutions ──
   {
     name: "MediFlow",
-    desc: "Healthcare Workflow AI System",
-    tagline: "Healthcare Operating System",
-    description: "AI-powered hospital management SaaS with patient lifecycle, chatbot booking, prescriptions, lab, billing, pharmacy, staff dashboards, and multi-tenant hospital isolation.",
+    desc: "Healthcare management system",
+    tagline: "Healthcare Management System",
+    description: "Hospital management with patient lifecycle, appointment booking, prescriptions, billing, lab workflows, and multi-tenant isolation.",
     url: "https://mediflow.srpailabs.com",
     subdomain: "mediflow.srpailabs.com",
     icon: Activity,
@@ -151,13 +151,31 @@ export const products: Product[] = [
     category: "Industry Solutions",
     features: ["Patient lifecycle & chatbot booking", "Prescriptions, lab & billing", "Pharmacy & staff dashboards", "Multi-tenant hospital isolation"],
   },
+  {
+    name: "SRP Education AI",
+    desc: "Education & institutional platform",
+    tagline: "Education & Institutional Platform",
+    description: "Academic workflows, student progress tracking, AI study support, and institutional analytics for scalable education delivery.",
+    url: "https://edu.srpailabs.com",
+    subdomain: "edu.srpailabs.com",
+    icon: BookOpen,
+    color: "from-indigo-500 to-blue-500",
+    gradientColor: "from-indigo-500/20 to-blue-500/10",
+    border: "hover:border-indigo-500/40",
+    iconColor: "text-indigo-400",
+    badge: "New",
+    tag: "NEW",
+    isNew: true,
+    category: "Industry Solutions",
+    features: ["Student progress & success analytics", "AI-powered study support", "Institutional management dashboards", "Structured learning workflows"],
+  },
 
-  // ── Consumer AI Apps ──
+  // ── Consumer Products ──
   {
     name: "NutriSutra",
-    desc: "AI Nutrition Engine — Accurate calorie analysis for real-world food",
-    tagline: "AI Nutrition Analysis App",
-    description: "AI Nutrition Engine that delivers accurate calorie and macro analysis for real-world food — snap a photo or describe your meal and get instant nutritional insights.",
+    desc: "AI nutrition analysis app",
+    tagline: "AI Nutrition Analysis",
+    description: "Snap a photo or describe a meal — get accurate calorie, macro, and nutritional breakdown instantly.",
     url: "https://nutrisutra.srpailabs.com",
     subdomain: "nutrisutra.srpailabs.com",
     icon: Leaf,
@@ -168,14 +186,14 @@ export const products: Product[] = [
     badge: "New",
     tag: "NEW",
     isNew: true,
-    category: "Consumer AI Apps",
+    category: "Consumer Products",
     features: ["Photo-based meal recognition", "Accurate calorie & macro analysis", "Real-world food database", "Daily nutrition tracking"],
   },
   {
     name: "SRP Kids",
-    desc: "AI-powered cognitive learning system for kids",
-    tagline: "AI Learning App for Kids",
-    description: "AI-powered cognitive learning system for kids — adaptive lessons, gamified challenges, and personalized learning paths designed to build skills and spark curiosity.",
+    desc: "Learning platform for children",
+    tagline: "Learning Platform for Kids",
+    description: "Adaptive lessons, gamified challenges, and personalized learning paths designed to build skills and spark curiosity.",
     url: "https://kids.srpailabs.com",
     subdomain: "kids.srpailabs.com",
     icon: GraduationCap,
@@ -185,7 +203,7 @@ export const products: Product[] = [
     iconColor: "text-yellow-400",
     badge: "Coming Soon",
     isComingSoon: true,
-    category: "Consumer AI Apps",
+    category: "Consumer Products",
     features: ["Adaptive AI learning paths", "Gamified challenges & rewards", "Age-appropriate content", "Parent progress dashboard"],
   },
 ];
@@ -193,11 +211,11 @@ export const products: Product[] = [
 export const PRODUCT_COUNT = products.filter((p) => !p.isComingSoon).length;
 
 export const PRODUCT_CATEGORIES: ProductCategory[] = [
-  "AI Business Platforms",
-  "Enterprise Systems",
-  "Growth & Revenue Systems",
+  "Business Platforms",
+  "Enterprise HR & Hiring",
+  "Growth & Revenue",
   "Industry Solutions",
-  "Consumer AI Apps",
+  "Consumer Products",
 ];
 
 export const productsByCategory = PRODUCT_CATEGORIES.map((cat) => ({

@@ -29,15 +29,15 @@ const sections = [
     content: (
       <>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          SRP AI Labs develops and operates a suite of <strong className="text-foreground">9 AI-powered products</strong> across five categories:
+          SRP AI Labs develops and operates a suite of <strong className="text-foreground">10 AI-powered products</strong> across five categories:
         </p>
         <div className="grid sm:grid-cols-2 gap-3">
           {[
-            { cat: "AI Business Platforms", items: ["Autonomous OS — AI-native operating system", "Automation OS — Intelligent workflow engine"] },
-            { cat: "Enterprise Systems", items: ["SRP HRMS — HR lifecycle management", "SmartRecruit — AI recruitment platform"] },
+            { cat: "Business Platforms", items: ["Autonomous OS — AI-native operating system", "Automation OS — Intelligent workflow engine"] },
+            { cat: "Enterprise HR & Hiring", items: ["SRP HRMS — HR lifecycle management", "SmartRecruit — AI recruitment platform"] },
             { cat: "Growth & Revenue", items: ["Growth OS — Revenue & recruitment hybrid", "Marketing OS — AI marketing automation"] },
-            { cat: "Industry Solutions", items: ["MediFlow — Healthcare AI for clinics & hospitals"] },
-            { cat: "Consumer AI Apps", items: ["NutriSutra — AI nutrition & wellness", "SRP Kids — AI learning for children (Coming Soon)"] },
+            { cat: "Industry Solutions", items: ["MediFlow — Healthcare AI for clinics & hospitals", "SRP Education AI — Student success & institutional intelligence"] },
+            { cat: "Consumer Products", items: ["NutriSutra — AI nutrition & wellness", "SRP Kids — AI learning for children (Coming Soon)"] },
           ].map((g) => (
             <div key={g.cat} className="p-3 rounded-xl bg-muted/30 border border-border/40">
               <p className="text-xs font-semibold text-primary mb-1.5 uppercase tracking-wide">{g.cat}</p>
@@ -89,7 +89,7 @@ const sections = [
         </p>
         <div className="space-y-3">
           {[
-            { title: "Isolated Product Databases", desc: "Each of our 9 products runs on a completely separate database. Medical records in MediFlow, HR records in SRP HRMS, and nutritional data in NutriSutra are stored in isolated environments and never co-mingled." },
+            { title: "Isolated Product Databases", desc: "Each of our 10 products runs on a completely separate database. Medical records in MediFlow, HR records in SRP HRMS, education data in SRP Education AI, and nutritional data in NutriSutra are stored in isolated environments and never co-mingled." },
             { title: "Data Encryption", desc: "All data is encrypted in transit (TLS 1.2+) and at rest. Authentication tokens are hashed using industry-standard algorithms." },
             { title: "Role-Based Access Control", desc: "Every product enforces RBAC — users only access data their role permits. Admin escalations are logged and auditable." },
             { title: "Responsible AI Practices", desc: "Our AI systems are designed to avoid bias and harmful outputs. Healthcare (MediFlow) and children (SRP Kids) products comply with additional safety standards for sensitive contexts." },
@@ -270,10 +270,10 @@ const TermsOfService = () => {
       {/* Footer */}
       <footer className="py-10 border-t border-border mt-4">
         <div className="container mx-auto px-4 text-center text-muted-foreground text-sm">
-          <p className="mb-3">© 2026 SRP AI Labs — Advanced Agentic AI for Business, Enterprise &amp; Consumers</p>
+          <p className="mb-3">© 2026 SRP AI Labs — Specialized Software for Modern Business</p>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <Link to="/" className="hover:text-primary transition-colors">Home</Link>
-            <Link to="/agentic-ai" className="hover:text-primary transition-colors">Agentic AI</Link>
+            <Link to="/technology" className="hover:text-primary transition-colors">Technology</Link>
             <Link to="/security" className="hover:text-primary transition-colors">Security</Link>
             <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
             <a href="mailto:info@srpailabs.com" className="hover:text-primary transition-colors">info@srpailabs.com</a>
