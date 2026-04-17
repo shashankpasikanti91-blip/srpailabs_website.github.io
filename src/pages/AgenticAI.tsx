@@ -134,7 +134,7 @@ export default function AgenticAI() {
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2 sm:gap-3">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-10 sm:h-11 w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-11 sm:h-12 md:h-[3.25rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
             </Link>
             <div className="hidden md:flex items-center gap-5">
               <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Home</Link>
@@ -212,7 +212,7 @@ export default function AgenticAI() {
               SRP AI Labs builds <strong className="text-foreground">autonomous AI agents</strong> that don't just answer questions — they complete entire workflows end-to-end. Plan, execute, verify, and iterate — without human handholding.
             </motion.p>
 
-            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
               <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-10 border-0 shadow-[0_4px_30px_hsl(265_85%_65%/0.4)] hover:-translate-y-0.5 transition-all">
                 <Link to="/#contact" className="flex items-center gap-2">
                   Deploy Your First Agent <ArrowRight className="w-5 h-5" />
@@ -248,12 +248,12 @@ export default function AgenticAI() {
       <div className="section-divider" />
 
       {/* ===== WHAT IS AGENTIC AI ===== */}
-      <section className="py-20 sm:py-28 relative overflow-hidden">
+      <section className="py-16 sm:py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-80px" }} variants={stagger}>
-              <motion.div variants={fadeInUp} className="text-center mb-16">
+              <motion.div variants={fadeInUp} className="text-center mb-10">
                 <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
                   <Brain className="w-4 h-4" /> What Makes It Agentic
                 </span>
@@ -266,7 +266,7 @@ export default function AgenticAI() {
               </motion.div>
 
               {/* Comparison table */}
-              <motion.div variants={fadeInUp} className="grid md:grid-cols-2 gap-6 mb-16">
+              <motion.div variants={fadeInUp} className="grid md:grid-cols-2 gap-6 mb-10">
                 <div className="p-8 rounded-2xl bg-card/50 border border-border/50">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 rounded-xl bg-muted/50 border border-border/60 flex items-center justify-center">
@@ -339,12 +339,12 @@ export default function AgenticAI() {
       <div className="section-divider" />
 
       {/* ===== HOW AGENTS WORK ===== */}
-      <section className="py-20 sm:py-28 relative overflow-hidden">
+      <section className="py-16 sm:py-20 relative overflow-hidden">
         <div className="absolute top-0 right-[10%] w-[500px] h-[500px] rounded-full opacity-[0.04] pointer-events-none" style={{ background: "radial-gradient(circle, hsl(190 100% 50%), transparent 70%)", filter: "blur(100px)" }} />
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-80px" }} variants={stagger}>
-              <motion.div variants={fadeInUp} className="text-center mb-16">
+              <motion.div variants={fadeInUp} className="text-center mb-10">
                 <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
                   <Workflow className="w-4 h-4" /> Agent Execution Loop
                 </span>
@@ -357,7 +357,7 @@ export default function AgenticAI() {
               </motion.div>
 
               {/* Loop steps */}
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
                 {[
                   { step: "01", icon: Eye, title: "Perceive", desc: "Agent reads context — emails, data, triggers, user inputs, API responses, and memory from previous sessions.", color: "text-pink-400" },
                   { step: "02", icon: Brain, title: "Plan", desc: "Latest reasoning models formulate a multi-step action plan, selecting the right tools and sub-agents for each step.", color: "text-purple-400" },
@@ -403,12 +403,12 @@ export default function AgenticAI() {
       <div className="section-divider" />
 
       {/* ===== AGENT USE CASES ===== */}
-      <section className="py-20 sm:py-28 relative overflow-hidden">
+      <section className="py-16 sm:py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/[0.02] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-80px" }} variants={stagger}>
-              <motion.div variants={fadeInUp} className="text-center mb-16">
+              <motion.div variants={fadeInUp} className="text-center mb-10">
                 <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
                   <Target className="w-4 h-4" /> Real-World Agent Deployments
                 </span>
@@ -467,7 +467,7 @@ export default function AgenticAI() {
       <div className="section-divider" />
 
       {/* ===== WHY SRP AGENTS ===== */}
-      <section className="py-20 sm:py-28 relative overflow-hidden">
+      <section className="py-16 sm:py-20 relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-80px" }} variants={stagger}>
@@ -512,7 +512,7 @@ export default function AgenticAI() {
       <div className="section-divider" />
 
       {/* ===== CTA ===== */}
-      <section className="py-20 sm:py-28 relative overflow-hidden">
+      <section className="py-16 sm:py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.04] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div
@@ -554,7 +554,7 @@ export default function AgenticAI() {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-10 w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-11 sm:h-12 md:h-[3.25rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
             </Link>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 justify-center">
               {[

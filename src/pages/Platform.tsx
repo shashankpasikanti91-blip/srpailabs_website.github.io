@@ -23,7 +23,7 @@ export default function Platform() {
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
             <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-10 sm:h-11 w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-11 sm:h-12 md:h-[3.25rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
             </Link>
             <div className="hidden md:flex items-center gap-5">
               <Link to="/products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Products</Link>
@@ -67,7 +67,7 @@ export default function Platform() {
       </header>
 
       {/* Hero */}
-      <section className="py-16 sm:py-24 relative overflow-hidden">
+      <section className="py-14 sm:py-20 relative overflow-hidden">
         <div className="absolute top-0 left-[10%] w-[400px] h-[400px] rounded-full opacity-[0.05] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(190 100% 50%), transparent 70%)', filter: 'blur(80px)' }} />
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <motion.div initial="initial" animate="animate" variants={stagger}>
@@ -76,10 +76,10 @@ export default function Platform() {
                 <span className="w-2 h-2 rounded-full bg-primary" /> Platform Architecture
               </span>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-display mb-4">
-                One Ecosystem.<br /><span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">{products.length} Independent Systems.</span>
+                One Brand.<br /><span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">{products.length} Independent Systems.</span>
               </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto text-lg sm:text-xl mb-8">
-                SRP AI Labs builds each product as a completely isolated system — separate authentication, separate database, independent deployment — all under one brand.
+                Every product runs on its own infrastructure — separate auth, separate database, independent deployment. No shared sessions, no data leakage.
               </p>
             </motion.div>
           </motion.div>
@@ -150,8 +150,8 @@ export default function Platform() {
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={stagger}>
             <motion.div variants={fadeInUp}>
-              <h2 className="text-3xl sm:text-4xl font-bold font-display mb-4">Why This Architecture?</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto mb-10">Isolation isn't just a technical choice — it's a business and security requirement.</p>
+              <h2 className="text-3xl sm:text-4xl font-bold font-display mb-4">Why Isolation Matters</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto mb-10">It's not just a technical choice — it's a security and reliability requirement.</p>
             </motion.div>
             <div className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {[
@@ -178,7 +178,7 @@ export default function Platform() {
       <section className="py-12 border-t border-border/40">
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={fadeInUp}>
-            <h2 className="text-2xl sm:text-3xl font-bold font-display mb-4">Want to see it in action?</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold font-display mb-4">See it in action</h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-8 border-0">
                 <Link to="/products">Browse All Products <ArrowRight className="w-4 h-4 ml-1" /></Link>

@@ -13,19 +13,19 @@ const fadeInUp = {
 const stagger = { animate: { transition: { staggerChildren: 0.07 } } };
 
 const services = [
-  { icon: Bot, title: "AI Agents", description: "Intelligent agents for business automation.", features: ["Customer support agent", "Lead generation agent", "WhatsApp/Email bot", "Website chatbot", "AI FAQ Assistant"], color: "text-purple-400" },
-  { icon: Workflow, title: "n8n Workflow Automation", description: "End-to-end automation for any business process.", features: ["Task automation", "Notification system", "CRM integration", "Google Sheets automation", "Multi-step API workflows"], color: "text-cyan-400" },
-  { icon: Code, title: "No-Code App Development", description: "Build internal tools and dashboards without code.", features: ["Internal tools", "Automation dashboards", "Small CRM", "Lead tracking systems", "Custom mini-apps"], color: "text-pink-400" },
-  { icon: Globe, title: "Website Automation", description: "Automate customer journeys and website interactions.", features: ["Web form → CRM", "Auto-reply system", "Customer onboarding", "Chatbot integration"], color: "text-green-400" },
-  { icon: Plug, title: "API Integrations & Webhooks", description: "Connect all your tools and systems seamlessly.", features: ["REST APIs", "JSON processing", "Google Apps API", "Gmail & Sheets integration", "CRM integrations"], color: "text-orange-400" },
-  { icon: Settings, title: "Custom Business Automation", description: "Tailored automation for your unique business needs.", features: ["Recruitment automation", "Lead generation flows", "Dashboard automations", "Reporting systems"], color: "text-blue-400" },
+  { icon: Bot, title: "AI Agents", description: "Conversational agents for support, sales, and internal ops.", features: ["Customer support agent", "Lead generation agent", "WhatsApp/Email bot", "Website chatbot", "FAQ Assistant"], color: "text-purple-400" },
+  { icon: Workflow, title: "Workflow Automation", description: "End-to-end automation for repetitive business processes.", features: ["Task automation", "Notification system", "CRM integration", "Google Sheets automation", "Multi-step API workflows"], color: "text-cyan-400" },
+  { icon: Code, title: "Internal Tools", description: "Dashboards, admin panels, and lightweight apps — without code.", features: ["Internal tools", "Automation dashboards", "Small CRM", "Lead tracking systems", "Custom mini-apps"], color: "text-pink-400" },
+  { icon: Globe, title: "Website Automation", description: "Automate customer journeys and web interactions.", features: ["Web form → CRM", "Auto-reply system", "Customer onboarding", "Chatbot integration"], color: "text-green-400" },
+  { icon: Plug, title: "API Integrations", description: "Connect your tools and data sources seamlessly.", features: ["REST APIs", "JSON processing", "Google Apps API", "Gmail & Sheets integration", "CRM integrations"], color: "text-orange-400" },
+  { icon: Settings, title: "Custom Automation", description: "Tailored workflows for your specific business needs.", features: ["Recruitment automation", "Lead generation flows", "Dashboard automations", "Reporting systems"], color: "text-blue-400" },
 ];
 
 const steps = [
-  { step: "01", icon: Target, title: "Discovery", desc: "We analyze your business processes and identify automation opportunities with the highest ROI." },
-  { step: "02", icon: Layers, title: "Design", desc: "We architect the workflow solution with clear documentation and milestones." },
-  { step: "03", icon: Code, title: "Build", desc: "We develop and test the automation using n8n, AI tools, and custom code." },
-  { step: "04", icon: Rocket, title: "Deploy", desc: "We launch, monitor, and provide ongoing support and iteration." },
+  { step: "01", icon: Target, title: "Discovery", desc: "We map your business processes and identify the highest-impact automation opportunities." },
+  { step: "02", icon: Layers, title: "Design", desc: "We architect the solution with clear documentation and delivery milestones." },
+  { step: "03", icon: Code, title: "Build", desc: "We develop and test the automation using proven tools and custom code where needed." },
+  { step: "04", icon: Rocket, title: "Deploy", desc: "We launch, monitor, and provide ongoing support as your needs evolve." },
 ];
 
 export default function Services() {
@@ -38,7 +38,7 @@ export default function Services() {
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
             <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-10 sm:h-11 w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-11 sm:h-12 md:h-[3.25rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
             </Link>
             <div className="hidden md:flex items-center gap-5">
               <Link to="/products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Products</Link>
@@ -82,7 +82,7 @@ export default function Services() {
       </header>
 
       {/* Hero */}
-      <section className="py-16 sm:py-24 relative overflow-hidden">
+      <section className="py-14 sm:py-20 relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <motion.div initial="initial" animate="animate" variants={stagger}>
             <motion.div variants={fadeInUp}>
@@ -90,10 +90,10 @@ export default function Services() {
                 <span className="w-2 h-2 rounded-full bg-primary" /> What We Build
               </span>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-display mb-4">
-                AI Automation <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">Services</span>
+                Automation <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">Services</span>
               </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto text-lg sm:text-xl mb-8">
-                From AI agents to n8n workflows — we build the automation backbone that lets your business run on autopilot.
+                From workflow automation to custom agents — we build the systems that reduce manual work and lower admin costs.
               </p>
             </motion.div>
           </motion.div>

@@ -4,7 +4,7 @@ import { ArrowRight, ArrowUpRight, ExternalLink, ChevronDown, Menu, X } from "lu
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import srpLogo from "@/assets/srp-ai-logo.png";
-import { products, productsByCategory, PRODUCT_COUNT } from "@/config/products";
+import { products, PRODUCT_COUNT } from "@/config/products";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -25,7 +25,7 @@ export default function Products() {
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
             <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-10 sm:h-11 w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-11 sm:h-12 md:h-[3.25rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
             </Link>
             <div className="hidden md:flex items-center gap-5">
               <Link to="/products" className="text-sm text-primary font-medium">Products</Link>
@@ -69,7 +69,7 @@ export default function Products() {
       </header>
 
       {/* Hero */}
-      <section className="py-16 sm:py-24 relative overflow-hidden">
+      <section className="py-14 sm:py-20 relative overflow-hidden">
         <div className="absolute top-0 right-[10%] w-[400px] h-[400px] rounded-full opacity-[0.06] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(265 85% 65%), transparent 70%)', filter: 'blur(80px)' }} />
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <motion.div initial="initial" animate="animate" variants={stagger}>
@@ -79,63 +79,56 @@ export default function Products() {
                 {PRODUCT_COUNT} Products Live + 1 Coming Soon
               </span>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-display mb-4">
-                Our <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">AI Products</span>
+                All <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">Products</span>
               </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto text-lg sm:text-xl mb-8">
-                Enterprise platforms, industry solutions, and consumer apps — each with its own login, database, and deployment.
+                {PRODUCT_COUNT} products across HR, hiring, growth, healthcare, education, and operations. Each runs on its own infrastructure.
               </p>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* Products by Category */}
-      <section className="pb-20 sm:pb-28">
+      {/* All Products — 3-column grid */}
+      <section className="pb-16 sm:pb-20">
         <div className="container mx-auto px-4 sm:px-6">
-          <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={stagger}>
-            {productsByCategory.map(({ category, items }) => (
-              <div key={category} className="mb-12">
-                <motion.div variants={fadeInUp} className="mb-5">
-                  <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60 border border-border/50 px-3 py-1.5 rounded-full">{category}</span>
-                </motion.div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                  {items.map((product, i) => (
-                    <motion.div key={i} variants={fadeInUp} whileHover={{ y: -6 }} transition={{ duration: 0.25 }}>
-                      <a href={product.url} target="_blank" rel="noopener noreferrer"
-                        className={`flex flex-col h-full p-6 rounded-2xl bg-gradient-to-br ${product.gradientColor} border border-border/50 ${product.border} hover:border-primary/50 hover:shadow-[0_8px_40px_hsl(265_85%_65%/0.15)] transition-all duration-300 group`}>
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="w-12 h-12 rounded-xl bg-background/60 border border-border/60 flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <product.icon className={`w-6 h-6 ${product.iconColor}`} />
-                          </div>
-                          <div className="flex items-center gap-2">
-                            {product.isNew && <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-400">NEW</span>}
-                            {product.isComingSoon && <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-yellow-500/20 text-yellow-400">COMING SOON</span>}
-                            <span className="w-8 h-8 rounded-lg bg-background/60 border border-border/60 flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:border-primary/50 transition-all">
-                              <ExternalLink className="w-3.5 h-3.5" />
-                            </span>
-                          </div>
-                        </div>
-                        <h3 className="text-lg font-bold text-foreground font-display mb-1 group-hover:text-primary transition-colors">{product.name}</h3>
-                        <p className="text-xs text-primary font-medium mb-2">{product.tagline}</p>
-                        <p className="text-sm text-muted-foreground leading-relaxed flex-1">{product.description}</p>
-                        <div className="mt-4 pt-4 border-t border-border/40">
-                          <ul className="space-y-1.5">
-                            {product.features.slice(0, 3).map((f, idx) => (
-                              <li key={idx} className="flex items-center gap-2 text-xs text-muted-foreground">
-                                <span className={`w-1.5 h-1.5 rounded-full ${product.iconColor.replace('text-', 'bg-')}`} />
-                                {f}
-                              </li>
-                            ))}
-                          </ul>
-                          <div className="flex items-center gap-1.5 mt-4 text-sm font-medium text-primary group-hover:gap-2.5 transition-all">
-                            Visit {product.name} <ArrowRight className="w-4 h-4" />
-                          </div>
-                        </div>
-                      </a>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+          <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={stagger}
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-6xl mx-auto">
+            {products.map((product, i) => (
+              <motion.div key={i} variants={fadeInUp} whileHover={{ y: -5 }} transition={{ duration: 0.25 }}>
+                <a href={product.url} target="_blank" rel="noopener noreferrer"
+                  className={`flex flex-col h-full p-5 sm:p-6 rounded-2xl bg-gradient-to-br ${product.gradientColor} border border-border/50 ${product.border} hover:border-primary/50 hover:shadow-[0_8px_32px_hsl(265_85%_65%/0.12)] transition-all duration-300 group`}>
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="w-11 h-11 rounded-xl bg-background/60 border border-border/60 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <product.icon className={`w-5 h-5 ${product.iconColor}`} />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {product.isNew && <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-400">NEW</span>}
+                      {product.isComingSoon && <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-yellow-500/20 text-yellow-400">COMING SOON</span>}
+                      <span className="w-7 h-7 rounded-lg bg-background/60 border border-border/60 flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:border-primary/50 transition-all">
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </span>
+                    </div>
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 mb-2">{product.category}</span>
+                  <h3 className="text-base font-bold text-foreground font-display mb-0.5 group-hover:text-primary transition-colors">{product.name}</h3>
+                  <p className="text-xs text-primary/80 font-medium mb-2">{product.tagline}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed flex-1">{product.description}</p>
+                  <div className="mt-3 pt-3 border-t border-border/40">
+                    <ul className="space-y-1">
+                      {product.features.slice(0, 3).map((f, idx) => (
+                        <li key={idx} className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <span className={`w-1.5 h-1.5 rounded-full ${product.iconColor.replace('text-', 'bg-')}`} />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="flex items-center gap-1.5 mt-3 text-sm font-medium text-primary group-hover:gap-2.5 transition-all">
+                      Visit {product.name} <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </a>
+              </motion.div>
             ))}
           </motion.div>
         </div>
@@ -145,8 +138,8 @@ export default function Products() {
       <section className="py-16 sm:py-20 border-t border-border/40">
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={fadeInUp}>
-            <h2 className="text-3xl sm:text-4xl font-bold font-display mb-4">Not sure which product to use?</h2>
-            <p className="text-muted-foreground mb-8 max-w-lg mx-auto">Tell us your use case and our team will point you to the right system — or build something custom.</p>
+            <h2 className="text-3xl sm:text-4xl font-bold font-display mb-4">Need help choosing?</h2>
+            <p className="text-muted-foreground mb-8 max-w-lg mx-auto">Share your use case — our team will recommend the right product or scope a custom build.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-8 border-0">
                 <Link to="/#contact">Contact Us</Link>

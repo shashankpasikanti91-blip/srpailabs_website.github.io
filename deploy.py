@@ -39,7 +39,11 @@ def upload_dir(sftp, local_path: Path, remote_path: str):
             sftp.put(str(item), remote_item)
 
 def ensure_remote_dirs(ssh):
-    """Make sure /var/www/srpailabs/dist exists on the server."""
+    """Clean old dist/ completely and recreate, ensuring no stale cache."""
+    print("  Removing old dist/ to clear cached assets...")
+    ssh.exec_command("rm -rf /var/www/srpailabs/dist")
+    import time
+    time.sleep(1)
     ssh.exec_command("mkdir -p /var/www/srpailabs/dist")
     # Also ensure nginx is set up to serve React SPA
     # Check if nginx site config exists
@@ -78,6 +82,8 @@ def main():
 
     # Test nginx config and reload
     print("Reloading nginx...")
+    # Clear any nginx proxy cache if exists
+    ssh.exec_command("rm -rf /var/cache/nginx/* 2>/dev/null || true")
     _, stdout, stderr = ssh.exec_command("nginx -t 2>&1 && systemctl reload nginx && echo NGINX_OK")
     result = stdout.read().decode() + stderr.read().decode()
     if "NGINX_OK" in result or "successful" in result:

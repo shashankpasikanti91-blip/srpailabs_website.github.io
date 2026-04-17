@@ -171,7 +171,7 @@ const Index = () => {
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
             <a href="#home" className="flex items-center gap-2 sm:gap-3">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-10 sm:h-11 w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-11 sm:h-12 md:h-[3.25rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
             </a>
 
             {/* Desktop navigation */}
@@ -412,7 +412,7 @@ const Index = () => {
                 maxWidth: '680px',
                 fontWeight: 400,
               }}>
-                10 specialized products helping teams automate operations, improve workflows, and scale growth across HR, hiring, healthcare, education, and business systems.
+                Software that handles the repetitive work — across HR, hiring, healthcare, education, and business operations. Built for teams that need results, not demos.
               </p>
 
               {/* Product Chips — Row 1 (desktop order-4, mobile order-5) */}
@@ -601,7 +601,7 @@ const Index = () => {
       <div className="section-divider" />
 
       {/* ==================== SECTION E: PRODUCT ECOSYSTEM ==================== */}
-      <section id="products-overview" className="py-16 sm:py-24 relative">
+      <section id="products-overview" className="py-14 sm:py-20 relative">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-[20%] -left-[10%] w-[400px] h-[400px] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, hsl(265 85% 65%), transparent 70%)', filter: 'blur(60px)' }} />
         </div>
@@ -613,10 +613,10 @@ const Index = () => {
                 Product Ecosystem
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-4">
-                One Platform. <span className="gradient-text">Ten Specialized Products.</span>
+                One Platform. <span className="gradient-text">Ten Products.</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
-                Independent products with dedicated deployments, databases, and access controls — all under one unified ecosystem. Use one product or the entire suite.
+                Each product runs on its own infrastructure with dedicated databases, access controls, and deployment. Use one or use the full suite.
               </p>
             </motion.div>
             {productsByCategory.map(({ category, items }) => (
@@ -665,7 +665,7 @@ const Index = () => {
       <div className="section-divider" />
 
       {/* ==================== SECTION F: WHY SRP ==================== */}
-      <section id="why-srp" className="py-16 sm:py-24 relative overflow-hidden">
+      <section id="why-srp" className="py-14 sm:py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.015] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
@@ -676,16 +676,16 @@ const Index = () => {
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-4">
                 Why Teams Choose <span className="gradient-text">SRP AI Labs</span>
               </h2>
-              <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">Enterprise capability. Startup speed. Real products for real operations.</p>
+              <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">Enterprise-grade systems. Startup-speed delivery. Real products, real results.</p>
             </motion.div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-5xl mx-auto">
               {[
-                { icon: Rocket, title: "Faster Deployment", desc: "Each product ships production-ready with its own infrastructure. Go live in days, not months." },
-                { icon: Target, title: "Real Business Use Cases", desc: "Every product solves a specific operational problem — from hiring pipelines to patient management." },
-                { icon: Brain, title: "AI Where It Matters", desc: "Intelligence is built into workflows — not bolted on. Every AI feature drives a measurable outcome." },
-                { icon: Layers, title: "Modular Architecture", desc: "Independent databases, separate deployments, isolated environments. Scale what you need, when you need it." },
-                { icon: TrendingUp, title: "Built to Scale", desc: "Multi-tenant isolation, horizontal scaling, and enterprise-grade infrastructure from day one." },
-                { icon: Users, title: "Human + AI Operations", desc: "Designed for real teams — operators, managers, and decision-makers who need software that works." },
+                { icon: Rocket, title: "Fast Deployment", desc: "Each product ships production-ready with its own infrastructure. Go live in days, not months." },
+                { icon: Target, title: "Solves Real Problems", desc: "Every product is built around a specific workflow — from hiring pipelines to patient management." },
+                { icon: Brain, title: "Practical Intelligence", desc: "AI is built into workflows where it adds value — not bolted on for marketing." },
+                { icon: Layers, title: "Independent Systems", desc: "Separate databases, isolated deployments, dedicated environments. Scale exactly what you need." },
+                { icon: TrendingUp, title: "Scales With You", desc: "Multi-tenant isolation, horizontal scaling, and reliable infrastructure from day one." },
+                { icon: Users, title: "Built for Real Teams", desc: "Designed for operators, managers, and decision-makers who need working software." },
               ].map((item, i) => (
                 <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }}
                   className="group p-6 sm:p-7 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/50 hover:bg-primary/[0.03] hover:shadow-[0_0_25px_hsl(265_85%_65%/0.15)] transition-all duration-400">
@@ -701,10 +701,31 @@ const Index = () => {
         </div>
       </section>
 
+      {/* ==================== TRUST SIGNALS ==================== */}
+      <section className="py-8 sm:py-10 border-y border-border/20 bg-card/10">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-xs sm:text-sm text-muted-foreground/70">
+            {[
+              "Founder-led delivery",
+              "Custom builds available",
+              "Fast implementation",
+              "Enterprise-grade security",
+              "Transparent pricing",
+              "Global support",
+            ].map((signal) => (
+              <span key={signal} className="flex items-center gap-2">
+                <CheckCircle className="w-3.5 h-3.5 text-emerald-400/70" />
+                {signal}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <div className="section-divider" />
 
       {/* ==================== SECTION G: TECHNOLOGY ==================== */}
-      <section id="technology" className="py-16 sm:py-24 relative overflow-hidden">
+      <section id="technology" className="py-14 sm:py-20 relative overflow-hidden">
         <div className="absolute top-[20%] right-[5%] w-[400px] h-[400px] rounded-full opacity-[0.05] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(265 85% 65%), transparent 70%)', filter: 'blur(80px)' }} />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
@@ -714,20 +735,20 @@ const Index = () => {
                 Platform Technology
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-4">
-                Built on <span className="gradient-text">Modern Infrastructure</span>
+                Built on <span className="gradient-text">Reliable Infrastructure</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
-                Enterprise-grade technology stack designed for security, performance, and scale across every product.
+                Secure, performant, and scalable — the same stack powering all ten products.
               </p>
             </motion.div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-5xl mx-auto">
               {[
-                { icon: Brain, title: "Frontier AI Models", desc: "Powered by the latest reasoning and language models — continuously updated as capabilities advance.", color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/5" },
-                { icon: Cpu, title: "Advanced Reasoning Systems", desc: "Contextual understanding that processes inputs, prior interactions, and domain-specific knowledge.", color: "text-pink-400", bg: "from-pink-500/10 to-pink-500/5" },
-                { icon: Workflow, title: "Workflow Automation Layer", desc: "Multi-step execution engine that handles API calls, data processing, notifications, and triggers.", color: "text-cyan-400", bg: "from-cyan-500/10 to-cyan-500/5" },
-                { icon: Lock, title: "Secure Data Infrastructure", desc: "Multi-tenant isolation, encrypted data at rest and in transit, role-based access, and audit trails.", color: "text-emerald-400", bg: "from-emerald-500/10 to-emerald-500/5" },
-                { icon: ServerCog, title: "Scalable Backend Services", desc: "Independent deployments, horizontal scaling, and dedicated databases per product for zero-downtime operations.", color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/5" },
-                { icon: Plug, title: "Enterprise Integrations", desc: "Connect with existing tools and systems through APIs, webhooks, and pre-built connectors.", color: "text-amber-400", bg: "from-amber-500/10 to-amber-500/5" },
+                { icon: Brain, title: "Modern AI Models", desc: "Powered by the latest reasoning and language models — updated as capabilities improve.", color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/5" },
+                { icon: Cpu, title: "Context-Aware Processing", desc: "Understands inputs, prior interactions, and domain-specific knowledge to surface the right action.", color: "text-pink-400", bg: "from-pink-500/10 to-pink-500/5" },
+                { icon: Workflow, title: "Workflow Automation", desc: "Multi-step execution engine handling API calls, data processing, notifications, and triggers.", color: "text-cyan-400", bg: "from-cyan-500/10 to-cyan-500/5" },
+                { icon: Lock, title: "Secure Infrastructure", desc: "Multi-tenant isolation, encrypted data at rest and in transit, role-based access, and full audit trails.", color: "text-emerald-400", bg: "from-emerald-500/10 to-emerald-500/5" },
+                { icon: ServerCog, title: "Scalable Backend", desc: "Independent deployments, horizontal scaling, and dedicated databases per product.", color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/5" },
+                { icon: Plug, title: "500+ Integrations", desc: "Connect with existing tools through APIs, webhooks, and pre-built connectors.", color: "text-amber-400", bg: "from-amber-500/10 to-amber-500/5" },
               ].map((card, i) => (
                 <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }}
                   className={`group p-6 sm:p-7 rounded-2xl bg-gradient-to-br ${card.bg} border border-border/40 hover:border-primary/30 transition-all duration-300`}>
@@ -758,7 +779,7 @@ const Index = () => {
       <div className="section-divider" />
 
       {/* ==================== SECTION H: INDUSTRY SOLUTIONS ==================== */}
-      <section id="industries" className="py-16 sm:py-24 relative overflow-hidden">
+      <section id="industries" className="py-14 sm:py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/[0.015] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
@@ -769,7 +790,7 @@ const Index = () => {
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-4">
                 Purpose-Built for <span className="gradient-text">Your Industry</span>
               </h2>
-              <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">Specialized software designed around real workflows — not generic templates.</p>
+              <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">Software designed around real workflows — not generic templates repurposed for every vertical.</p>
             </motion.div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-6xl mx-auto">
               {[
@@ -811,7 +832,7 @@ const Index = () => {
       <div className="section-divider" />
 
       {/* ==================== SECTION I: CTA ==================== */}
-      <section className="py-20 sm:py-28 relative overflow-hidden">
+      <section className="py-16 sm:py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.03] to-transparent pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.06] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(265 85% 65%), transparent 60%)', filter: 'blur(80px)' }} />
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
@@ -823,12 +844,12 @@ const Index = () => {
             className="text-center max-w-3xl mx-auto"
           >
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6">
-              Upgrade How Your
+              Run Your Business
               <br />
-              <span className="gradient-text">Business Operates</span>
+              <span className="gradient-text">More Efficiently</span>
             </h2>
             <p className="text-muted-foreground text-base sm:text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-              From HR and recruitment to healthcare and education — find the right product for your team and go live in days.
+              From HR and recruitment to healthcare and education — pick the right product for your team and go live in days.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-8 shadow-[0_4px_30px_hsl(265_85%_65%/0.4),0_2px_15px_hsl(190_100%_50%/0.2)] hover:shadow-[0_8px_50px_hsl(265_85%_65%/0.5)] hover:-translate-y-0.5 transition-all border-0">
@@ -851,7 +872,7 @@ const Index = () => {
       <div className="section-divider" />
 
       {/* ==================== CONTACT ==================== */}
-      <section id="contact" className="py-16 sm:py-24 relative overflow-hidden">
+      <section id="contact" className="py-14 sm:py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger} className="max-w-5xl mx-auto">
@@ -864,7 +885,7 @@ const Index = () => {
                 Ready to <span className="gradient-text">Get Started</span>?
               </h2>
               <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
-                Whether you need a product for your industry, a custom workflow, or enterprise integration — our team responds within hours.
+                Whether you need a product for your industry, a custom workflow, or enterprise integration — we respond within hours.
               </p>
             </motion.div>
             <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
@@ -929,14 +950,14 @@ const Index = () => {
       </section>
 
       {/* ==================== SECTION J: FOOTER ==================== */}
-      <footer className="py-14 sm:py-20 relative border-t border-transparent" style={{ borderImage: 'linear-gradient(90deg, transparent, hsl(320 90% 60% / 0.3), hsl(265 85% 65% / 0.5), hsl(190 100% 50% / 0.3), transparent) 1' }}>
+      <footer className="py-10 sm:py-14 relative border-t border-transparent" style={{ borderImage: 'linear-gradient(90deg, transparent, hsl(320 90% 60% / 0.3), hsl(265 85% 65% / 0.5), hsl(190 100% 50% / 0.3), transparent) 1' }}>
         <div className="absolute inset-0 bg-gradient-to-t from-purple-500/[0.02] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 sm:gap-10 mb-10 sm:mb-14">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 sm:gap-10 mb-8 sm:mb-10">
             <div className="col-span-2">
               <img src={srpLogo} alt="SRP AI Labs" className="h-12 w-auto mb-4 drop-shadow-[0_0_10px_rgba(139,92,246,0.2)]" />
               <p className="text-sm text-muted-foreground leading-relaxed mb-4 max-w-xs">
-                Specialized software for HR, recruitment, healthcare, education, and growth — built for teams that need results.
+                Specialized software for HR, hiring, healthcare, education, and growth. Founder-led. Global delivery.
               </p>
               <p className="text-xs text-muted-foreground/60">
                 SRP AI Labs Platform &mdash; <a href="https://srpailabs.com" className="hover:text-primary transition-colors">srpailabs.com</a>

@@ -1,43 +1,43 @@
-# SRP AI Labs — AI Ecosystem for Business, Enterprise & Consumers
+# SRP AI Labs — Software for Business, Enterprise & Consumers
 
-> **Unified AI Ecosystem** — 10 AI Products (Enterprise + Industry + Consumer) + Custom Automation (n8n + AI)
+> **10 Specialized Products** across HR, Recruitment, Sales, Healthcare, Education & Operations + Custom Automation
 
 **Website:** [srpailabs.com](https://srpailabs.com)  
 **Contact:** info@srpailabs.com
 
 ---
 
-## Product Ecosystem (10 AI Products)
+## Product Ecosystem (10 Products)
 
-### AI Business Platforms
+### Business Platforms
 | Product | Subdomain | Focus | Status |
 |---|---|---|---|
-| Autonomous OS | [autonomous.srpailabs.com](https://autonomous.srpailabs.com) | AI Business App Generator | Live |
+| Autonomous OS | [autonomous.srpailabs.com](https://autonomous.srpailabs.com) | Business App Generator | Live |
 | Automation OS | [automation.srpailabs.com](https://automation.srpailabs.com) | CRM / Revenue Automation | New |
 
 ### Enterprise Systems
 | Product | Subdomain | Focus | Status |
 |---|---|---|---|
-| HRMS | [hrms.srpailabs.com](https://hrms.srpailabs.com) | AI-Native HRMS (Hiring to Retirement) | **NEW** |
+| HRMS | [hrms.srpailabs.com](https://hrms.srpailabs.com) | Full Employee Lifecycle | **NEW** |
 | SmartRecruit | [recruit.srpailabs.com](https://recruit.srpailabs.com) | ATS + Recruitment Pipeline | Live |
 
-### Growth & Revenue Systems
+### Growth & Revenue
 | Product | Subdomain | Focus | Status |
 |---|---|---|---|
 | Growth OS | [growth.srpailabs.com](https://growth.srpailabs.com) | Recruitment + Sales Automation | Live |
-| Marketing OS | [app.srpailabs.com](https://app.srpailabs.com) | AI Marketing Automation | Live |
+| Marketing OS | [app.srpailabs.com](https://app.srpailabs.com) | Marketing Automation | Live |
 
 ### Industry Solutions
 | Product | Subdomain | Focus | Status |
 |---|---|---|---|
-| MediFlow | [mediflow.srpailabs.com](https://mediflow.srpailabs.com) | Healthcare Workflow AI | Live |
-| SRP Education AI | [edu.srpailabs.com](https://edu.srpailabs.com) | Student Success & Institutional Intelligence | **NEW** |
+| MediFlow | [mediflow.srpailabs.com](https://mediflow.srpailabs.com) | Healthcare Management | Live |
+| SRP Education AI | [edu.srpailabs.com](https://edu.srpailabs.com) | Student & Institutional Platform | **NEW** |
 
-### Consumer AI Apps
+### Consumer Apps
 | Product | Subdomain | Focus | Status |
 |---|---|---|---|
-| NutriSutra | [nutrisutra.srpailabs.com](https://nutrisutra.srpailabs.com) | AI Nutrition Analysis | **NEW** |
-| SRP Kids | [kids.srpailabs.com](https://kids.srpailabs.com) | AI Learning App for Kids | Coming Soon |
+| NutriSutra | [nutrisutra.srpailabs.com](https://nutrisutra.srpailabs.com) | Nutrition Analysis | **NEW** |
+| SRP Kids | [kids.srpailabs.com](https://kids.srpailabs.com) | Learning App for Kids | Coming Soon |
 
 > Each product is a **fully independent system** — separate login, database, and deployment.
 >
@@ -56,17 +56,17 @@ Main brand hub + platform landing page (`srpailabs.com`). Each product lives in 
 
 ## What's on srpailabs.com
 
-- **Hero** — "AI Ecosystem for Business, Enterprise & Consumers" (10 products + custom automation)
-- **Product Tags** — HRMS OS · Recruitment AI · Sales Automation · Healthcare AI · Education AI · Nutri AI · Kids AI
-- **Get Started** — 4-step onboarding: Choose Product → Sign Up → Custom Automation → Book Demo
-- **Platform Overview** — One Ecosystem. Ten AI Systems. Categorized by type.
-- **Custom Automation Section** — n8n + AI agents + CRM + multi-tenant SaaS builds
-- **Products Section** — 10 product cards with category groupings, NEW/SOON badges
-- **Product Ecosystem** — Independent deployment model explained
-- **Industries** — Healthcare, Education, HRMS, Recruitment, Marketing, Sales, Nutrition, Kids
-- **Pricing** — Flexible per-product pricing
-- **AI Chatbot (SRPA)** — Updated with all 10 products, clear routing logic, key distinctions
-- **App Switcher** — Category-grouped product switcher (bottom drawer mobile / panel desktop)
+- **Hero** — "Modern Systems. Real Outcomes." (10 products + trust signals)
+- **Product Tags** — HRMS · Recruitment · Sales · Healthcare · Education · Nutrition · Kids
+- **Trust Signals** — Founder-led delivery, fast implementation, enterprise security, transparent pricing
+- **Platform Overview** — One Platform. Ten Products. Independent infrastructure.
+- **Custom Automation Section** — Workflow automation + agents + dashboards + CRM builds
+- **Products Section** — 3-column grid with category badges, streamlined cards
+- **Product Ecosystem** — Independent deployment model
+- **Industries** — Healthcare, Education, HR, Recruitment, Marketing, Sales, Nutrition, Kids
+- **Pricing** — Per-product pricing with custom automation tiers
+- **Sales Chatbot (SRPA)** — Solutions advisor with routing logic, cross-sell, lead capture
+- **App Switcher** — Category-grouped product switcher (bottom drawer mobile / floating panel desktop)
 
 ---
 
@@ -196,7 +196,7 @@ Schemas: `auth` · `autonomous` · `marketing` · `mediflow` · `recruit` · `gr
 
 ## SEO Keywords
 
-`AI HRMS Software` · `Recruitment Automation Platform` · `Sales Automation AI` · `Healthcare AI System` · `AI Education Platform` · `AI Nutrition App` · `AI Kids Learning App` · `AI Business Automation` · `n8n Workflow Automation`
+`HRMS Software` · `Recruitment Automation` · `Sales Automation Platform` · `Healthcare Management System` · `Education Platform` · `Nutrition App` · `Kids Learning App` · `Business Automation` · `Workflow Automation` · `Custom Software Development`
 
 ---
 

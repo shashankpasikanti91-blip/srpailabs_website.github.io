@@ -16,19 +16,19 @@ const stagger = { animate: { transition: { staggerChildren: 0.07 } } };
 const industries = [
   {
     icon: Building2, title: "Enterprises & HR Teams",
-    desc: "Full employee lifecycle management — hiring to retirement. Payroll, attendance, performance tracking, and AI-powered HR analytics that goes beyond Workday, Oracle, and SAP.",
+    desc: "Full employee lifecycle management — hiring to retirement. Payroll, attendance, performance tracking, and HR analytics for growing teams.",
     product: "HRMS", productDesc: "SRP HRMS — Enterprise HR Platform", color: "text-purple-400",
     features: ["Employee lifecycle management", "AI-powered payroll automation", "Attendance & leave tracking", "Performance reviews & KPIs", "Onboarding workflows"],
   },
   {
     icon: UserCheck, title: "Recruitment Agencies",
-    desc: "Cut time-to-hire by 60% using AI resume screening, automated interview scheduling, and a smart ATS that learns your hiring patterns.",
+    desc: "Reduce time-to-hire with resume screening, automated interview scheduling, and a smart ATS that learns your hiring patterns.",
     product: "SmartRecruit", productDesc: "SmartRecruit — AI ATS Platform", color: "text-cyan-400",
     features: ["AI resume scoring & matching", "Automated candidate messaging", "Interview scheduling automation", "Pipeline visibility dashboard", "Offer letter generation"],
   },
   {
     icon: HeartPulse, title: "Healthcare Providers",
-    desc: "Reduce admin burden with AI-driven patient intake, scheduling, billing, and documentation across your hospital or clinic network.",
+    desc: "Reduce admin burden with automated patient intake, scheduling, billing, and documentation across your hospital or clinic network.",
     product: "MediFlow", productDesc: "MediFlow — Hospital AI System", color: "text-rose-400",
     features: ["AI patient intake chatbot", "Smart appointment scheduling", "Automated billing & coding", "Medical documentation AI", "OPD registration automation"],
   },
@@ -40,19 +40,19 @@ const industries = [
   },
   {
     icon: Leaf, title: "Health-Conscious Consumers",
-    desc: "Snap a photo of your meal and instantly get accurate calorie, macro, and micro nutrient analysis powered by our proprietary AI Nutrition Engine.",
+    desc: "Snap a photo of your meal and get accurate calorie, macro, and micro nutrient analysis instantly.",
     product: "NutriSutra", productDesc: "NutriSutra — AI Nutrition App", color: "text-emerald-400",
     features: ["Photo-based food recognition", "Instant calorie & macro analysis", "Personalized meal plans", "Progress tracking", "Nutritionist-grade insights"],
   },
   {
     icon: BookOpen, title: "Education & Institutions",
-    desc: "AI-powered education platform for students, teachers, and institutions — structured learning workflows, student progress analytics, AI study support, and institutional management.",
+    desc: "Education platform for students, teachers, and institutions — structured learning workflows, progress analytics, study support, and institutional management.",
     product: "SRP Education AI", productDesc: "SRP Education AI — Student Success Platform", color: "text-indigo-400",
     features: ["Student progress & success analytics", "AI-powered study support", "Institutional management dashboards", "Structured learning workflows", "Academic performance tracking"],
   },
   {
     icon: GraduationCap, title: "Parents & Kids",
-    desc: "AI-powered cognitive learning system designed for children — adaptive lessons, gamified challenges, and personalized learning paths that evolve with each child.",
+    desc: "Cognitive learning system for children — adaptive lessons, gamified challenges, and personalized learning paths that evolve with each child.",
     product: "SRP Kids", productDesc: "SRP Kids — AI Learning Platform (Coming Soon)", color: "text-orange-400",
     features: ["Adaptive learning engine", "Age-appropriate AI content", "Gamified challenges", "Parent progress dashboard", "Multi-subject coverage"],
   },
@@ -68,7 +68,7 @@ export default function Industries() {
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
             <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-10 sm:h-11 w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-11 sm:h-12 md:h-[3.25rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
             </Link>
             <div className="hidden md:flex items-center gap-5">
               <Link to="/products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Products</Link>
@@ -112,7 +112,7 @@ export default function Industries() {
       </header>
 
       {/* Hero */}
-      <section className="py-16 sm:py-24 relative overflow-hidden">
+      <section className="py-14 sm:py-20 relative overflow-hidden">
         <div className="absolute top-0 right-[10%] w-[400px] h-[400px] rounded-full opacity-[0.05] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(320 90% 60%), transparent 70%)', filter: 'blur(80px)' }} />
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <motion.div initial="initial" animate="animate" variants={stagger}>
@@ -121,10 +121,10 @@ export default function Industries() {
                 <span className="w-2 h-2 rounded-full bg-primary" /> Who We Serve
               </span>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-display mb-4">
-                Built for <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">Every Industry</span>
+                Built for <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">Your Industry</span>
               </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto text-lg sm:text-xl mb-8">
-                From hospitals to recruitment agencies — our AI products are purpose-built for real industry workflows, not generic automation.
+                Purpose-built products for healthcare, HR, recruitment, education, sales, and more. Real workflows, not generic automation.
               </p>
             </motion.div>
           </motion.div>
@@ -132,7 +132,7 @@ export default function Industries() {
       </section>
 
       {/* Industry Cards */}
-      <section className="pb-20 sm:pb-28">
+      <section className="pb-16 sm:pb-20">
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={stagger} className="space-y-5 max-w-5xl mx-auto">
             {industries.map((ind, i) => (
@@ -169,7 +169,7 @@ export default function Industries() {
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true }} variants={fadeInUp}>
             <h2 className="text-3xl sm:text-4xl font-bold font-display mb-4">Don't see your industry?</h2>
-            <p className="text-muted-foreground mb-8 max-w-lg mx-auto">We also build completely custom automation systems for any business. Tell us your workflow and we'll design the right solution.</p>
+            <p className="text-muted-foreground mb-8 max-w-lg mx-auto">We build custom automation systems for any business. Share your workflow and we'll scope the right solution.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-8 border-0">
                 <Link to="/#contact">Get Custom Automation <ArrowRight className="w-4 h-4 ml-1" /></Link>
