@@ -23,7 +23,7 @@ export default function Pricing() {
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
             <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-11 sm:h-12 md:h-[3.25rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-12 sm:h-14 md:h-[3.75rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
             </Link>
             <div className="hidden md:flex items-center gap-5">
               <Link to="/products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Products</Link>
@@ -124,24 +124,25 @@ export default function Pricing() {
               <Sparkles className="w-7 h-7 text-primary" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold font-display mb-4">Custom Automation</h2>
-            <p className="text-muted-foreground mb-6 leading-relaxed">
-              Need workflows, AI agents, CRM builds, or multi-tenant systems? We scope and price per project based on complexity and timeline.
+            <p className="text-muted-foreground mb-8 leading-relaxed">
+              Need workflows, AI agents, CRM builds, or custom systems? We build practical automation solutions for businesses of all sizes.
             </p>
             <div className="grid sm:grid-cols-3 gap-4 mb-8 text-left">
               {[
-                { tier: "Starter", price: "From $299", desc: "Simple workflow automation — 1-3 steps, basic integrations. Delivered in 2-3 days." },
-                { tier: "Business", price: "From $999", desc: "Complex multi-step workflows with integrations, testing, and documentation. 1-2 weeks." },
-                { tier: "Enterprise", price: "Custom Quote", desc: "Full platform builds, multi-tenant systems, and bespoke solutions. Scoped per project." },
+                { tier: "Starter", price: "From $49", desc: "Simple workflow automation, forms, notifications, basic integrations, and small business tasks.", delivery: "1–3 business days" },
+                { tier: "Business", price: "From $149", desc: "Advanced workflows, CRM automation, dashboards, multi-step logic, API integrations, and reporting.", delivery: "3–7 business days" },
+                { tier: "Enterprise", price: "Custom Quote", desc: "Custom portals, AI agents, large workflows, multi-user systems, internal tools, and enterprise automation.", delivery: "Based on scope" },
               ].map((tier, i) => (
-                <div key={i} className="p-4 rounded-xl bg-card/60 border border-border/50">
+                <div key={i} className="p-5 rounded-xl bg-card/60 border border-border/50 flex flex-col h-full">
                   <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">{tier.tier}</p>
                   <p className="text-xl font-bold text-foreground font-display mb-2">{tier.price}</p>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{tier.desc}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed flex-1">{tier.desc}</p>
+                  <p className="text-[11px] text-muted-foreground/70 mt-3 pt-3 border-t border-border/30">Delivery: {tier.delivery}</p>
                 </div>
               ))}
             </div>
             <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-8 border-0">
-              <Link to="/#contact">Get a Custom Quote <ArrowRight className="w-4 h-4 ml-1" /></Link>
+              <Link to="/#contact">Get Custom Quote <ArrowRight className="w-4 h-4 ml-1" /></Link>
             </Button>
           </motion.div>
         </div>

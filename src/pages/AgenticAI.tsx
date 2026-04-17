@@ -134,7 +134,7 @@ export default function AgenticAI() {
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2 sm:gap-3">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-11 sm:h-12 md:h-[3.25rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-12 sm:h-14 md:h-[3.75rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
             </Link>
             <div className="hidden md:flex items-center gap-5">
               <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Home</Link>
@@ -554,7 +554,7 @@ export default function AgenticAI() {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-11 sm:h-12 md:h-[3.25rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-12 sm:h-14 md:h-[3.75rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
             </Link>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 justify-center">
               {[

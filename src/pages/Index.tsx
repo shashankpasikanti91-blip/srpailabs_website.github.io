@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import srpLogo from "@/assets/srp-ai-logo.png";
 
 import { ChatWidget } from "@/components/ChatWidget";
-import AppSwitcher from "@/components/AppSwitcher";
+
 import ParticleNetwork from "@/components/ParticleNetwork";
 import { products, productsByCategory, PRODUCT_COUNT } from "@/config/products";
 
@@ -152,7 +152,7 @@ const Index = () => {
           <p className="text-center text-xs sm:text-sm text-muted-foreground/80 font-medium">
             <span className="inline-flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              {PRODUCT_COUNT} AI-Powered Products Live
+              {PRODUCT_COUNT} Products Live
               <Link to="/products" className="text-primary hover:text-primary/80 transition-colors font-semibold ml-1 inline-flex items-center gap-0.5">
                 Explore <ChevronRight className="w-3 h-3" />
               </Link>
@@ -171,7 +171,7 @@ const Index = () => {
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
             <a href="#home" className="flex items-center gap-2 sm:gap-3">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-11 sm:h-12 md:h-[3.25rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-12 sm:h-14 md:h-[3.75rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
             </a>
 
             {/* Desktop navigation */}
@@ -1016,7 +1016,6 @@ const Index = () => {
         </div>
       </footer>
 
-      <AppSwitcher />
       <ChatWidget />
     </div>
   );

@@ -87,6 +87,25 @@ Your role: Help visitors understand products, choose the right solution, and con
 SRP AI Labs also builds tailored systems: workflow automation, agents, dashboards, internal tools, portals, CRM systems, ATS, API integrations. Mention when relevant:
 "We also build custom systems based on your workflow, team size, and goals."
 
+━━ CUSTOM AUTOMATION PRICING ━━
+STARTER — From $49
+Simple workflows, forms, notifications, basic integrations.
+Delivery: 1–3 business days.
+
+BUSINESS — From $149
+Advanced workflows, CRM automation, dashboards, API integrations, reporting.
+Delivery: 3–7 business days.
+
+ENTERPRISE — Custom Quote
+Custom portals, AI agents, large workflows, internal tools, multi-user systems.
+Pricing depends on scope and timeline.
+
+RULES FOR PRICING:
+- Always give latest pricing only ($49 / $149 / Custom).
+- Never mention old pricing ($299 / $999).
+- If user asks exact cost, say final quote depends on requirements.
+- Encourage contact/demo for detailed quote.
+
 ━━ LEAD CAPTURE ━━
 When user shows buying intent (pricing, demo, interested, need system, quote, timeline), ask:
 1. Company name  2. Industry  3. Team size  4. Country  5. What they need  6. Timeline
@@ -162,7 +181,7 @@ export const ChatWidget = () => {
 
       if (!resp.ok) {
         const errText = await resp.text();
-        console.error("OpenAI API error:", resp.status, errText);
+        if (import.meta.env.DEV) console.error("OpenAI API error:", resp.status, errText);
         if (resp.status === 429) throw new Error("rate_limit");
         throw new Error(`API error ${resp.status}`);
       }
@@ -174,7 +193,7 @@ export const ChatWidget = () => {
 
       setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
     } catch (error) {
-      console.error("Chat error:", error);
+      if (import.meta.env.DEV) console.error("Chat error:", error);
       const isRateLimit = error instanceof Error && error.message === "rate_limit";
       setMessages((prev) => [
         ...prev,

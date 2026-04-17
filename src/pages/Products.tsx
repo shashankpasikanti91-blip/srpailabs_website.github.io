@@ -25,7 +25,7 @@ export default function Products() {
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
             <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-11 sm:h-12 md:h-[3.25rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-12 sm:h-14 md:h-[3.75rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
             </Link>
             <div className="hidden md:flex items-center gap-5">
               <Link to="/products" className="text-sm text-primary font-medium">Products</Link>

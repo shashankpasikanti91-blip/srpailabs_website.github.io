@@ -214,7 +214,7 @@ const ProjectDetail = () => {
       fetch(project.workflowFile)
         .then(res => res.json())
         .then(data => setWorkflow(data))
-        .catch(console.error);
+        .catch((err: unknown) => { if (import.meta.env.DEV) console.error(err); });
     }
   }, [project?.workflowFile]);
 
