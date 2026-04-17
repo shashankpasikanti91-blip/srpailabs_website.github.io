@@ -204,6 +204,19 @@ Schemas: `auth` · `autonomous` · `marketing` · `mediflow` · `recruit` · `gr
 
 ---
 
+## Changelog
+
+### April 2026 — Homepage Hero Polish (v9.5)
+- **Announcement bar** — Decluttered copy ("9 AI-Powered Products Live" instead of verbose text)
+- **Headline** — Reduced font sizes by 5% + added `maxWidth: 95%` for tighter visual weight
+- **Subheadline** — Increased text contrast from `0.72` → `0.82` opacity (+12%)
+- **Right logo group** — Shifted upward by 24px for better vertical balance
+- **Floating trust chips** — Aligned to clean invisible 3×2 grid (symmetric offsets)
+- **Whitespace harmony** — Rebalanced hero padding, badge/chip margins for premium spacing
+- **Nginx config** — Added all 10 product subdomain server blocks (ports 3001–3010)
+
+---
+
 ## This Repository
 
 This repo contains the **main brand hub + platform landing page** (`srpailabs.com`). Each product lives in its own separate repository on its own subdomain. This site routes users to the correct product.

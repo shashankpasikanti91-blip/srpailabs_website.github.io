@@ -149,10 +149,10 @@ const Index = () => {
       {/* ==================== SECTION A: ANNOUNCEMENT BAR ==================== */}
       <div className="bg-gradient-to-r from-purple-600/10 via-primary/5 to-cyan-500/10 border-b border-border/20">
         <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-2.5">
-          <p className="text-center text-xs sm:text-sm text-muted-foreground font-medium">
+          <p className="text-center text-xs sm:text-sm text-muted-foreground/80 font-medium">
             <span className="inline-flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Multi-Product SaaS Ecosystem &mdash; {PRODUCT_COUNT} Specialized Systems for Modern Business
+              {PRODUCT_COUNT} AI-Powered Products Live
               <Link to="/products" className="text-primary hover:text-primary/80 transition-colors font-semibold ml-1 inline-flex items-center gap-0.5">
                 Explore <ChevronRight className="w-3 h-3" />
               </Link>
@@ -363,76 +363,98 @@ const Index = () => {
       </AnimatePresence>
 
       {/* ==================== SECTION B: HERO ==================== */}
-      <section id="home" className="relative min-h-[90vh] lg:min-h-screen flex flex-col justify-center overflow-hidden">
+      <section id="home" className="relative overflow-hidden" style={{ minHeight: '88vh' }}>
+        {/* Background — subtle particles, no heavy bloom */}
         <div className="absolute inset-0">
           <ParticleNetwork />
           <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent z-[1]" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent z-[1]" />
+          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-background to-transparent z-[1]" />
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 relative z-10 py-12 lg:py-0">
-          <div className="grid lg:grid-cols-2 gap-10 md:gap-12 lg:gap-16 items-center">
-            {/* Left text */}
+        <div className="relative z-10 mx-auto w-full px-6 md:px-10 lg:px-12" style={{ maxWidth: '1440px', paddingTop: '48px', paddingBottom: '64px' }}>
+          <div className="grid lg:grid-cols-[58fr_42fr] gap-8 lg:gap-8 items-center" style={{ minHeight: 'calc(88vh - 110px)' }}>
+
+            {/* ===== LEFT COLUMN ===== */}
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col order-1"
             >
+              {/* Badge */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-6 sm:mb-8"
+                className="mb-10"
               >
-                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 animate-pulse" />
-                Intelligent Systems for Real Operations
+                <span className="inline-flex items-center gap-2 rounded-full bg-purple-500/[0.06] border border-purple-500/20 text-purple-300" style={{ padding: '10px 18px', fontSize: '14px', fontWeight: 500 }}>
+                  <span className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 animate-pulse" />
+                  Intelligent Systems for Real Operations
+                </span>
               </motion.div>
 
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight font-display mb-5 sm:mb-8">
-                <span className="text-foreground">Software Built</span>
-                <br />
-                <span className="text-foreground">for Real </span>
-                <span className="gradient-text-glow text-glow" style={{
-                  backgroundImage: "linear-gradient(135deg, hsl(320 90% 65%), hsl(265 85% 65%), hsl(220 85% 60%), hsl(190 100% 50%))",
-                  backgroundSize: "200% 200%",
-                  animation: "text-shimmer 4s ease-in-out infinite",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}>Operations.</span>
+              {/* Headline */}
+              <h1 className="font-display font-extrabold mb-7" style={{ lineHeight: 0.95, letterSpacing: '-2px', maxWidth: '95%' }}>
+                <span className="text-foreground block text-[49px] md:text-[59px] lg:text-[68px] xl:text-[80px]">Modern Systems.</span>
+                <span className="block text-[49px] md:text-[59px] lg:text-[68px] xl:text-[80px]" style={{
+                  backgroundImage: 'linear-gradient(135deg, hsl(265 85% 65%), hsl(230 85% 62%), hsl(190 100% 50%))',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>Real Outcomes.</span>
               </h1>
 
-              <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed mb-8 sm:mb-10 max-w-xl">
-                {PRODUCT_COUNT} specialized products for HR, recruitment, healthcare, education, sales, and operations — built to <strong className="text-foreground">automate workflows and deliver measurable outcomes</strong>.
+              {/* Subheadline */}
+              <p className="mb-9" style={{
+                fontSize: 'clamp(18px, 1.6vw, 24px)',
+                lineHeight: 1.55,
+                color: 'rgba(255,255,255,0.82)',
+                maxWidth: '680px',
+                fontWeight: 400,
+              }}>
+                10 specialized products helping teams automate operations, improve workflows, and scale growth across HR, hiring, healthcare, education, and business systems.
               </p>
 
-              {/* Product chips */}
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-8 sm:mb-10">
-                {products.filter(p => !p.isComingSoon).slice(0, 6).map((p) => (
-                  <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium bg-card/60 border border-border/50 text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all duration-300">
-                    <p.icon className={`w-3 h-3 ${p.iconColor}`} />
-                    {p.name}
-                  </a>
-                ))}
-                <Link to="/products"
-                  className="inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium text-primary border border-primary/30 hover:bg-primary/5 transition-all duration-300">
-                  +{products.length - 6} more <ArrowRight className="w-3 h-3" />
-                </Link>
+              {/* Product Chips — Row 1 (desktop order-4, mobile order-5) */}
+              <div className="flex flex-col gap-2 mb-10 order-5 sm:order-4">
+                <div className="flex flex-wrap gap-2.5">
+                  {products.filter(p => !p.isComingSoon).slice(0, 5).map((p) => (
+                    <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/70 hover:border-purple-500/40 hover:text-purple-300 hover:bg-purple-500/[0.06] transition-all duration-300" style={{ padding: '10px 14px', fontSize: '14px', fontWeight: 500 }}>
+                      <p.icon className={`w-3.5 h-3.5 ${p.iconColor}`} />
+                      {p.name}
+                    </a>
+                  ))}
+                </div>
+                <div className="flex flex-wrap gap-2.5">
+                  {products.filter(p => !p.isComingSoon).slice(5, 9).map((p) => (
+                    <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/70 hover:border-purple-500/40 hover:text-purple-300 hover:bg-purple-500/[0.06] transition-all duration-300" style={{ padding: '10px 14px', fontSize: '14px', fontWeight: 500 }}>
+                      <p.icon className={`w-3.5 h-3.5 ${p.iconColor}`} />
+                      {p.name}
+                    </a>
+                  ))}
+                  <Link to="/products"
+                    className="inline-flex items-center gap-1.5 rounded-full text-purple-300 border border-purple-500/30 hover:bg-purple-500/[0.06] transition-all duration-300" style={{ padding: '10px 14px', fontSize: '14px', fontWeight: 500 }}>
+                    +{products.filter(p => p.isComingSoon).length} More <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
               </div>
 
+              {/* CTA Buttons (desktop order-5, mobile order-4) */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4"
+                className="flex flex-col sm:flex-row gap-3.5 order-4 sm:order-5 mb-9 sm:mb-0"
               >
-                <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-6 sm:px-8 shadow-[0_4px_30px_hsl(265_85%_65%/0.4),0_2px_15px_hsl(190_100%_50%/0.2)] hover:shadow-[0_8px_50px_hsl(265_85%_65%/0.5),0_4px_25px_hsl(190_100%_50%/0.3)] hover:-translate-y-0.5 transition-all border-0 w-full sm:w-auto">
+                <Button asChild className="bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:from-purple-500 hover:to-blue-400 rounded-full border-0 shadow-[0_4px_30px_hsl(265_85%_65%/0.35)] hover:shadow-[0_8px_50px_hsl(265_85%_65%/0.5)] hover:-translate-y-0.5 transition-all w-full sm:w-auto" style={{ height: '52px', padding: '0 28px', fontSize: '16px' }}>
                   <a href="#products-overview" className="group flex items-center justify-center gap-2">
                     Explore Products
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </Button>
-                <Button size="lg" variant="outline" asChild className="rounded-full px-6 sm:px-8 border-purple-500/30 hover:border-purple-500/60 hover:bg-purple-500/5 w-full sm:w-auto">
+                <Button variant="outline" asChild className="rounded-full border-white/[0.12] hover:border-purple-500/40 hover:bg-purple-500/[0.05] text-foreground w-full sm:w-auto" style={{ height: '52px', padding: '0 28px', fontSize: '16px' }}>
                   <a href="#contact" className="flex items-center justify-center gap-2">
                     Book a Demo
                   </a>
@@ -440,51 +462,81 @@ const Index = () => {
               </motion.div>
             </motion.div>
 
-            {/* Right — Premium ecosystem visual */}
+            {/* ===== RIGHT COLUMN — Desktop: Logo + Floating Chips ===== */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="hidden lg:block relative"
+              className="hidden lg:flex items-center justify-center order-2"
+              style={{ marginTop: '-24px' }}
             >
-              <div className="relative w-full max-w-[520px] mx-auto aspect-square">
-                {/* Central logo — transparent, no box */}
-                <motion.div
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <img src={srpLogo} alt="SRP AI Labs" className="w-20 h-20 object-contain drop-shadow-[0_0_20px_rgba(139,92,246,0.15)]" />
-                </motion.div>
+              <div className="relative w-full max-w-[520px] mx-auto" style={{ aspectRatio: '1' }}>
+                {/* Central logo — transparent, no box, no shadow halo */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                  <img
+                    src={srpLogo}
+                    alt="SRP AI Labs"
+                    className="w-[250px] h-auto object-contain"
+                    style={{ filter: 'drop-shadow(0 0 30px rgba(139,92,246,0.10))' }}
+                  />
+                </div>
 
-                {/* Floating ecosystem cards */}
-                {ecosystemCards.map((card, i) => {
-                  const angle = (i * 60) - 60;
-                  const radius = 190;
-                  const x = Math.cos((angle * Math.PI) / 180) * radius;
-                  const y = Math.sin((angle * Math.PI) / 180) * radius;
+                {/* Floating trust chips — aligned to invisible 3×2 grid */}
+                {[
+                  { label: "Scalable Deployments", icon: Rocket, color: "text-amber-400", bg: "from-amber-500/10 to-amber-500/[0.03]", top: '5%', left: '0%' },
+                  { label: "10 Products Live", icon: Boxes, color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/[0.03]", top: '5%', right: '0%' },
+                  { label: "Workflow Automation", icon: Workflow, color: "text-pink-400", bg: "from-pink-500/10 to-pink-500/[0.03]", top: '40%', left: '-6%' },
+                  { label: "6+ Industries", icon: Building2, color: "text-cyan-400", bg: "from-cyan-500/10 to-cyan-500/[0.03]", top: '40%', right: '-6%' },
+                  { label: "Secure Infrastructure", icon: Shield, color: "text-emerald-400", bg: "from-emerald-500/10 to-emerald-500/[0.03]", bottom: '5%', left: '0%' },
+                  { label: "Independent Systems", icon: ServerCog, color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/[0.03]", bottom: '5%', right: '0%' },
+                ].map((chip, i) => {
+                  const posStyle: React.CSSProperties = {};
+                  if (chip.top) posStyle.top = chip.top;
+                  if (chip.bottom) posStyle.bottom = chip.bottom;
+                  if (chip.left) posStyle.left = chip.left;
+                  if (chip.right) posStyle.right = chip.right;
                   return (
                     <motion.div
-                      key={card.label}
-                      className="absolute left-1/2 top-1/2 z-20"
-                      style={{ x: x - 70, y: y - 28 }}
+                      key={chip.label}
+                      className="absolute z-20"
+                      style={posStyle}
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
                     >
                       <motion.div
-                        animate={{ y: [0, i % 2 === 0 ? -6 : 6, 0] }}
-                        transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut" }}
-                        className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-gradient-to-br ${card.bg} border border-border/40 backdrop-blur-md shadow-lg hover:border-primary/30 transition-all duration-300 cursor-default min-w-[140px]`}
+                        animate={{ y: [0, i % 2 === 0 ? -8 : 8, 0] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        className={`flex items-center gap-2.5 rounded-[14px] bg-gradient-to-br ${chip.bg} border border-white/[0.06] backdrop-blur-md hover:border-purple-500/20 transition-all duration-300 cursor-default`}
+                        style={{ padding: '14px 18px' }}
                       >
-                        <card.icon className={`w-4 h-4 ${card.color} flex-shrink-0`} />
-                        <span className="text-xs font-medium text-foreground whitespace-nowrap">{card.label}</span>
+                        <chip.icon className={`w-4 h-4 ${chip.color} flex-shrink-0`} />
+                        <span className="text-[15px] font-medium text-foreground/90 whitespace-nowrap">{chip.label}</span>
                       </motion.div>
                     </motion.div>
                   );
                 })}
               </div>
             </motion.div>
+
+            {/* ===== RIGHT COLUMN — Mobile: Logo + Simplified Chips ===== */}
+            <div className="lg:hidden flex flex-col items-center gap-6 order-6 mt-2">
+              <img
+                src={srpLogo}
+                alt="SRP AI Labs"
+                className="w-[130px] md:w-[180px] h-auto object-contain"
+                style={{ filter: 'drop-shadow(0 0 20px rgba(139,92,246,0.08))' }}
+              />
+              <div className="flex flex-wrap justify-center gap-2">
+                {ecosystemCards.slice(0, 4).map((card) => (
+                  <div key={card.label} className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-gradient-to-br ${card.bg} border border-white/[0.06] backdrop-blur-md`}>
+                    <card.icon className={`w-3.5 h-3.5 ${card.color}`} />
+                    <span className="text-xs font-medium text-foreground/80">{card.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
