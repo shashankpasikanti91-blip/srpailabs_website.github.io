@@ -484,35 +484,34 @@ const Index = () => {
 
                 {/* 6 floating chips — 3 rows × 2 columns, mathematically symmetric */}
                 {[
-                  { label: "Scalable Deployments", icon: Rocket, color: "text-amber-400", bg: "from-amber-500/10 to-amber-500/[0.03]", x: -170, y: -155 },
-                  { label: "10 Products Live", icon: Boxes, color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/[0.03]", x: 170, y: -155 },
-                  { label: "Workflow Automation", icon: Workflow, color: "text-pink-400", bg: "from-pink-500/10 to-pink-500/[0.03]", x: -190, y: 0 },
-                  { label: "6+ Industries", icon: Building2, color: "text-cyan-400", bg: "from-cyan-500/10 to-cyan-500/[0.03]", x: 190, y: 0 },
-                  { label: "Secure Infrastructure", icon: Shield, color: "text-emerald-400", bg: "from-emerald-500/10 to-emerald-500/[0.03]", x: -170, y: 155 },
-                  { label: "Independent Systems", icon: ServerCog, color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/[0.03]", x: 170, y: 155 },
+                  { label: "Scalable Deployments", icon: Rocket, color: "text-amber-400", bg: "from-amber-500/10 to-amber-500/[0.03]", top: '7%', left: '-4%' },
+                  { label: "10 Products Live", icon: Boxes, color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/[0.03]", top: '7%', right: '-4%', left: 'auto' },
+                  { label: "Workflow Automation", icon: Workflow, color: "text-pink-400", bg: "from-pink-500/10 to-pink-500/[0.03]", top: '42%', left: '-12%' },
+                  { label: "6+ Industries", icon: Building2, color: "text-cyan-400", bg: "from-cyan-500/10 to-cyan-500/[0.03]", top: '42%', right: '-12%', left: 'auto' },
+                  { label: "Secure Infrastructure", icon: Shield, color: "text-emerald-400", bg: "from-emerald-500/10 to-emerald-500/[0.03]", top: '77%', left: '-4%' },
+                  { label: "Independent Systems", icon: ServerCog, color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/[0.03]", top: '77%', right: '-4%', left: 'auto' },
                 ].map((chip, i) => (
-                  <motion.div
+                  <div
                     key={chip.label}
                     className="absolute z-20"
-                    style={{
-                      left: '50%',
-                      top: '50%',
-                      transform: `translate(calc(-50% + ${chip.x}px), calc(-50% + ${chip.y}px))`,
-                    }}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
+                    style={{ top: chip.top, left: chip.left ?? undefined, right: (chip as any).right ?? undefined }}
                   >
                     <motion.div
-                      animate={{ y: [0, i % 2 === 0 ? -6 : 6, 0] }}
-                      transition={{ duration: 4 + i * 0.3, repeat: Infinity, ease: "easeInOut" }}
-                      className={`flex items-center gap-2 rounded-[14px] bg-gradient-to-br ${chip.bg} border border-white/[0.06] backdrop-blur-md hover:border-purple-500/20 transition-all duration-300 cursor-default`}
-                      style={{ padding: '12px 16px' }}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
                     >
-                      <chip.icon className={`w-4 h-4 ${chip.color} flex-shrink-0`} />
-                      <span className="text-[14px] font-medium text-foreground/90 whitespace-nowrap">{chip.label}</span>
+                      <motion.div
+                        animate={{ y: [0, i % 2 === 0 ? -6 : 6, 0] }}
+                        transition={{ duration: 4 + i * 0.3, repeat: Infinity, ease: "easeInOut" }}
+                        className={`flex items-center gap-2 rounded-[14px] bg-gradient-to-br ${chip.bg} border border-white/[0.06] backdrop-blur-md hover:border-purple-500/20 transition-all duration-300 cursor-default`}
+                        style={{ padding: '12px 16px' }}
+                      >
+                        <chip.icon className={`w-4 h-4 ${chip.color} flex-shrink-0`} />
+                        <span className="text-[14px] font-medium text-foreground/90 whitespace-nowrap">{chip.label}</span>
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </motion.div>
