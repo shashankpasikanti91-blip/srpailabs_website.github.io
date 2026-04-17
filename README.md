@@ -85,7 +85,7 @@ This drives **every** part of the site automatically:
 products.ts exports:
   - products[]         — all 10 products
   - productsByCategory — grouped by category
-  - PRODUCT_COUNT      — count of non-coming-soon products (9)
+  - PRODUCT_COUNT      — total product count (10)
   - PRODUCT_CATEGORIES — list of 5 category names
 ```
 

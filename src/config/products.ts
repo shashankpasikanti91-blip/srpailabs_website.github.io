@@ -208,7 +208,7 @@ export const products: Product[] = [
   },
 ];
 
-export const PRODUCT_COUNT = products.filter((p) => !p.isComingSoon).length;
+export const PRODUCT_COUNT = products.length;
 
 export const PRODUCT_CATEGORIES: ProductCategory[] = [
   "Business Platforms",

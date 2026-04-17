@@ -389,9 +389,9 @@ const Index = () => {
               </motion.div>
 
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight font-display mb-5 sm:mb-8">
-                <span className="text-foreground">Software That</span>
+                <span className="text-foreground">Software Built</span>
                 <br />
-                <span className="text-foreground">Runs Your </span>
+                <span className="text-foreground">for Real </span>
                 <span className="gradient-text-glow text-glow" style={{
                   backgroundImage: "linear-gradient(135deg, hsl(320 90% 65%), hsl(265 85% 65%), hsl(220 85% 60%), hsl(190 100% 50%))",
                   backgroundSize: "200% 200%",
@@ -402,7 +402,7 @@ const Index = () => {
               </h1>
 
               <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed mb-8 sm:mb-10 max-w-xl">
-                {PRODUCT_COUNT} specialized products for HR, recruitment, healthcare, education, and growth — each built to <strong className="text-foreground">automate workflows and deliver measurable outcomes</strong>.
+                {PRODUCT_COUNT} specialized products for HR, recruitment, healthcare, education, sales, and operations — built to <strong className="text-foreground">automate workflows and deliver measurable outcomes</strong>.
               </p>
 
               {/* Product chips */}
@@ -448,25 +448,14 @@ const Index = () => {
               className="hidden lg:block relative"
             >
               <div className="relative w-full max-w-[520px] mx-auto aspect-square">
-                {/* Central glow */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-48 h-48 rounded-full bg-gradient-to-br from-purple-500/20 to-cyan-500/10 blur-3xl" />
-                </div>
-
-                {/* Central logo */}
+                {/* Central logo — transparent, no box */}
                 <motion.div
                   className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
-                  animate={{ y: [0, -8, 0] }}
+                  animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <div className="w-24 h-24 rounded-2xl bg-card/80 border border-border/60 backdrop-blur-xl flex items-center justify-center shadow-[0_8px_40px_hsl(265_85%_65%/0.25)]">
-                    <img src={srpLogo} alt="SRP AI Labs" className="w-16 h-16 object-contain" />
-                  </div>
+                  <img src={srpLogo} alt="SRP AI Labs" className="w-20 h-20 object-contain drop-shadow-[0_0_20px_rgba(139,92,246,0.15)]" />
                 </motion.div>
-
-                {/* Orbiting rings */}
-                <div className="absolute inset-12 rounded-full border border-border/20" />
-                <div className="absolute inset-6 rounded-full border border-border/10" />
 
                 {/* Floating ecosystem cards */}
                 {ecosystemCards.map((card, i) => {
