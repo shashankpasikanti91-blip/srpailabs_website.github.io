@@ -1,15 +1,15 @@
 import { motion, useMotionValue, useSpring, useTransform, useInView, AnimatePresence } from "framer-motion";
-import { 
-  Workflow, MessageSquare, Globe, Plug, Bot, Settings, ArrowRight, Linkedin, Github, Mail,
-  Zap, Clock, Bell, BarChart3, CheckCircle, Rocket, Shield, Users, Code, Wrench,
-  HelpCircle, MapPin, Phone, Sparkles, FileText, TrendingUp, Target, ExternalLink,
-  MousePointer2, Layers, Database, Cpu, ArrowUpRight, ChevronDown, Monitor, Activity,
-  Brain, Briefcase, HeartPulse, UserCheck, Building2, Star, Menu, X, Minus,
-  CircleDot, MousePointerClick, CalendarCheck, PhoneCall, Sun, Moon,
-  Leaf, GraduationCap, BookOpen
+import {
+  Workflow, Globe, Plug, Bot, Settings, ArrowRight, Linkedin, Github, Mail,
+  Zap, BarChart3, CheckCircle, Rocket, Shield, Users, Code,
+  MapPin, Phone, Sparkles, TrendingUp, Target, ExternalLink,
+  Layers, Database, Cpu, ArrowUpRight, ChevronDown, Monitor, Activity,
+  Brain, Building2, Menu, X,
+  Sun, Moon, Leaf, GraduationCap, BookOpen, ChevronRight, Lock, ServerCog, Boxes, Cog,
+  UserCheck, HeartPulse
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
@@ -21,7 +21,7 @@ import srpLogo from "@/assets/srp-ai-logo.png";
 import { ChatWidget } from "@/components/ChatWidget";
 import AppSwitcher from "@/components/AppSwitcher";
 import ParticleNetwork from "@/components/ParticleNetwork";
-import { products, productsByCategory } from "@/config/products";
+import { products, productsByCategory, PRODUCT_COUNT } from "@/config/products";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -40,15 +40,13 @@ const stagger = {
   animate: { transition: { staggerChildren: 0.08 } }
 };
 
-// Animated counter component
 const AnimatedCounter = ({ value, suffix = "" }: { value: string; suffix?: string }) => {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true });
   const num = parseInt(value.replace(/\D/g, ''));
   const isNumeric = !isNaN(num);
-  
   const [count, setCount] = useState(0);
-  
+
   useEffect(() => {
     if (isInView && isNumeric) {
       let start = 0;
@@ -63,7 +61,7 @@ const AnimatedCounter = ({ value, suffix = "" }: { value: string; suffix?: strin
       return () => clearInterval(timer);
     }
   }, [isInView, isNumeric, num]);
-  
+
   return <span ref={ref}>{isNumeric && isInView ? `${count}${suffix}` : value}</span>;
 };
 
@@ -99,8 +97,6 @@ const Index = () => {
     e.preventDefault();
     try {
       contactSchema.parse(formData);
-
-      // Send Telegram notification
       const botToken = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
       const chatId = import.meta.env.VITE_TELEGRAM_CHAT_ID;
       if (botToken && chatId) {
@@ -117,10 +113,9 @@ const Index = () => {
             body: JSON.stringify({ chat_id: chatId, text, parse_mode: "HTML" }),
           });
         } catch (_) {
-          // Telegram send failed silently – don't block the UX
+          // Silent fail
         }
       }
-
       toast({ title: "Message sent!", description: "We'll get back to you soon." });
       setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (error) {
@@ -130,11 +125,20 @@ const Index = () => {
     }
   };
 
+  const ecosystemCards = [
+    { icon: Boxes, label: "10 Products Live", color: "text-purple-400", bg: "from-purple-500/15 to-purple-500/5" },
+    { icon: Building2, label: "6+ Industries", color: "text-cyan-400", bg: "from-cyan-500/15 to-cyan-500/5" },
+    { icon: ServerCog, label: "Independent Systems", color: "text-blue-400", bg: "from-blue-500/15 to-blue-500/5" },
+    { icon: Shield, label: "Secure Infrastructure", color: "text-emerald-400", bg: "from-emerald-500/15 to-emerald-500/5" },
+    { icon: Workflow, label: "Workflow Automation", color: "text-pink-400", bg: "from-pink-500/15 to-pink-500/5" },
+    { icon: Rocket, label: "Scalable Deployments", color: "text-amber-400", bg: "from-amber-500/15 to-amber-500/5" },
+  ];
+
   return (
     <div className="min-h-screen bg-background relative">
-      {/* Cursor glow follower — SRP brand purple/cyan */}
+      {/* Cursor glow */}
       <motion.div
-        className="fixed w-[600px] h-[600px] rounded-full pointer-events-none z-0 opacity-[0.06]"
+        className="fixed w-[600px] h-[600px] rounded-full pointer-events-none z-0 opacity-[0.06] hidden lg:block"
         style={{
           x: useTransform(smoothX, (v) => v - 300),
           y: useTransform(smoothY, (v) => v - 300),
@@ -142,7 +146,22 @@ const Index = () => {
         }}
       />
 
-      {/* Header */}
+      {/* ==================== SECTION A: ANNOUNCEMENT BAR ==================== */}
+      <div className="bg-gradient-to-r from-purple-600/10 via-primary/5 to-cyan-500/10 border-b border-border/20">
+        <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-2.5">
+          <p className="text-center text-xs sm:text-sm text-muted-foreground font-medium">
+            <span className="inline-flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Multi-Product SaaS Ecosystem &mdash; {PRODUCT_COUNT} Specialized Systems for Modern Business
+              <Link to="/products" className="text-primary hover:text-primary/80 transition-colors font-semibold ml-1 inline-flex items-center gap-0.5">
+                Explore <ChevronRight className="w-3 h-3" />
+              </Link>
+            </span>
+          </p>
+        </div>
+      </div>
+
+      {/* ==================== HEADER ==================== */}
       <motion.header
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -157,7 +176,6 @@ const Index = () => {
 
             {/* Desktop navigation */}
             <div className="hidden md:flex items-center gap-5 lg:gap-6">
-              {/* Products dropdown */}
               <div className="relative group">
                 <button className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300">
                   Products <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" />
@@ -267,7 +285,6 @@ const Index = () => {
                 </button>
               </div>
               <div className="flex-1 overflow-y-auto py-4 px-4">
-                {/* Products expandable */}
                 <div className="mb-1">
                   <button
                     onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
@@ -345,19 +362,17 @@ const Index = () => {
         )}
       </AnimatePresence>
 
-      {/* ==================== HERO ==================== */}
-      <section id="home" className="relative min-h-screen flex flex-col justify-center overflow-hidden">
-        {/* Interactive particle network background */}
+      {/* ==================== SECTION B: HERO ==================== */}
+      <section id="home" className="relative min-h-[90vh] lg:min-h-screen flex flex-col justify-center overflow-hidden">
         <div className="absolute inset-0">
           <ParticleNetwork />
-          {/* Subtle gradient overlay at top and bottom for readability */}
           <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent z-[1]" />
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent z-[1]" />
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center mb-10 md:mb-16">
-            {/* Left - Text content */}
+        <div className="container mx-auto px-4 sm:px-6 relative z-10 py-12 lg:py-0">
+          <div className="grid lg:grid-cols-2 gap-10 md:gap-12 lg:gap-16 items-center">
+            {/* Left text */}
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
@@ -367,47 +382,49 @@ const Index = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-5 sm:mb-8"
+                className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-6 sm:mb-8"
               >
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 animate-pulse" />
-                SRP AI Labs — 10 Specialized Products for Modern Business
+                Intelligent Systems for Real Operations
               </motion.div>
 
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.05] tracking-tight font-display mb-5 sm:mb-8">
-                <span className="text-foreground">Intelligent Systems.</span>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight font-display mb-5 sm:mb-8">
+                <span className="text-foreground">Software That</span>
                 <br />
+                <span className="text-foreground">Runs Your </span>
                 <span className="gradient-text-glow text-glow" style={{
                   backgroundImage: "linear-gradient(135deg, hsl(320 90% 65%), hsl(265 85% 65%), hsl(220 85% 60%), hsl(190 100% 50%))",
                   backgroundSize: "200% 200%",
                   animation: "text-shimmer 4s ease-in-out infinite",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
-                }}>Measurable Outcomes.</span>
+                }}>Operations.</span>
               </h1>
 
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed mb-6 sm:mb-10 max-w-xl">
-                SRP AI Labs builds specialized software for HR, recruitment, sales, healthcare, education, and operations — designed to <strong className="text-foreground">automate workflows and deliver measurable results</strong>.
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed mb-8 sm:mb-10 max-w-xl">
+                {PRODUCT_COUNT} specialized products for HR, recruitment, healthcare, education, and growth — each built to <strong className="text-foreground">automate workflows and deliver measurable outcomes</strong>.
               </p>
 
-              {/* Product pills */}
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6 sm:mb-10">
-                {products.map((p) => (
+              {/* Product chips */}
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-8 sm:mb-10">
+                {products.filter(p => !p.isComingSoon).slice(0, 6).map((p) => (
                   <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium bg-card/60 border border-border/50 text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all duration-300">
-                    <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-cyan-400" />
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium bg-card/60 border border-border/50 text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all duration-300">
+                    <p.icon className={`w-3 h-3 ${p.iconColor}`} />
                     {p.name}
-                    {p.isNew && <span className="ml-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-rose-500/20 text-rose-400">NEW</span>}
-                    {p.isComingSoon && <span className="ml-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-yellow-500/20 text-yellow-400">SOON</span>}
-                    <ExternalLink className="w-3 h-3" />
                   </a>
                 ))}
+                <Link to="/products"
+                  className="inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium text-primary border border-primary/30 hover:bg-primary/5 transition-all duration-300">
+                  +{products.length - 6} more <ArrowRight className="w-3 h-3" />
+                </Link>
               </div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4"
               >
                 <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-6 sm:px-8 shadow-[0_4px_30px_hsl(265_85%_65%/0.4),0_2px_15px_hsl(190_100%_50%/0.2)] hover:shadow-[0_8px_50px_hsl(265_85%_65%/0.5),0_4px_25px_hsl(190_100%_50%/0.3)] hover:-translate-y-0.5 transition-all border-0 w-full sm:w-auto">
                   <a href="#products-overview" className="group flex items-center justify-center gap-2">
@@ -423,101 +440,151 @@ const Index = () => {
               </motion.div>
             </motion.div>
 
-            {/* Right - Logo */}
+            {/* Right — Premium ecosystem visual */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="hidden lg:flex items-center justify-center"
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="hidden lg:block relative"
             >
-              <motion.img
-                src={srpLogo}
-                alt="SRP AI Labs"
-                className="w-[200px] lg:w-[280px] drop-shadow-[0_0_30px_rgba(139,92,246,0.3)]"
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              />
+              <div className="relative w-full max-w-[520px] mx-auto aspect-square">
+                {/* Central glow */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-48 h-48 rounded-full bg-gradient-to-br from-purple-500/20 to-cyan-500/10 blur-3xl" />
+                </div>
+
+                {/* Central logo */}
+                <motion.div
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <div className="w-24 h-24 rounded-2xl bg-card/80 border border-border/60 backdrop-blur-xl flex items-center justify-center shadow-[0_8px_40px_hsl(265_85%_65%/0.25)]">
+                    <img src={srpLogo} alt="SRP AI Labs" className="w-16 h-16 object-contain" />
+                  </div>
+                </motion.div>
+
+                {/* Orbiting rings */}
+                <div className="absolute inset-12 rounded-full border border-border/20" />
+                <div className="absolute inset-6 rounded-full border border-border/10" />
+
+                {/* Floating ecosystem cards */}
+                {ecosystemCards.map((card, i) => {
+                  const angle = (i * 60) - 60;
+                  const radius = 190;
+                  const x = Math.cos((angle * Math.PI) / 180) * radius;
+                  const y = Math.sin((angle * Math.PI) / 180) * radius;
+                  return (
+                    <motion.div
+                      key={card.label}
+                      className="absolute left-1/2 top-1/2 z-20"
+                      style={{ x: x - 70, y: y - 28 }}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
+                    >
+                      <motion.div
+                        animate={{ y: [0, i % 2 === 0 ? -6 : 6, 0] }}
+                        transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut" }}
+                        className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-gradient-to-br ${card.bg} border border-border/40 backdrop-blur-md shadow-lg hover:border-primary/30 transition-all duration-300 cursor-default min-w-[140px]`}
+                      >
+                        <card.icon className={`w-4 h-4 ${card.color} flex-shrink-0`} />
+                        <span className="text-xs font-medium text-foreground whitespace-nowrap">{card.label}</span>
+                      </motion.div>
+                    </motion.div>
+                  );
+                })}
+              </div>
             </motion.div>
           </div>
+        </div>
+      </section>
 
-          {/* Scrolling marquee ticker */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            className="mt-6 sm:mt-10 md:mt-14 py-4 sm:py-5 border-y border-border/30"
-          >
-            <div className="marquee-container">
-              <div className="marquee-track">
-                {[...Array(2)].map((_, setIdx) => (
-                  <div key={setIdx} className="flex items-center gap-6 sm:gap-10 px-3 sm:px-5">
-                    {["10 PRODUCTS LIVE", "MULTI-PRODUCT PLATFORM", "ENTERPRISE HRMS", "SMART RECRUITMENT", "HEALTHCARE SYSTEMS", "EDUCATION PLATFORM", "GROWTH AUTOMATION", "MARKETING AUTOMATION", "REVENUE OPERATIONS", "SECURE INFRASTRUCTURE", "MODULAR ARCHITECTURE", "INDEPENDENT DEPLOYMENTS", "WORKFLOW AUTOMATION", "MULTI-INDUSTRY", "AI-POWERED SYSTEMS", "SCALABLE BY DESIGN"].map((text, i) => (
-                      <span key={`${setIdx}-${i}`} className="flex items-center gap-3 sm:gap-4 whitespace-nowrap">
-                        <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-muted-foreground/60 hover:text-primary/80 transition-colors duration-300">{text}</span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 opacity-40" />
-                      </span>
-                    ))}
-                  </div>
-                ))}
-              </div>
+      {/* ==================== SECTION C: TRUST STRIP ==================== */}
+      <section className="relative border-y border-border/30 bg-card/20">
+        <div className="py-5 sm:py-6">
+          <div className="marquee-container">
+            <div className="marquee-track">
+              {[...Array(2)].map((_, setIdx) => (
+                <div key={setIdx} className="flex items-center gap-6 sm:gap-10 px-3 sm:px-5">
+                  {["HR MANAGEMENT", "RECRUITMENT", "HEALTHCARE", "EDUCATION", "SALES & GROWTH", "MARKETING", "OPERATIONS", "REVENUE AUTOMATION", "WORKFLOW MANAGEMENT", "SECURE INFRASTRUCTURE"].map((text, i) => (
+                    <span key={`${setIdx}-${i}`} className="flex items-center gap-3 sm:gap-4 whitespace-nowrap">
+                      <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-muted-foreground/60 hover:text-primary/80 transition-colors duration-300">{text}</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 opacity-40" />
+                    </span>
+                  ))}
+                </div>
+              ))}
             </div>
-          </motion.div>
+          </div>
+        </div>
+      </section>
 
-          {/* Stats section */}
+      {/* ==================== SECTION D: METRICS ==================== */}
+      <section className="py-16 sm:py-20 relative">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.6 }}
-            className="mt-8 sm:mt-12 md:mt-16 bg-card/30 backdrop-blur-xl rounded-2xl border border-border/30 py-6 sm:py-8 px-4 sm:px-8"
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="bg-card/30 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-border/30 py-8 sm:py-12 px-6 sm:px-10"
           >
-            <div className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-8 text-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
               {[
-                { value: "10", suffix: "", label: "Product Systems Live" },
+                { value: "10", suffix: "", label: "Specialized Products" },
                 { value: "6", suffix: "+", label: "Industries Served" },
-                { value: "40", suffix: "+", label: "Workflow Automations" },
+                { value: "5", suffix: "", label: "Product Categories" },
+                { value: "100", suffix: "%", label: "Independent Deployments" },
               ].map((stat, i) => (
-                <div key={i} className="text-center">
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold font-display" style={{
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-1" style={{
                     backgroundImage: "linear-gradient(135deg, hsl(320 90% 65%), hsl(265 85% 65%), hsl(190 100% 50%))",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                   }}>
-                    {stat.value === "24/7" ? "24/7" : <AnimatedCounter value={stat.value} suffix={stat.suffix} />}
+                    <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                   </div>
-                  <div className="text-[10px] sm:text-xs md:text-sm text-muted-foreground mt-1">{stat.label}</div>
-                </div>
+                  <div className="text-[11px] sm:text-xs md:text-sm text-muted-foreground mt-1 font-medium">{stat.label}</div>
+                </motion.div>
               ))}
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Section divider */}
       <div className="section-divider" />
 
-      {/* ==================== PRODUCT ECOSYSTEM OVERVIEW ==================== */}
-      <section id="products-overview" className="py-14 sm:py-20 relative">
+      {/* ==================== SECTION E: PRODUCT ECOSYSTEM ==================== */}
+      <section id="products-overview" className="py-16 sm:py-24 relative">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-[20%] -left-[10%] w-[400px] h-[400px] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, hsl(265 85% 65%), transparent 70%)', filter: 'blur(60px)' }} />
         </div>
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
-            <motion.div variants={fadeInUp} className="text-center mb-8 sm:mb-12">
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-14">
               <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                 Product Ecosystem
               </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-3">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-4">
                 One Platform. <span className="gradient-text">Ten Specialized Products.</span>
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base">
-                Each product operates independently with its own login, database, and deployment — all under the SRP AI Labs platform. Use one product or the entire ecosystem.
+              <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+                Independent products with dedicated deployments, databases, and access controls — all under one unified ecosystem. Use one product or the entire suite.
               </p>
             </motion.div>
             {productsByCategory.map(({ category, items }) => (
-              <div key={category} className="max-w-6xl mx-auto mb-6">
+              <div key={category} className="max-w-6xl mx-auto mb-8">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 mb-3 px-1">{category}</p>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                   {items.map((product, i) => (
                     <motion.a
                       key={i}
@@ -525,19 +592,19 @@ const Index = () => {
                       href={product.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ y: -3 }}
-                      className={`group flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br ${product.gradientColor} border border-border/50 ${product.border} hover:border-primary/50 hover:shadow-[0_4px_20px_hsl(265_85%_65%/0.15)] transition-all duration-300`}
+                      whileHover={{ y: -4 }}
+                      className={`group flex items-center gap-4 p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-gradient-to-br ${product.gradientColor} border border-border/50 ${product.border} hover:border-primary/50 hover:shadow-[0_4px_20px_hsl(265_85%_65%/0.15)] transition-all duration-300`}
                     >
-                      <div className="w-10 h-10 rounded-lg bg-background/60 border border-border/60 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                      <div className="w-11 h-11 rounded-xl bg-background/60 border border-border/60 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                         <product.icon className={`w-5 h-5 ${product.iconColor}`} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm font-semibold text-foreground flex items-center gap-1.5">
+                        <div className="text-sm font-semibold text-foreground flex items-center gap-1.5 mb-0.5">
                           {product.name}
                           {product.isNew && <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-rose-500/20 text-rose-400">NEW</span>}
                           {product.isComingSoon && <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-yellow-500/20 text-yellow-400">SOON</span>}
                         </div>
-                        <div className="text-xs text-muted-foreground truncate">{product.desc}</div>
+                        <div className="text-xs text-muted-foreground">{product.desc}</div>
                       </div>
                       <ArrowUpRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
                     </motion.a>
@@ -545,7 +612,7 @@ const Index = () => {
                 </div>
               </div>
             ))}
-            <motion.div variants={fadeInUp} className="text-center mt-2">
+            <motion.div variants={fadeInUp} className="text-center mt-4">
               <Link to="/products" className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors mr-6">
                 View all products <ArrowRight className="w-4 h-4" />
               </Link>
@@ -557,121 +624,139 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Section divider */}
       <div className="section-divider" />
 
-      {/* ==================== TECHNOLOGY / INTELLIGENCE ==================== */}
-      <section id="technology" className="py-14 sm:py-20 md:py-24 relative overflow-hidden">
-        <div className="absolute top-[20%] right-[5%] w-[400px] h-[400px] rounded-full opacity-[0.05] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(265 85% 65%), transparent 70%)', filter: 'blur(80px)' }} />
+      {/* ==================== SECTION F: WHY SRP ==================== */}
+      <section id="why-srp" className="py-16 sm:py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.015] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
-            <div className="max-w-6xl mx-auto">
-              <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-                {/* Left content */}
-                <motion.div variants={fadeInUp}>
-                  <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-6">
-                    <span className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 animate-pulse" />
-                    Platform Intelligence
-                  </span>
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-5">
-                    Intelligence <span className="gradient-text">Built Into</span>
-                    <br />Every Workflow.
-                  </h2>
-                  <p className="text-muted-foreground text-sm sm:text-base lg:text-lg leading-relaxed mb-8">
-                    SRP AI Labs products use <strong className="text-foreground">contextual intelligence and workflow automation</strong> to handle complex business processes — so your team can focus on decisions, not repetitive tasks.
-                  </p>
-                  <div className="space-y-3 mb-8">
-                    {[
-                      { icon: Brain, text: "Contextual understanding — processes inputs from data, user actions, and prior interactions" },
-                      { icon: Workflow, text: "Workflow orchestration with 500+ integrations and automated multi-step execution" },
-                      { icon: Database, text: "Continuous learning — systems adapt based on outcomes and usage patterns" },
-                      { icon: Shield, text: "Secure execution with role-based access and full audit trails" },
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-3 text-sm text-muted-foreground">
-                        <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
-                          <item.icon className="w-4 h-4 text-primary" />
-                        </div>
-                        {item.text}
-                      </div>
-                    ))}
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-14">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary" /> Why SRP AI Labs
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-4">
+                Why Teams Choose <span className="gradient-text">SRP AI Labs</span>
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">Enterprise capability. Startup speed. Real products for real operations.</p>
+            </motion.div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-5xl mx-auto">
+              {[
+                { icon: Rocket, title: "Faster Deployment", desc: "Each product ships production-ready with its own infrastructure. Go live in days, not months." },
+                { icon: Target, title: "Real Business Use Cases", desc: "Every product solves a specific operational problem — from hiring pipelines to patient management." },
+                { icon: Brain, title: "AI Where It Matters", desc: "Intelligence is built into workflows — not bolted on. Every AI feature drives a measurable outcome." },
+                { icon: Layers, title: "Modular Architecture", desc: "Independent databases, separate deployments, isolated environments. Scale what you need, when you need it." },
+                { icon: TrendingUp, title: "Built to Scale", desc: "Multi-tenant isolation, horizontal scaling, and enterprise-grade infrastructure from day one." },
+                { icon: Users, title: "Human + AI Operations", desc: "Designed for real teams — operators, managers, and decision-makers who need software that works." },
+              ].map((item, i) => (
+                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }}
+                  className="group p-6 sm:p-7 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/50 hover:bg-primary/[0.03] hover:shadow-[0_0_25px_hsl(265_85%_65%/0.15)] transition-all duration-400">
+                  <div className="w-11 h-11 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-primary/20 transition-all">
+                    <item.icon className="w-5 h-5 text-primary" />
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <Button asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-7 border-0 shadow-[0_4px_20px_hsl(265_85%_65%/0.3)]">
-                      <Link to="/technology" className="flex items-center gap-2">
-                        Explore Technology <ArrowRight className="w-4 h-4" />
-                      </Link>
-                    </Button>
-                    <Button variant="outline" asChild className="rounded-full px-7 border-purple-500/30 hover:border-purple-500/60 hover:bg-purple-500/5">
-                      <Link to="/platform">View Platform Architecture</Link>
-                    </Button>
-                  </div>
+                  <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                 </motion.div>
-
-                {/* Right — agent capability cards */}
-                <motion.div variants={fadeInUp} className="grid grid-cols-2 gap-4">
-                  {[
-                    { icon: Bot, title: "Understand Context", desc: "Processes inputs from emails, data sources, user actions, and prior interactions to determine the right next step.", color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/5" },
-                    { icon: Brain, title: "Recommend Actions", desc: "Analyzes patterns and context to surface the right action — whether it's a follow-up, approval, or escalation.", color: "text-pink-400", bg: "from-pink-500/10 to-pink-500/5" },
-                    { icon: Zap, title: "Execute Workflows", desc: "Runs multi-step processes automatically — API calls, data updates, notifications, and downstream triggers.", color: "text-cyan-400", bg: "from-cyan-500/10 to-cyan-500/5" },
-                    { icon: CheckCircle, title: "Learn & Improve", desc: "Adapts over time based on outcomes, feedback, and usage patterns to deliver better results with every cycle.", color: "text-green-400", bg: "from-green-500/10 to-green-500/5" },
-                  ].map((card, i) => (
-                    <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }}
-                      className={`p-5 rounded-2xl bg-gradient-to-br ${card.bg} border border-border/40 hover:border-primary/30 transition-all`}>
-                      <div className="w-10 h-10 rounded-xl bg-card/60 border border-border/60 flex items-center justify-center mb-4">
-                        <card.icon className={`w-5 h-5 ${card.color}`} />
-                      </div>
-                      <h4 className="font-semibold text-foreground mb-1">{card.title}</h4>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{card.desc}</p>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </div>
+              ))}
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Section divider */}
       <div className="section-divider" />
 
-      {/* ==================== INDUSTRY QUICK LINKS ==================== */}
-      <section id="industries" className="py-14 sm:py-20 relative overflow-hidden">
+      {/* ==================== SECTION G: TECHNOLOGY ==================== */}
+      <section id="technology" className="py-16 sm:py-24 relative overflow-hidden">
+        <div className="absolute top-[20%] right-[5%] w-[400px] h-[400px] rounded-full opacity-[0.05] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(265 85% 65%), transparent 70%)', filter: 'blur(80px)' }} />
+        <div className="container mx-auto px-4 sm:px-6">
+          <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-14">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4">
+                <span className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 animate-pulse" />
+                Platform Technology
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-4">
+                Built on <span className="gradient-text">Modern Infrastructure</span>
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+                Enterprise-grade technology stack designed for security, performance, and scale across every product.
+              </p>
+            </motion.div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-5xl mx-auto">
+              {[
+                { icon: Brain, title: "Frontier AI Models", desc: "Powered by the latest reasoning and language models — continuously updated as capabilities advance.", color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/5" },
+                { icon: Cpu, title: "Advanced Reasoning Systems", desc: "Contextual understanding that processes inputs, prior interactions, and domain-specific knowledge.", color: "text-pink-400", bg: "from-pink-500/10 to-pink-500/5" },
+                { icon: Workflow, title: "Workflow Automation Layer", desc: "Multi-step execution engine that handles API calls, data processing, notifications, and triggers.", color: "text-cyan-400", bg: "from-cyan-500/10 to-cyan-500/5" },
+                { icon: Lock, title: "Secure Data Infrastructure", desc: "Multi-tenant isolation, encrypted data at rest and in transit, role-based access, and audit trails.", color: "text-emerald-400", bg: "from-emerald-500/10 to-emerald-500/5" },
+                { icon: ServerCog, title: "Scalable Backend Services", desc: "Independent deployments, horizontal scaling, and dedicated databases per product for zero-downtime operations.", color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/5" },
+                { icon: Plug, title: "Enterprise Integrations", desc: "Connect with existing tools and systems through APIs, webhooks, and pre-built connectors.", color: "text-amber-400", bg: "from-amber-500/10 to-amber-500/5" },
+              ].map((card, i) => (
+                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }}
+                  className={`group p-6 sm:p-7 rounded-2xl bg-gradient-to-br ${card.bg} border border-border/40 hover:border-primary/30 transition-all duration-300`}>
+                  <div className="w-11 h-11 rounded-xl bg-card/60 border border-border/60 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                    <card.icon className={`w-5 h-5 ${card.color}`} />
+                  </div>
+                  <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">{card.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{card.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+            <motion.div variants={fadeInUp} className="text-center mt-8">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-7 border-0 shadow-[0_4px_20px_hsl(265_85%_65%/0.3)]">
+                  <Link to="/technology" className="flex items-center gap-2">
+                    Explore Technology <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </Button>
+                <Button variant="outline" asChild className="rounded-full px-7 border-purple-500/30 hover:border-purple-500/60 hover:bg-purple-500/5">
+                  <Link to="/platform">View Platform Architecture</Link>
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ==================== SECTION H: INDUSTRY SOLUTIONS ==================== */}
+      <section id="industries" className="py-16 sm:py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/[0.015] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
-            <motion.div variants={fadeInUp} className="text-center mb-10">
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-14">
               <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary" /> Industry Solutions
               </span>
-              <h2 className="text-3xl sm:text-4xl font-bold font-display mb-3">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-4">
                 Purpose-Built for <span className="gradient-text">Your Industry</span>
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">Specialized software designed around real workflows — not generic templates.</p>
             </motion.div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-6xl mx-auto">
               {[
-                { icon: Building2, title: "Enterprise & HR", desc: "Complete HRMS with employee lifecycle management, payroll automation, and workforce analytics.", tag: "HRMS", href: "https://hrms.srpailabs.com" },
-                { icon: UserCheck, title: "Recruitment", desc: "Applicant tracking, AI resume screening, and structured hiring pipelines that reduce time-to-hire.", tag: "SmartRecruit", href: "https://recruit.srpailabs.com" },
-                { icon: HeartPulse, title: "Healthcare", desc: "Patient management, appointment scheduling, prescriptions, billing, and multi-facility workflows.", tag: "MediFlow", href: "https://mediflow.srpailabs.com" },
-                { icon: TrendingUp, title: "Sales & Growth", desc: "Lead management, pipeline automation, outreach sequences, and revenue tracking in one system.", tag: "Growth OS", href: "https://growth.srpailabs.com" },
-                { icon: Leaf, title: "Health & Nutrition", desc: "AI-powered meal analysis with instant calorie and macro breakdowns from photos or descriptions.", tag: "NutriSutra", href: "https://nutrisutra.srpailabs.com" },
-                { icon: BookOpen, title: "Education", desc: "Student progress tracking, institutional analytics, and AI-assisted learning for modern education.", tag: "Education AI", href: "https://edu.srpailabs.com" },
-                { icon: GraduationCap, title: "Kids Learning", desc: "Adaptive and gamified learning paths for children — personalized to age and skill level.", tag: "SRP Kids", href: "https://kids.srpailabs.com" },
+                { icon: Building2, title: "Human Resources", desc: "Employee lifecycle management, payroll, attendance, and workforce analytics.", tag: "HRMS", href: "https://hrms.srpailabs.com" },
+                { icon: UserCheck, title: "Recruitment", desc: "Applicant tracking, AI screening, and structured hiring pipelines.", tag: "SmartRecruit", href: "https://recruit.srpailabs.com" },
+                { icon: HeartPulse, title: "Healthcare", desc: "Patient management, appointments, prescriptions, billing, and multi-facility workflows.", tag: "MediFlow", href: "https://mediflow.srpailabs.com" },
+                { icon: BookOpen, title: "Education", desc: "Student progress tracking, institutional analytics, and AI-assisted learning.", tag: "Education AI", href: "https://edu.srpailabs.com" },
+                { icon: TrendingUp, title: "Sales & Growth", desc: "Lead management, pipeline automation, outreach sequences, and revenue tracking.", tag: "Growth OS", href: "https://growth.srpailabs.com" },
+                { icon: BarChart3, title: "Marketing", desc: "Campaign management, creative generation, social scheduling, and analytics.", tag: "Marketing OS", href: "https://app.srpailabs.com" },
+                { icon: Cog, title: "Operations", desc: "CRM, revenue automation, workflow orchestration, and business process management.", tag: "Automation OS", href: "https://automation.srpailabs.com" },
               ].map((uc, i) => (
                 <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }}>
                   <a href={uc.href} target="_blank" rel="noopener noreferrer"
-                    className="group flex items-start gap-4 p-5 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/50 hover:bg-primary/[0.03] hover:shadow-[0_0_25px_hsl(265_85%_65%/0.15)] transition-all duration-400 h-full block">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-primary/20 transition-all">
-                      <uc.icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xs font-bold uppercase tracking-wide text-primary/70">{uc.tag}</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                    className="group flex flex-col p-5 sm:p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/50 hover:bg-primary/[0.03] hover:shadow-[0_0_25px_hsl(265_85%_65%/0.15)] transition-all duration-400 h-full">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-primary/20 transition-all">
+                        <uc.icon className="w-5 h-5 text-primary" />
                       </div>
-                      <h3 className="text-sm font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">{uc.title}</h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{uc.desc}</p>
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-wide text-primary/60">{uc.tag}</span>
+                        <h3 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">{uc.title}</h3>
+                      </div>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity ml-auto flex-shrink-0" />
                     </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{uc.desc}</p>
                   </a>
                 </motion.div>
               ))}
@@ -685,103 +770,102 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Section divider */}
       <div className="section-divider" />
 
-      {/* ==================== WHY SRP ==================== */}
-      <section id="why-srp" className="py-14 sm:py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.015] to-transparent pointer-events-none" />
-        <div className="container mx-auto px-4 sm:px-6">
-          <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger}>
-            <motion.div variants={fadeInUp} className="text-center mb-10">
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" /> Why SRP AI Labs
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-bold font-display mb-3">
-                Why Teams Choose <span className="gradient-text">SRP AI Labs</span>
-              </h2>
-              <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">Enterprise capability. Startup speed. Real products for real operations.</p>
-            </motion.div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
-              {[
-                { icon: Layers, title: "Multi-Product Ecosystem", desc: "Ten specialized products across five categories — use one or build your entire operations stack on SRP." },
-                { icon: Rocket, title: "Deploy in Days, Not Months", desc: "Each product ships production-ready with its own infrastructure. No lengthy implementation cycles." },
-                { icon: Brain, title: "AI That Adds Real Value", desc: "Intelligence is built into workflows — not bolted on. Every AI feature solves a specific operational problem." },
-                { icon: Database, title: "Modular Architecture", desc: "Independent databases, separate deployments, isolated environments. Scale what you need, when you need it." },
-                { icon: Users, title: "Built for Real Teams", desc: "Designed for operators, HR managers, recruiters, and growth teams who need software that works on day one." },
-                { icon: Shield, title: "Secure by Design", desc: "Multi-tenant isolation, encrypted data, role-based access, and audit trails across every product." },
-              ].map((item, i) => (
-                <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }}
-                  className="group p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/50 hover:bg-primary/[0.03] hover:shadow-[0_0_25px_hsl(265_85%_65%/0.15)] transition-all duration-400">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all">
-                    <item.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="text-sm font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
-                </motion.div>
-              ))}
+      {/* ==================== SECTION I: CTA ==================== */}
+      <section className="py-20 sm:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.03] to-transparent pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.06] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(265 85% 65%), transparent 60%)', filter: 'blur(80px)' }} />
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center max-w-3xl mx-auto"
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6">
+              Upgrade How Your
+              <br />
+              <span className="gradient-text">Business Operates</span>
+            </h2>
+            <p className="text-muted-foreground text-base sm:text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+              From HR and recruitment to healthcare and education — find the right product for your team and go live in days.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-8 shadow-[0_4px_30px_hsl(265_85%_65%/0.4),0_2px_15px_hsl(190_100%_50%/0.2)] hover:shadow-[0_8px_50px_hsl(265_85%_65%/0.5)] hover:-translate-y-0.5 transition-all border-0">
+                <Link to="/products" className="group flex items-center gap-2">
+                  Explore Products
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild className="rounded-full px-8 border-purple-500/30 hover:border-purple-500/60 hover:bg-purple-500/5">
+                <a href="#contact">Book a Demo</a>
+              </Button>
+              <Button size="lg" variant="outline" asChild className="rounded-full px-8 border-border/50 hover:border-primary/40 hover:bg-primary/5">
+                <a href="mailto:info@srpailabs.com">Contact Sales</a>
+              </Button>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Section divider */}
       <div className="section-divider" />
 
       {/* ==================== CONTACT ==================== */}
-      <section id="contact" className="py-14 sm:py-20 md:py-24 lg:py-28 relative overflow-hidden">
+      <section id="contact" className="py-16 sm:py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div initial="initial" whileInView="animate" viewport={{ once: true, margin: "-100px" }} variants={stagger} className="max-w-5xl mx-auto">
-            <motion.div variants={fadeInUp} className="text-center mb-8 sm:mb-12">
+            <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-14">
               <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary" />
-                Let's Work Together
+                Get in Touch
               </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-3">
-                Ready to Upgrade <span className="gradient-text">Your Operations</span>?
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-4">
+                Ready to <span className="gradient-text">Get Started</span>?
               </h2>
+              <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
+                Whether you need a product for your industry, a custom workflow, or enterprise integration — our team responds within hours.
+              </p>
             </motion.div>
-            <motion.p variants={fadeInUp} className="text-sm sm:text-base text-muted-foreground mb-8 sm:mb-14 text-center max-w-2xl mx-auto">
-              Whether you need a product for your industry, a custom workflow, or enterprise integration — our team responds within hours.
-            </motion.p>
             <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
-              <motion.div variants={fadeInUp} className="space-y-4 sm:space-y-6">
+              <motion.div variants={fadeInUp} className="space-y-4 sm:space-y-5">
                 <h4 className="text-lg sm:text-xl font-semibold text-foreground font-display">Contact Information</h4>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <a href="mailto:info@srpailabs.com" className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors p-4 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-                      <Mail className="w-6 h-6 text-primary" />
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-5 h-5 text-primary" />
                     </div>
                     <div>
                       <p className="text-xs text-muted-foreground mb-0.5">Email</p>
-                      <p className="text-foreground font-medium">info@srpailabs.com</p>
+                      <p className="text-foreground font-medium text-sm">info@srpailabs.com</p>
                     </div>
                   </a>
                   <a href="tel:+60122824566" className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors p-4 rounded-2xl bg-card/50 border border-border/50 hover:border-primary/30">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-                      <Phone className="w-6 h-6 text-primary" />
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                      <Phone className="w-5 h-5 text-primary" />
                     </div>
                     <div>
                       <p className="text-xs text-muted-foreground mb-0.5">WhatsApp / Phone</p>
-                      <p className="text-foreground font-medium">+60 12-282 4566</p>
+                      <p className="text-foreground font-medium text-sm">+60 12-282 4566</p>
                     </div>
                   </a>
                   <div className="flex items-center gap-4 p-4 rounded-2xl bg-card/50 border border-border/50">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-                      <MapPin className="w-6 h-6 text-primary" />
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-5 h-5 text-primary" />
                     </div>
                     <div>
                       <p className="text-xs text-muted-foreground mb-0.5">Location</p>
-                      <p className="text-foreground font-medium">India / Remote</p>
+                      <p className="text-foreground font-medium text-sm">India / Remote</p>
                     </div>
                   </div>
                 </div>
                 <div className="flex gap-3 pt-2">
-                  <a href="https://www.linkedin.com/in/sashyank-p-9785a9303/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-card/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 transition-all">
+                  <a href="https://www.linkedin.com/in/sashyank-p-9785a9303/" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-xl bg-card/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 transition-all">
                     <Linkedin className="w-5 h-5" />
                   </a>
-                  <a href="https://github.com/shashankpasikanti91-blip" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-card/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 transition-all">
+                  <a href="https://github.com/shashankpasikanti91-blip" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-xl bg-card/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 transition-all">
                     <Github className="w-5 h-5" />
                   </a>
                 </div>
@@ -794,7 +878,7 @@ const Index = () => {
                       <Input type="email" placeholder="Email *" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} required className="bg-muted/30 border-border/50 focus:border-primary/50 text-foreground placeholder:text-muted-foreground rounded-xl" />
                       <Input type="tel" placeholder="Phone" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="bg-muted/30 border-border/50 focus:border-primary/50 text-foreground placeholder:text-muted-foreground rounded-xl" />
                       <Textarea placeholder="Message *" value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} required rows={5} className="bg-muted/30 border-border/50 focus:border-primary/50 text-foreground placeholder:text-muted-foreground rounded-xl" />
-                      <Button type="submit" className="w-full bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full border-0" size="lg">
+                      <Button type="submit" className="w-full bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full border-0 shadow-[0_2px_15px_hsl(265_85%_65%/0.3)]" size="lg">
                         Send Message
                       </Button>
                     </form>
@@ -806,62 +890,69 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ==================== FOOTER ==================== */}
-      <footer className="py-12 sm:py-16 md:py-20 relative border-t border-transparent" style={{ borderImage: 'linear-gradient(90deg, transparent, hsl(320 90% 60% / 0.3), hsl(265 85% 65% / 0.5), hsl(190 100% 50% / 0.3), transparent) 1' }}>
+      {/* ==================== SECTION J: FOOTER ==================== */}
+      <footer className="py-14 sm:py-20 relative border-t border-transparent" style={{ borderImage: 'linear-gradient(90deg, transparent, hsl(320 90% 60% / 0.3), hsl(265 85% 65% / 0.5), hsl(190 100% 50% / 0.3), transparent) 1' }}>
         <div className="absolute inset-0 bg-gradient-to-t from-purple-500/[0.02] to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 sm:gap-10 mb-8 sm:mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 sm:gap-10 mb-10 sm:mb-14">
             <div className="col-span-2">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-14 w-auto mb-4 drop-shadow-[0_0_10px_rgba(139,92,246,0.2)]" />
-              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                SRP AI Labs builds specialized software for HR, recruitment, growth, healthcare, and education — helping teams automate operations and deliver better outcomes.
+              <img src={srpLogo} alt="SRP AI Labs" className="h-12 w-auto mb-4 drop-shadow-[0_0_10px_rgba(139,92,246,0.2)]" />
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4 max-w-xs">
+                Specialized software for HR, recruitment, healthcare, education, and growth — built for teams that need results.
               </p>
-              <p className="text-xs text-muted-foreground">Part of SRP AI Labs Platform &mdash; <a href="https://srpailabs.com" className="hover:text-primary transition-colors">srpailabs.com</a></p>
+              <p className="text-xs text-muted-foreground/60">
+                SRP AI Labs Platform &mdash; <a href="https://srpailabs.com" className="hover:text-primary transition-colors">srpailabs.com</a>
+              </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4 text-foreground">Products</h4>
-              <ul className="space-y-3">
+              <h4 className="font-semibold mb-4 text-foreground text-sm">Products</h4>
+              <ul className="space-y-2.5">
                 {products.map((p) => (
-                  <li key={p.name}><a href={p.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"><p.icon className="w-3.5 h-3.5" />{p.name}{p.isNew && <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-rose-500/20 text-rose-400">NEW</span>}{p.isComingSoon && <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-yellow-500/20 text-yellow-400">SOON</span>}</a></li>
+                  <li key={p.name}>
+                    <a href={p.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
+                      <p.icon className="w-3.5 h-3.5 flex-shrink-0" />
+                      {p.name}
+                      {p.isNew && <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-rose-500/20 text-rose-400">NEW</span>}
+                      {p.isComingSoon && <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-yellow-500/20 text-yellow-400">SOON</span>}
+                    </a>
+                  </li>
                 ))}
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4 text-foreground">Company</h4>
-              <ul className="space-y-3">
+              <h4 className="font-semibold mb-4 text-foreground text-sm">Company</h4>
+              <ul className="space-y-2.5">
                 <li><Link to="/products" className="text-sm text-muted-foreground hover:text-primary transition-colors">All Products</Link></li>
                 <li><Link to="/technology" className="text-sm text-muted-foreground hover:text-primary transition-colors">Technology</Link></li>
                 <li><Link to="/platform" className="text-sm text-muted-foreground hover:text-primary transition-colors">Platform</Link></li>
                 <li><Link to="/services" className="text-sm text-muted-foreground hover:text-primary transition-colors">Services</Link></li>
                 <li><Link to="/industries" className="text-sm text-muted-foreground hover:text-primary transition-colors">Industries</Link></li>
                 <li><Link to="/pricing" className="text-sm text-muted-foreground hover:text-primary transition-colors">Pricing</Link></li>
-                <li><Link to="/case-studies" className="text-sm text-muted-foreground hover:text-primary transition-colors">Case Studies</Link></li>
-                <li><Link to="/technology" className="text-sm text-muted-foreground hover:text-primary transition-colors">Technology</Link></li>
-                <li><a href="#contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">Contact</a></li>
                 <li><Link to="/security" className="text-sm text-muted-foreground hover:text-primary transition-colors">Security</Link></li>
+                <li><a href="#contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">Contact</a></li>
                 <li><Link to="/privacy-policy" className="text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link></li>
                 <li><Link to="/terms-of-service" className="text-sm text-muted-foreground hover:text-primary transition-colors">Terms of Service</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4 text-foreground">Contact</h4>
-              <ul className="space-y-3">
-                <li className="text-sm text-muted-foreground">info@srpailabs.com</li>
-                <li className="text-sm text-muted-foreground">+60 12-282 4566</li>
+              <h4 className="font-semibold mb-4 text-foreground text-sm">Contact</h4>
+              <ul className="space-y-2.5">
+                <li><a href="mailto:info@srpailabs.com" className="text-sm text-muted-foreground hover:text-primary transition-colors">info@srpailabs.com</a></li>
+                <li><a href="tel:+60122824566" className="text-sm text-muted-foreground hover:text-primary transition-colors">+60 12-282 4566</a></li>
                 <li className="text-sm text-muted-foreground">India / Remote</li>
               </ul>
-              <div className="flex gap-3 mt-6">
+              <div className="flex gap-3 mt-5">
                 <a href="https://www.linkedin.com/in/sashyank-p-9785a9303/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-card border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 transition-all">
-                  <Linkedin className="w-5 h-5" />
+                  <Linkedin className="w-4 h-4" />
                 </a>
                 <a href="https://github.com/shashankpasikanti91-blip" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-card border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 transition-all">
-                  <Github className="w-5 h-5" />
+                  <Github className="w-4 h-4" />
                 </a>
               </div>
             </div>
           </div>
-          <div className="pt-8 border-t border-border/40">
-            <p className="text-sm text-muted-foreground text-center">© 2026 SRP AI Labs. All rights reserved. &nbsp;·&nbsp; <a href="https://srpailabs.com" className="hover:text-primary transition-colors">srpailabs.com</a></p>
+          <div className="pt-8 border-t border-border/30">
+            <p className="text-sm text-muted-foreground/60 text-center">&copy; {new Date().getFullYear()} SRP AI Labs. All rights reserved.</p>
           </div>
         </div>
       </footer>
