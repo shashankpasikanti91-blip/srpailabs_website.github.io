@@ -470,52 +470,50 @@ const Index = () => {
               className="hidden lg:flex items-center justify-center order-2"
               style={{ marginTop: '-24px' }}
             >
-              <div className="relative w-full max-w-[520px] mx-auto" style={{ aspectRatio: '1' }}>
-                {/* Central logo — transparent, no box, no shadow halo */}
+              {/* Fixed 420×420 orbit container */}
+              <div className="relative" style={{ width: '420px', height: '420px' }}>
+                {/* Central logo — exact center */}
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
                   <img
                     src={srpLogo}
                     alt="SRP AI Labs"
-                    className="w-[250px] h-auto object-contain"
+                    className="w-[200px] h-auto object-contain"
                     style={{ filter: 'drop-shadow(0 0 30px rgba(139,92,246,0.10))' }}
                   />
                 </div>
 
-                {/* Floating trust chips — aligned to invisible 3×2 grid */}
+                {/* 6 floating chips — 3 rows × 2 columns, mathematically symmetric */}
                 {[
-                  { label: "Scalable Deployments", icon: Rocket, color: "text-amber-400", bg: "from-amber-500/10 to-amber-500/[0.03]", top: '5%', left: '0%' },
-                  { label: "10 Products Live", icon: Boxes, color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/[0.03]", top: '5%', right: '0%' },
-                  { label: "Workflow Automation", icon: Workflow, color: "text-pink-400", bg: "from-pink-500/10 to-pink-500/[0.03]", top: '40%', left: '-6%' },
-                  { label: "6+ Industries", icon: Building2, color: "text-cyan-400", bg: "from-cyan-500/10 to-cyan-500/[0.03]", top: '40%', right: '-6%' },
-                  { label: "Secure Infrastructure", icon: Shield, color: "text-emerald-400", bg: "from-emerald-500/10 to-emerald-500/[0.03]", bottom: '5%', left: '0%' },
-                  { label: "Independent Systems", icon: ServerCog, color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/[0.03]", bottom: '5%', right: '0%' },
-                ].map((chip, i) => {
-                  const posStyle: React.CSSProperties = {};
-                  if (chip.top) posStyle.top = chip.top;
-                  if (chip.bottom) posStyle.bottom = chip.bottom;
-                  if (chip.left) posStyle.left = chip.left;
-                  if (chip.right) posStyle.right = chip.right;
-                  return (
+                  { label: "Scalable Deployments", icon: Rocket, color: "text-amber-400", bg: "from-amber-500/10 to-amber-500/[0.03]", x: -170, y: -155 },
+                  { label: "10 Products Live", icon: Boxes, color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/[0.03]", x: 170, y: -155 },
+                  { label: "Workflow Automation", icon: Workflow, color: "text-pink-400", bg: "from-pink-500/10 to-pink-500/[0.03]", x: -190, y: 0 },
+                  { label: "6+ Industries", icon: Building2, color: "text-cyan-400", bg: "from-cyan-500/10 to-cyan-500/[0.03]", x: 190, y: 0 },
+                  { label: "Secure Infrastructure", icon: Shield, color: "text-emerald-400", bg: "from-emerald-500/10 to-emerald-500/[0.03]", x: -170, y: 155 },
+                  { label: "Independent Systems", icon: ServerCog, color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/[0.03]", x: 170, y: 155 },
+                ].map((chip, i) => (
+                  <motion.div
+                    key={chip.label}
+                    className="absolute z-20"
+                    style={{
+                      left: '50%',
+                      top: '50%',
+                      transform: `translate(calc(-50% + ${chip.x}px), calc(-50% + ${chip.y}px))`,
+                    }}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
+                  >
                     <motion.div
-                      key={chip.label}
-                      className="absolute z-20"
-                      style={posStyle}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
+                      animate={{ y: [0, i % 2 === 0 ? -6 : 6, 0] }}
+                      transition={{ duration: 4 + i * 0.3, repeat: Infinity, ease: "easeInOut" }}
+                      className={`flex items-center gap-2 rounded-[14px] bg-gradient-to-br ${chip.bg} border border-white/[0.06] backdrop-blur-md hover:border-purple-500/20 transition-all duration-300 cursor-default`}
+                      style={{ padding: '12px 16px' }}
                     >
-                      <motion.div
-                        animate={{ y: [0, i % 2 === 0 ? -8 : 8, 0] }}
-                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                        className={`flex items-center gap-2.5 rounded-[14px] bg-gradient-to-br ${chip.bg} border border-white/[0.06] backdrop-blur-md hover:border-purple-500/20 transition-all duration-300 cursor-default`}
-                        style={{ padding: '14px 18px' }}
-                      >
-                        <chip.icon className={`w-4 h-4 ${chip.color} flex-shrink-0`} />
-                        <span className="text-[15px] font-medium text-foreground/90 whitespace-nowrap">{chip.label}</span>
-                      </motion.div>
+                      <chip.icon className={`w-4 h-4 ${chip.color} flex-shrink-0`} />
+                      <span className="text-[14px] font-medium text-foreground/90 whitespace-nowrap">{chip.label}</span>
                     </motion.div>
-                  );
-                })}
+                  </motion.div>
+                ))}
               </div>
             </motion.div>
 
