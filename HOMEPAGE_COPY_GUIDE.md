@@ -5,6 +5,19 @@
 
 ---
 
+## June 2026 Live Update Note
+
+- This guide contains broader copy options; live homepage is currently simplified.
+- Live homepage now uses:
+  - **5 live products**
+  - **3 core industries** (HR, Recruitment & Growth, Healthcare)
+  - **No `+0 More` product chip**
+- `Wellora` replaces NutriSutra in live references.
+- Recently added homepage image overlays were removed per urgent request.
+- Legacy "10 product" and non-live product references in this file are archival options only; do not use for current production copy.
+
+---
+
 ## 1. ANNOUNCEMENT BAR
 
 | # | Copy |
@@ -82,9 +95,9 @@
 
 | Stat | Value | Label |
 |------|-------|-------|
-| 1 | 10 | Product Systems Live |
-| 2 | 6+ | Industries Served |
-| 3 | 40+ | Workflow Automations |
+| 1 | 5 | Product Systems Live |
+| 2 | 3 | Core Industries |
+| 3 | Real Business Workflows | Outcome Focus |
 
 ---
 
@@ -129,16 +142,11 @@ Each product operates independently with its own login, database, and deployment
 
 | Product | Tagline | Description |
 |---------|---------|-------------|
-| **Autonomous OS** | AI Business Application Generator | Generate full business applications, dashboards, and workflow systems from natural language — multi-tenant and multi-industry. |
-| **Automation OS** | CRM & Revenue Automation | Manage pipelines, automate invoicing, orchestrate workflows, and track revenue — all from one intelligent CRM. |
 | **HRMS** | Complete Human Resource Management | Full employee lifecycle from onboarding to payroll, performance, attendance, and HR analytics — built to replace legacy systems. |
 | **SmartRecruit** | Hiring & Applicant Tracking | AI-powered resume screening, pipeline management, interview scheduling, and candidate tracking for modern recruitment teams. |
-| **Growth OS** | Recruitment + Sales Automation | Unified lead and candidate management with automated outreach, pipeline tracking, and growth analytics. |
-| **Marketing OS** | Marketing Automation Platform | CRM, lead capture, campaign management, multilingual creative generation, social scheduling, and performance analytics. |
+| **Growth OS** | Recruitment + Growth Automation | Unified candidate and pipeline management with automated outreach and growth analytics. |
 | **MediFlow** | Healthcare Management System | Hospital management with patient lifecycle, appointment booking, prescriptions, billing, lab workflows, and multi-tenant isolation. |
-| **SRP Education AI** | Education & Institutional Platform | Academic workflows, student progress tracking, AI study support, and institutional analytics for scalable education delivery. |
-| **NutriSutra** | AI Nutrition Analysis | Snap a photo or describe a meal — get accurate calorie, macro, and nutritional breakdown instantly. |
-| **SRP Kids** | Learning Platform for Children | Adaptive lessons, gamified challenges, and personalized learning paths designed to build skills and spark curiosity. |
+| **Wellora** | AI Nutrition Analysis | Snap a photo or describe a meal — get accurate calorie, macro, and nutritional breakdown instantly. |
 
 ---
 

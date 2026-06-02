@@ -11,7 +11,6 @@ const fadeInUp = {
   transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
 };
 const stagger = { animate: { transition: { staggerChildren: 0.07 } } };
-
 const coreStack = [
   { icon: Workflow, name: "n8n", type: "Automation Platform", description: "The backbone of every workflow. We build self-hosted n8n instances that orchestrate AI, APIs, databases, and business tools into unified pipelines.", color: "from-orange-500 to-red-500" },
   { icon: Bot, name: "OpenAI GPT-4o", type: "AI Language Model", description: "Powers our email classification, document analysis, data extraction, and conversational agents with state-of-the-art reasoning capabilities.", color: "from-green-500 to-emerald-500" },
@@ -44,7 +43,7 @@ export default function Technology() {
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
             <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-12 sm:h-14 md:h-[3.75rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-16 sm:h-[4.5rem] md:h-[5rem] w-auto flex-shrink-0 drop-shadow-[0_0_10px_rgba(139,92,246,0.25)]" />
             </Link>
             <div className="hidden md:flex items-center gap-5">
               <Link to="/products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Products</Link>

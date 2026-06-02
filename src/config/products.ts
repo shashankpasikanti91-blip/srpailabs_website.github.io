@@ -28,7 +28,7 @@ export interface Product {
   features: string[];
 }
 
-export const products: Product[] = [
+export const allProducts: Product[] = [
   // ── Business Platforms ──
   {
     name: "Autonomous OS",
@@ -172,12 +172,12 @@ export const products: Product[] = [
 
   // ── Consumer Products ──
   {
-    name: "NutriSutra",
+    name: "Wellora",
     desc: "AI nutrition analysis app",
     tagline: "AI Nutrition Analysis",
-    description: "Snap a photo or describe a meal — get calorie, macro, and nutritional breakdown instantly.",
-    url: "https://nutrisutra.srpailabs.com",
-    subdomain: "nutrisutra.srpailabs.com",
+    description: "Snap a photo or describe a meal and get calorie, macro, and nutrition insights instantly.",
+    url: "https://wellora.srpailabs.com",
+    subdomain: "wellora.srpailabs.com",
     icon: Leaf,
     color: "from-lime-500 to-green-500",
     gradientColor: "from-lime-500/20 to-green-500/10",
@@ -208,6 +208,11 @@ export const products: Product[] = [
   },
 ];
 
+const LIVE_PRODUCT_NAMES = ["HRMS", "SmartRecruit", "Growth OS", "MediFlow", "Wellora"] as const;
+const LIVE_PRODUCT_NAME_SET = new Set<string>(LIVE_PRODUCT_NAMES);
+
+export const products: Product[] = allProducts.filter((product) => LIVE_PRODUCT_NAME_SET.has(product.name));
+export const hiddenProducts: Product[] = allProducts.filter((product) => !LIVE_PRODUCT_NAME_SET.has(product.name));
 export const PRODUCT_COUNT = products.length;
 
 export const PRODUCT_CATEGORIES: ProductCategory[] = [

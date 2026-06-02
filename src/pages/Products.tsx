@@ -13,7 +13,6 @@ const fadeInUp = {
 };
 
 const stagger = { animate: { transition: { staggerChildren: 0.07 } } };
-
 export default function Products() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
@@ -24,8 +23,8 @@ export default function Products() {
       <header className="sticky top-0 z-50 backdrop-blur-2xl bg-background/80 border-b border-border/30">
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
-            <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-12 sm:h-14 md:h-[3.75rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+            <Link to="/" className="flex items-center px-1 py-0.5">
+              <img src={srpLogo} alt="SRP AI Labs" className="h-16 sm:h-[4.5rem] md:h-[5rem] w-auto flex-shrink-0 drop-shadow-[0_0_10px_rgba(139,92,246,0.25)]" />
             </Link>
             <div className="hidden md:flex items-center gap-5">
               <Link to="/products" className="text-sm text-primary font-medium">Products</Link>
@@ -76,13 +75,13 @@ export default function Products() {
             <motion.div variants={fadeInUp}>
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-sm font-medium mb-6">
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                {PRODUCT_COUNT} Products Live + 1 Coming Soon
+                {PRODUCT_COUNT} Products Live
               </span>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-display mb-4">
                 All <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">Products</span>
               </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto text-lg sm:text-xl mb-8">
-                {PRODUCT_COUNT} products across HR, hiring, growth, healthcare, education, and operations. Each runs on its own infrastructure.
+                Live SRP systems for HR, recruitment, healthcare, nutrition, and growth operations. Each runs on independent infrastructure.
               </p>
             </motion.div>
           </motion.div>

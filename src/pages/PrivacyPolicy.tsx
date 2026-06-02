@@ -18,7 +18,7 @@ const sections = [
       <p className="text-muted-foreground leading-relaxed">
         <strong className="text-foreground">SRP AI Labs</strong> ("we," "our," or "us") is committed to protecting your privacy.
         This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit srpailabs.com
-        or use any of our AI products — SRP HRMS, SmartRecruit, Growth OS, Marketing OS, MediFlow, NutriSutra, SRP Kids,
+        or use any of our AI products — SRP HRMS, SmartRecruit, Growth OS, Marketing OS, MediFlow, Wellora, SRP Kids,
         Autonomous OS, and Automation OS. By using our services, you consent to the practices described here.
       </p>
     ),
@@ -34,7 +34,7 @@ const sections = [
         <div className="space-y-3">
           {[
             { label: "Account & Identity Data", desc: "Name, email, organisation name, job title, and authentication credentials provided during sign-up." },
-            { label: "Product-Specific Data", desc: "Depending on product: employee records (HRMS), candidate data (SmartRecruit), patient/health records (MediFlow), nutritional profiles (NutriSutra), child learning progress (SRP Kids), pipeline & CRM data (Growth OS, Marketing OS)." },
+            { label: "Product-Specific Data", desc: "Depending on product: employee records (HRMS), candidate data (SmartRecruit), patient/health records (MediFlow), nutritional profiles (Wellora), child learning progress (SRP Kids), pipeline & CRM data (Growth OS, Marketing OS)." },
             { label: "Usage & Analytics", desc: "Features used, actions taken, session duration, error logs, and in-app navigation patterns to improve our products." },
             { label: "Technical Data", desc: "IP address, browser type, device model, operating system, and referral source." },
             { label: "Communications", desc: "Messages sent via contact forms, email, or our chat widget." },
@@ -110,7 +110,7 @@ const sections = [
           {[
             {
               title: "Physically Isolated Databases",
-              desc: "Each product (HRMS, MediFlow, NutriSutra, SRP Kids, etc.) has its own database. HR data, medical data, and nutritional data are never stored together — isolation is at the infrastructure level.",
+              desc: "Each product (HRMS, MediFlow, Wellora, SRP Kids, etc.) has its own database. HR data, medical data, and nutritional data are never stored together — isolation is at the infrastructure level.",
             },
             {
               title: "End-to-End Encryption",
@@ -224,7 +224,7 @@ const PrivacyPolicy = () => {
         <div className="container mx-auto px-4 py-4">
           <nav className="flex items-center justify-between">
             <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-12 sm:h-14 md:h-[3.75rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-16 sm:h-[4.5rem] md:h-[5rem] w-auto flex-shrink-0 drop-shadow-[0_0_10px_rgba(139,92,246,0.25)]" />
             </Link>
             <div className="flex items-center gap-4">
               <Link to="/security" className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden sm:block">Security</Link>

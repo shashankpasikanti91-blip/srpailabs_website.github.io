@@ -11,7 +11,6 @@ const fadeInUp = {
   transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
 };
 const stagger = { animate: { transition: { staggerChildren: 0.07 } } };
-
 const services = [
   { icon: Bot, title: "AI Agents", description: "Conversational agents for support, sales, and internal ops.", features: ["Customer support agent", "Lead generation agent", "WhatsApp/Email bot", "Website chatbot", "FAQ Assistant"], color: "text-purple-400" },
   { icon: Workflow, title: "Workflow Automation", description: "End-to-end automation for repetitive business processes.", features: ["Task automation", "Notification system", "CRM integration", "Google Sheets automation", "Multi-step API workflows"], color: "text-cyan-400" },
@@ -38,7 +37,7 @@ export default function Services() {
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
             <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-12 sm:h-14 md:h-[3.75rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-16 sm:h-[4.5rem] md:h-[5rem] w-auto flex-shrink-0 drop-shadow-[0_0_10px_rgba(139,92,246,0.25)]" />
             </Link>
             <div className="hidden md:flex items-center gap-5">
               <Link to="/products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Products</Link>

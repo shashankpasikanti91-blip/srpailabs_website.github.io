@@ -26,7 +26,7 @@
     --secondary-foreground: 240 10% 10%;
 
     --muted: 240 10% 96%;
-    --muted-foreground: 240 5% 50%;
+    --muted-foreground: 240 6% 38%;
 
     --accent: 190 100% 45%;
     --accent-foreground: 0 0% 10%;
@@ -138,16 +138,12 @@
     scroll-behavior: smooth;
   }
 
-  /* Default to dark mode */
+  /* Respect active theme mode */
   html {
-    color-scheme: dark;
-  }
-
-  html:not(.dark) {
     color-scheme: light;
   }
-  
-  :root {
+
+  html.dark {
     color-scheme: dark;
   }
 }
@@ -436,6 +432,15 @@
   .card-3d:hover {
     transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateY(-8px);
   }
+}
+
+/* Keep SRP logo visible without boxed styling */
+img[alt="SRP AI Labs"] {
+  filter: drop-shadow(0 3px 14px hsl(240 10% 10% / 0.14));
+}
+
+html.dark img[alt="SRP AI Labs"] {
+  filter: drop-shadow(0 3px 14px hsl(265 85% 65% / 0.24));
 }
 
 /* Prevent horizontal overflow globally */

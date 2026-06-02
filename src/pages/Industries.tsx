@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Building2, UserCheck, HeartPulse, TrendingUp, Leaf, GraduationCap, BookOpen, ChevronDown, Menu, X } from "lucide-react";
+import { ArrowRight, Building2, UserCheck, HeartPulse, ChevronDown, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import srpLogo from "@/assets/srp-ai-logo.png";
-import { products } from "@/config/products";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -12,7 +11,6 @@ const fadeInUp = {
   transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
 };
 const stagger = { animate: { transition: { staggerChildren: 0.07 } } };
-
 const industries = [
   {
     icon: Building2, title: "Enterprises & HR Teams",
@@ -21,40 +19,16 @@ const industries = [
     features: ["Employee lifecycle management", "AI-powered payroll automation", "Attendance & leave tracking", "Performance reviews & KPIs", "Onboarding workflows"],
   },
   {
-    icon: UserCheck, title: "Recruitment Agencies",
-    desc: "Reduce time-to-hire with resume screening, automated interview scheduling, and a smart ATS that learns your hiring patterns.",
-    product: "SmartRecruit", productDesc: "SmartRecruit — AI ATS Platform", color: "text-cyan-400",
-    features: ["AI resume scoring & matching", "Automated candidate messaging", "Interview scheduling automation", "Pipeline visibility dashboard", "Offer letter generation"],
+    icon: UserCheck, title: "Recruitment & Growth Teams",
+    desc: "Reduce time-to-hire and improve pipeline output with structured recruitment workflows and growth automation in one flow.",
+    product: "SmartRecruit + Growth OS", productDesc: "SmartRecruit + Growth OS — Recruitment & Growth Stack", color: "text-cyan-400",
+    features: ["AI resume scoring & matching", "Automated candidate messaging", "Interview scheduling automation", "Pipeline visibility dashboard", "Growth pipeline tracking"],
   },
   {
     icon: HeartPulse, title: "Healthcare Providers",
     desc: "Reduce admin burden with automated patient intake, scheduling, billing, and documentation across your hospital or clinic network.",
     product: "MediFlow", productDesc: "MediFlow — Hospital AI System", color: "text-rose-400",
     features: ["AI patient intake chatbot", "Smart appointment scheduling", "Automated billing & coding", "Medical documentation AI", "OPD registration automation"],
-  },
-  {
-    icon: TrendingUp, title: "Sales & Growth Teams",
-    desc: "Manage leads, candidates, and conversions in one intelligent system. Automated outreach, pipeline tracking, and real-time analytics.",
-    product: "Growth OS", productDesc: "Growth OS — Sales Intelligence Platform", color: "text-green-400",
-    features: ["Lead scoring & qualification", "Automated outreach sequences", "Pipeline management", "Revenue forecasting", "CRM integrations"],
-  },
-  {
-    icon: Leaf, title: "Health-Conscious Consumers",
-    desc: "Snap a photo of your meal and get accurate calorie, macro, and micro nutrient analysis instantly.",
-    product: "NutriSutra", productDesc: "NutriSutra — AI Nutrition App", color: "text-emerald-400",
-    features: ["Photo-based food recognition", "Instant calorie & macro analysis", "Personalized meal plans", "Progress tracking", "Nutritionist-grade insights"],
-  },
-  {
-    icon: BookOpen, title: "Education & Institutions",
-    desc: "Education platform for students, teachers, and institutions — structured learning workflows, progress analytics, study support, and institutional management.",
-    product: "SRP Education AI", productDesc: "SRP Education AI — Student Success Platform", color: "text-indigo-400",
-    features: ["Student progress & success analytics", "AI-powered study support", "Institutional management dashboards", "Structured learning workflows", "Academic performance tracking"],
-  },
-  {
-    icon: GraduationCap, title: "Parents & Kids",
-    desc: "Cognitive learning system for children — adaptive lessons, gamified challenges, and personalized learning paths that evolve with each child.",
-    product: "SRP Kids", productDesc: "SRP Kids — AI Learning Platform (Coming Soon)", color: "text-orange-400",
-    features: ["Adaptive learning engine", "Age-appropriate AI content", "Gamified challenges", "Parent progress dashboard", "Multi-subject coverage"],
   },
 ];
 
@@ -68,7 +42,7 @@ export default function Industries() {
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
             <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-12 sm:h-14 md:h-[3.75rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-16 sm:h-[4.5rem] md:h-[5rem] w-auto flex-shrink-0 drop-shadow-[0_0_10px_rgba(139,92,246,0.25)]" />
             </Link>
             <div className="hidden md:flex items-center gap-5">
               <Link to="/products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Products</Link>
@@ -124,7 +98,7 @@ export default function Industries() {
                 Built for <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">Your Industry</span>
               </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto text-lg sm:text-xl mb-8">
-                Purpose-built products for healthcare, HR, recruitment, education, sales, and more. Real workflows, not generic automation.
+                Purpose-built systems for HR, recruitment & growth, and healthcare. Real workflows, not generic automation.
               </p>
             </motion.div>
           </motion.div>

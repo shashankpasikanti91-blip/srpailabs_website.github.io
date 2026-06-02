@@ -4,7 +4,7 @@ import { ArrowRight, ArrowUpRight, Shield, Database, Layers, Building2, Globe, L
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import srpLogo from "@/assets/srp-ai-logo.png";
-import { products, PRODUCT_COUNT } from "@/config/products";
+import { products } from "@/config/products";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -22,8 +22,8 @@ export default function Platform() {
       <header className="sticky top-0 z-50 backdrop-blur-2xl bg-background/80 border-b border-border/30">
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
-            <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-12 sm:h-14 md:h-[3.75rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+            <Link to="/" className="flex items-center px-1 py-0.5">
+              <img src={srpLogo} alt="SRP AI Labs" className="h-16 sm:h-[4.5rem] md:h-[5rem] w-auto flex-shrink-0 drop-shadow-[0_0_10px_rgba(139,92,246,0.25)]" />
             </Link>
             <div className="hidden md:flex items-center gap-5">
               <Link to="/products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Products</Link>
@@ -156,7 +156,7 @@ export default function Platform() {
             <div className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {[
                 { icon: Shield, title: "Data Privacy", desc: "Your hospital's patient data never touches your HR system. Strict data isolation per product domain.", color: "text-green-400" },
-                { icon: Zap, title: "Independent Scaling", desc: "If NutriSutra goes viral, it scales without affecting HRMS or SmartRecruit. Zero interference.", color: "text-yellow-400" },
+                { icon: Zap, title: "Independent Scaling", desc: "If Wellora scales rapidly, it does not affect HRMS or SmartRecruit. Zero interference.", color: "text-yellow-400" },
                 { icon: Layers, title: "Faster Innovation", desc: "Each product team can deploy features independently. No coordinated releases, no shared codebase bottlenecks.", color: "text-purple-400" },
               ].map((item, i) => (
                 <motion.div key={i} variants={fadeInUp} className="flex items-start gap-4 p-6 rounded-2xl bg-card/50 border border-border/50 text-left">

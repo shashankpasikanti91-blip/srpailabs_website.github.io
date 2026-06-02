@@ -5,7 +5,7 @@ import {
   MapPin, Phone, Sparkles, TrendingUp, Target, ExternalLink,
   Layers, Database, Cpu, ArrowUpRight, ChevronDown, Monitor, Activity,
   Brain, Building2, Menu, X,
-  Sun, Moon, Leaf, GraduationCap, BookOpen, ChevronRight, Lock, ServerCog, Boxes, Cog,
+  Sun, Moon, Leaf, GraduationCap, ChevronRight, Lock, ServerCog, Boxes,
   UserCheck, HeartPulse
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -126,13 +126,15 @@ const Index = () => {
   };
 
   const ecosystemCards = [
-    { icon: Boxes, label: "10 Products Live", color: "text-purple-400", bg: "from-purple-500/15 to-purple-500/5" },
-    { icon: Building2, label: "6+ Industries", color: "text-cyan-400", bg: "from-cyan-500/15 to-cyan-500/5" },
+    { icon: Boxes, label: `${PRODUCT_COUNT} Products Live`, color: "text-purple-400", bg: "from-purple-500/15 to-purple-500/5" },
+    { icon: Building2, label: "3 Core Industries", color: "text-cyan-400", bg: "from-cyan-500/15 to-cyan-500/5" },
     { icon: ServerCog, label: "Independent Systems", color: "text-blue-400", bg: "from-blue-500/15 to-blue-500/5" },
     { icon: Shield, label: "Secure Infrastructure", color: "text-emerald-400", bg: "from-emerald-500/15 to-emerald-500/5" },
     { icon: Workflow, label: "Workflow Automation", color: "text-pink-400", bg: "from-pink-500/15 to-pink-500/5" },
     { icon: Rocket, label: "Scalable Deployments", color: "text-amber-400", bg: "from-amber-500/15 to-amber-500/5" },
   ];
+  const liveProducts = products.filter((p) => !p.isComingSoon);
+  const overflowProductCount = Math.max(0, liveProducts.length - 5);
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -170,8 +172,8 @@ const Index = () => {
       >
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center justify-between">
-            <a href="#home" className="flex items-center gap-2 sm:gap-3">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-12 sm:h-14 md:h-[3.75rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+            <a href="#home" className="flex items-center gap-2 sm:gap-3 px-1 py-0.5">
+              <img src={srpLogo} alt="SRP AI Labs" className="h-16 sm:h-[4.5rem] md:h-[5rem] w-auto flex-shrink-0 drop-shadow-[0_0_10px_rgba(139,92,246,0.25)]" />
             </a>
 
             {/* Desktop navigation */}
@@ -225,7 +227,7 @@ const Index = () => {
               </a>
               <button
                 onClick={toggleTheme}
-                className="w-9 h-9 rounded-full bg-card/60 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-all duration-300"
+                className="w-9 h-9 rounded-full bg-foreground text-background border border-foreground/20 shadow-sm flex items-center justify-center hover:opacity-90 transition-all duration-300 dark:bg-card dark:text-foreground dark:border-border/70 dark:hover:text-primary dark:hover:border-primary/40"
                 aria-label="Toggle theme"
               >
                 {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -239,7 +241,7 @@ const Index = () => {
             <div className="flex md:hidden items-center gap-2">
               <button
                 onClick={toggleTheme}
-                className="w-10 h-10 rounded-xl bg-card/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
+                className="w-10 h-10 rounded-xl bg-foreground text-background border border-foreground/20 shadow-sm flex items-center justify-center hover:opacity-90 transition-colors dark:bg-card dark:text-foreground dark:border-border/70 dark:hover:text-primary"
                 aria-label="Toggle theme"
               >
                 {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -388,7 +390,7 @@ const Index = () => {
                 transition={{ delay: 0.2 }}
                 className="mb-10"
               >
-                <span className="inline-flex items-center gap-2 rounded-full bg-purple-500/[0.06] border border-purple-500/20 text-purple-300" style={{ padding: '10px 18px', fontSize: '14px', fontWeight: 500 }}>
+                <span className="inline-flex items-center gap-2 rounded-full bg-purple-500/[0.06] border border-purple-500/20 text-primary/85 dark:text-purple-300" style={{ padding: '10px 18px', fontSize: '14px', fontWeight: 500 }}>
                   <span className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 animate-pulse" />
                   Intelligent Systems for Real Operations
                 </span>
@@ -405,40 +407,41 @@ const Index = () => {
               </h1>
 
               {/* Subheadline */}
-              <p className="mb-9" style={{
+              <p className="mb-9 text-foreground/85 dark:text-white/80" style={{
                 fontSize: 'clamp(18px, 1.6vw, 24px)',
                 lineHeight: 1.55,
-                color: 'rgba(255,255,255,0.82)',
                 maxWidth: '680px',
                 fontWeight: 400,
               }}>
-                Software that handles the repetitive work — across HR, hiring, healthcare, education, and business operations. Built for teams that need results, not demos.
+                AI-powered operational systems that automate real business work across operations, recruitment, healthcare, education, and growth.
               </p>
 
               {/* Product Chips — Row 1 (desktop order-4, mobile order-5) */}
               <div className="flex flex-col gap-2 mb-10 order-5 sm:order-4">
                 <div className="flex flex-wrap gap-2.5">
-                  {products.filter(p => !p.isComingSoon).slice(0, 5).map((p) => (
+                  {liveProducts.slice(0, 5).map((p) => (
                     <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/70 hover:border-purple-500/40 hover:text-purple-300 hover:bg-purple-500/[0.06] transition-all duration-300" style={{ padding: '10px 14px', fontSize: '14px', fontWeight: 500 }}>
+                      className="inline-flex items-center gap-2 rounded-full bg-card/50 border border-border/70 text-foreground/75 hover:border-purple-500/40 hover:text-primary hover:bg-purple-500/[0.06] transition-all duration-300" style={{ padding: '10px 14px', fontSize: '14px', fontWeight: 500 }}>
                       <p.icon className={`w-3.5 h-3.5 ${p.iconColor}`} />
                       {p.name}
                     </a>
                   ))}
                 </div>
-                <div className="flex flex-wrap gap-2.5">
-                  {products.filter(p => !p.isComingSoon).slice(5, 9).map((p) => (
-                    <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/70 hover:border-purple-500/40 hover:text-purple-300 hover:bg-purple-500/[0.06] transition-all duration-300" style={{ padding: '10px 14px', fontSize: '14px', fontWeight: 500 }}>
-                      <p.icon className={`w-3.5 h-3.5 ${p.iconColor}`} />
-                      {p.name}
-                    </a>
-                  ))}
-                  <Link to="/products"
-                    className="inline-flex items-center gap-1.5 rounded-full text-purple-300 border border-purple-500/30 hover:bg-purple-500/[0.06] transition-all duration-300" style={{ padding: '10px 14px', fontSize: '14px', fontWeight: 500 }}>
-                    +{products.filter(p => p.isComingSoon).length} More <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
+                {overflowProductCount > 0 && (
+                  <div className="flex flex-wrap gap-2.5">
+                    {liveProducts.slice(5, 9).map((p) => (
+                      <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-full bg-card/50 border border-border/70 text-foreground/75 hover:border-purple-500/40 hover:text-primary hover:bg-purple-500/[0.06] transition-all duration-300" style={{ padding: '10px 14px', fontSize: '14px', fontWeight: 500 }}>
+                        <p.icon className={`w-3.5 h-3.5 ${p.iconColor}`} />
+                        {p.name}
+                      </a>
+                    ))}
+                    <Link to="/products"
+                      className="inline-flex items-center gap-1.5 rounded-full text-purple-300 border border-purple-500/30 hover:bg-purple-500/[0.06] transition-all duration-300" style={{ padding: '10px 14px', fontSize: '14px', fontWeight: 500 }}>
+                      +{overflowProductCount} More <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                )}
               </div>
 
               {/* CTA Buttons (desktop order-5, mobile order-4) */}
@@ -485,9 +488,9 @@ const Index = () => {
                 {/* 6 floating chips — 3 rows × 2 columns, mathematically symmetric */}
                 {[
                   { label: "Scalable Deployments", icon: Rocket, color: "text-amber-400", bg: "from-amber-500/10 to-amber-500/[0.03]", top: '7%', left: '-4%' },
-                  { label: "10 Products Live", icon: Boxes, color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/[0.03]", top: '7%', right: '-4%', left: 'auto' },
+                  { label: `${PRODUCT_COUNT} Products Live`, icon: Boxes, color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/[0.03]", top: '7%', right: '-4%', left: 'auto' },
                   { label: "Workflow Automation", icon: Workflow, color: "text-pink-400", bg: "from-pink-500/10 to-pink-500/[0.03]", top: '42%', left: '-12%' },
-                  { label: "6+ Industries", icon: Building2, color: "text-cyan-400", bg: "from-cyan-500/10 to-cyan-500/[0.03]", top: '42%', right: '-12%', left: 'auto' },
+                  { label: "3 Core Industries", icon: Building2, color: "text-cyan-400", bg: "from-cyan-500/10 to-cyan-500/[0.03]", top: '42%', right: '-12%', left: 'auto' },
                   { label: "Secure Infrastructure", icon: Shield, color: "text-emerald-400", bg: "from-emerald-500/10 to-emerald-500/[0.03]", top: '77%', left: '-4%' },
                   { label: "Independent Systems", icon: ServerCog, color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/[0.03]", top: '77%', right: '-4%', left: 'auto' },
                 ].map((chip, i) => (
@@ -545,7 +548,7 @@ const Index = () => {
             <div className="marquee-track">
               {[...Array(2)].map((_, setIdx) => (
                 <div key={setIdx} className="flex items-center gap-6 sm:gap-10 px-3 sm:px-5">
-                  {["HR MANAGEMENT", "RECRUITMENT", "HEALTHCARE", "EDUCATION", "SALES & GROWTH", "MARKETING", "OPERATIONS", "REVENUE AUTOMATION", "WORKFLOW MANAGEMENT", "SECURE INFRASTRUCTURE"].map((text, i) => (
+                  {["HR MANAGEMENT", "RECRUITMENT & GROWTH", "HEALTHCARE"].map((text, i) => (
                     <span key={`${setIdx}-${i}`} className="flex items-center gap-3 sm:gap-4 whitespace-nowrap">
                       <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-muted-foreground/60 hover:text-primary/80 transition-colors duration-300">{text}</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 opacity-40" />
@@ -570,9 +573,9 @@ const Index = () => {
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
               {[
-                { value: "10", suffix: "", label: "Specialized Products" },
-                { value: "6", suffix: "+", label: "Industries Served" },
-                { value: "5", suffix: "", label: "Product Categories" },
+                { value: String(PRODUCT_COUNT), suffix: "", label: "Live Products" },
+                { value: "3", suffix: "", label: "Industries Served" },
+                { value: "3", suffix: "", label: "Core Workstreams" },
                 { value: "100", suffix: "%", label: "Independent Deployments" },
               ].map((stat, i) => (
                 <motion.div
@@ -613,10 +616,10 @@ const Index = () => {
                 Product Ecosystem
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-4">
-                One Platform. <span className="gradient-text">Ten Products.</span>
+                One Platform. <span className="gradient-text">Five Live Systems.</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
-                Each product runs on its own infrastructure with dedicated databases, access controls, and deployment. Use one or use the full suite.
+                Five production systems for core operational workflows. Each runs on dedicated infrastructure with separate access controls and deployment.
               </p>
             </motion.div>
             {productsByCategory.map(({ category, items }) => (
@@ -676,7 +679,7 @@ const Index = () => {
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-4">
                 Why Teams Choose <span className="gradient-text">SRP AI Labs</span>
               </h2>
-              <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">Enterprise-grade systems. Startup-speed delivery. Real products, real results.</p>
+              <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">Built to improve throughput, reduce manual work, and keep operations reliable as teams scale.</p>
             </motion.div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-5xl mx-auto">
               {[
@@ -738,7 +741,7 @@ const Index = () => {
                 Built on <span className="gradient-text">Reliable Infrastructure</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
-                Secure, performant, and scalable — the same stack powering all ten products.
+                Secure and scalable infrastructure behind every live SRP system.
               </p>
             </motion.div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-5xl mx-auto">
@@ -792,15 +795,11 @@ const Index = () => {
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">Software designed around real workflows — not generic templates repurposed for every vertical.</p>
             </motion.div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-6xl mx-auto">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
               {[
                 { icon: Building2, title: "Human Resources", desc: "Employee lifecycle management, payroll, attendance, and workforce analytics.", tag: "HRMS", href: "https://hrms.srpailabs.com" },
-                { icon: UserCheck, title: "Recruitment", desc: "Applicant tracking, AI screening, and structured hiring pipelines.", tag: "SmartRecruit", href: "https://recruit.srpailabs.com" },
+                { icon: UserCheck, title: "Recruitment & Growth", desc: "Structured hiring pipelines with outreach and growth automation for recruitment teams.", tag: "SmartRecruit + Growth OS", href: "https://recruit.srpailabs.com" },
                 { icon: HeartPulse, title: "Healthcare", desc: "Patient management, appointments, prescriptions, billing, and multi-facility workflows.", tag: "MediFlow", href: "https://mediflow.srpailabs.com" },
-                { icon: BookOpen, title: "Education", desc: "Student progress tracking, institutional analytics, and AI-assisted learning.", tag: "Education AI", href: "https://edu.srpailabs.com" },
-                { icon: TrendingUp, title: "Sales & Growth", desc: "Lead management, pipeline automation, outreach sequences, and revenue tracking.", tag: "Growth OS", href: "https://growth.srpailabs.com" },
-                { icon: BarChart3, title: "Marketing", desc: "Campaign management, creative generation, social scheduling, and analytics.", tag: "Marketing OS", href: "https://app.srpailabs.com" },
-                { icon: Cog, title: "Operations", desc: "CRM, revenue automation, workflow orchestration, and business process management.", tag: "Automation OS", href: "https://automation.srpailabs.com" },
               ].map((uc, i) => (
                 <motion.div key={i} variants={fadeInUp} whileHover={{ y: -4 }}>
                   <a href={uc.href} target="_blank" rel="noopener noreferrer"
@@ -848,8 +847,8 @@ const Index = () => {
               <br />
               <span className="gradient-text">More Efficiently</span>
             </h2>
-            <p className="text-muted-foreground text-base sm:text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-              From HR and recruitment to healthcare and education — pick the right product for your team and go live in days.
+              <p className="text-muted-foreground text-base sm:text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+                Choose the system that fits your workflow, then scale with a platform built for reliable day-to-day execution.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:from-purple-500 hover:to-cyan-400 rounded-full px-8 shadow-[0_4px_30px_hsl(265_85%_65%/0.4),0_2px_15px_hsl(190_100%_50%/0.2)] hover:shadow-[0_8px_50px_hsl(265_85%_65%/0.5)] hover:-translate-y-0.5 transition-all border-0">

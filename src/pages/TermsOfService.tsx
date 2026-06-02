@@ -18,7 +18,7 @@ const sections = [
       <p className="text-muted-foreground leading-relaxed">
         By accessing or using any product or service provided by <strong className="text-foreground">SRP AI Labs</strong> ("we," "our," or "us"),
         you agree to be bound by these Terms of Service. This includes your use of srpailabs.com, srphrms.com,
-        smartrecruit.in, growthossrp.com, srpmarketing.com, mediflowsrp.com, nutrisutra.in, srpkids.com,
+        smartrecruit.in, growthossrp.com, srpmarketing.com, mediflowsrp.com, wellora.srpailabs.com, srpkids.com,
         autonomousos.com, and automationos.com. If you do not agree to these terms, please do not use our services.
       </p>
     ),
@@ -29,15 +29,14 @@ const sections = [
     content: (
       <>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          SRP AI Labs develops and operates a suite of <strong className="text-foreground">10 AI-powered products</strong> across five categories:
+          SRP AI Labs currently operates <strong className="text-foreground">5 live products</strong> across core business workflows:
         </p>
         <div className="grid sm:grid-cols-2 gap-3">
           {[
-            { cat: "Business Platforms", items: ["Autonomous OS — AI-native operating system", "Automation OS — Intelligent workflow engine"] },
-            { cat: "Enterprise HR & Hiring", items: ["SRP HRMS — HR lifecycle management", "SmartRecruit — AI recruitment platform"] },
-            { cat: "Growth & Revenue", items: ["Growth OS — Revenue & recruitment hybrid", "Marketing OS — AI marketing automation"] },
-            { cat: "Industry Solutions", items: ["MediFlow — Healthcare AI for clinics & hospitals", "SRP Education AI — Student success & institutional intelligence"] },
-            { cat: "Consumer Products", items: ["NutriSutra — AI nutrition & wellness", "SRP Kids — AI learning for children (Coming Soon)"] },
+            { cat: "Enterprise HR & Hiring", items: ["HRMS — HR lifecycle management", "SmartRecruit — recruitment workflow platform"] },
+            { cat: "Growth & Revenue", items: ["Growth OS — sales and growth operations"] },
+            { cat: "Healthcare", items: ["MediFlow — healthcare operations system"] },
+            { cat: "Wellness", items: ["Wellora — nutrition intelligence platform"] },
           ].map((g) => (
             <div key={g.cat} className="p-3 rounded-xl bg-muted/30 border border-border/40">
               <p className="text-xs font-semibold text-primary mb-1.5 uppercase tracking-wide">{g.cat}</p>
@@ -89,7 +88,7 @@ const sections = [
         </p>
         <div className="space-y-3">
           {[
-            { title: "Isolated Product Databases", desc: "Each of our 10 products runs on a completely separate database. Medical records in MediFlow, HR records in SRP HRMS, education data in SRP Education AI, and nutritional data in NutriSutra are stored in isolated environments and never co-mingled." },
+            { title: "Isolated Product Databases", desc: "Each live product runs on its own database. Medical records in MediFlow, HR records in HRMS, recruitment records in SmartRecruit, growth operations in Growth OS, and nutrition data in Wellora are stored in isolated environments and never co-mingled." },
             { title: "Data Encryption", desc: "All data is encrypted in transit (TLS 1.2+) and at rest. Authentication tokens are hashed using industry-standard algorithms." },
             { title: "Role-Based Access Control", desc: "Every product enforces RBAC — users only access data their role permits. Admin escalations are logged and auditable." },
             { title: "Responsible AI Practices", desc: "Our AI systems are designed to avoid bias and harmful outputs. Healthcare (MediFlow) and children (SRP Kids) products comply with additional safety standards for sensitive contexts." },
@@ -209,7 +208,7 @@ const TermsOfService = () => {
         <div className="container mx-auto px-4 py-4">
           <nav className="flex items-center justify-between">
             <Link to="/" className="flex items-center">
-              <img src={srpLogo} alt="SRP AI Labs" className="h-12 sm:h-14 md:h-[3.75rem] w-auto flex-shrink-0 drop-shadow-[0_0_8px_rgba(139,92,246,0.2)]" />
+              <img src={srpLogo} alt="SRP AI Labs" className="h-16 sm:h-[4.5rem] md:h-[5rem] w-auto flex-shrink-0 drop-shadow-[0_0_10px_rgba(139,92,246,0.25)]" />
             </Link>
             <div className="flex items-center gap-4">
               <Link to="/security" className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden sm:block">Security</Link>
